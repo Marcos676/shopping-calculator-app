@@ -1,13 +1,13 @@
-import "./App.css";
+import "./styles/App.css";
 import { useState } from "react";
+
+import { ModalSaveCalc } from "./components/ModalSaveCalc";
 
 function App() {
   const [originalPrice, setOriginalPrice] = useState("");
   const [porcentDiscount, setPorcentDiscount] = useState("");
   const [discount, setDiscount] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
-
-
 
   const handleValues = (price, disc) => {
     //Actualizacion de valores
@@ -28,6 +28,7 @@ function App() {
 
   return (
     <div className="App">
+      <ModalSaveCalc />
       <header className="App-header">
         <i className="fa-regular fa-bookmark"></i>
         <i className="fas fa-info-circle"></i>
