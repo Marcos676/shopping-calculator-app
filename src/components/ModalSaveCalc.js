@@ -1,26 +1,33 @@
 import "../styles/ModalSaveCalc.css"
-
-export const ModalSaveCalc = (isVisible, name, originalPrice, discount) => {
-    //let show = isVisible ? "flex" : "none" 
+import { useState } from "react";
 
 
-    return(
-        <div className="modal-save-calc" /* style={{display: {show}}} */>
-            <form className="form-modal-save-calc">
+export const ModalSaveCalc = ({isVisible, isNotVisible, save}) => {
+    const [name, setName] = useState("");
+    if (isVisible) {
+        return (
+            <div className="modal-save-calc">
+            <form className="form-modal-save-calc" >
                 <label htmlFor="name">Nombre:</label>
             <input
               id="name"
               className=""
               type="text"
               placeholder="Ej: Galletita, arroz, banana..."
+              onInput={(e) => setName(e.target.value)}
             />
                 <div className="modal-box-btns">
+                    <button
+                    type="button"
+                    onClick={ () => save(name)}
+                    >Guardar</button>
                     <button type="button"
-                    onClick={(e) => ModalSaveCalc(false)}
+                    onClick={() => isNotVisible(false)}
                     >Cancelar</button>
-                    <button type="button">Guardar</button>
+                    
                 </div>
             </form>
         </div>
-    )
+        )
+    }
 }

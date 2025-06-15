@@ -8,6 +8,24 @@ function App() {
   const [porcentDiscount, setPorcentDiscount] = useState("");
   const [discount, setDiscount] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [saveList, setSaveList] = useState([]);
+
+  // ------ Funciones útiles
+  
+  //Obtiene ID
+  const getId = () => {
+    if (saveList.length === 0) {
+      return 1;
+    } else {
+      return saveList[saveList.length - 1].id + 1;
+    }
+  };
+  //Obtiene descuento
+  const getDiscount = (precio, descuento) => (precio * descuento) / 100;
+
+
+  // --------Manejadores
 
   const handleValues = (price, disc) => {
     //Actualizacion de valores
@@ -20,15 +38,29 @@ function App() {
       setDiscount("");
       setFinalPrice("");
     } else {
-      setDiscount((price * disc) / 100);
-      setFinalPrice(price - (price * disc) / 100);
+      setDiscount(getDiscount(price, disc));
+      setFinalPrice(price - getDiscount(price, disc));
     }
   };
 
+  //recibe el nombre, pone los datos en un objeto dentro de un array y cierra el modal
+  const HandleSaveList = (name) => {
+    setSaveList([
+      ...saveList,
+      { id: getId(), name, originalPrice, porcentDiscount },
+    ]);
+    setShowSaveModal(false);
+    console.log(saveList);
+  };
 
   return (
     <div className="App">
-      <ModalSaveCalc />
+      <ModalSaveCalc
+        isVisible={showSaveModal}
+        isNotVisible={setShowSaveModal}
+        save={HandleSaveList}
+      />
+
       <header className="App-header">
         <i className="fa-regular fa-bookmark"></i>
         <i className="fas fa-info-circle"></i>
@@ -64,16 +96,16 @@ function App() {
           <div>
             <p className="discount">
               <i className="fas fa-arrow-right result-icons"></i>
-               Ahorro: $
-              <span className="number-discount">{discount}</span>
+              Ahorro: $<span className="number-discount">{discount}</span>
             </p>
             <p className="final-price">
               <i className="fa-solid fa-sack-dollar result-icons"></i>
-               Precio final: $
-              {finalPrice}
+              Precio final: ${finalPrice}
             </p>
           </div>
-          <button type="button">Guardar cálculo</button>
+          <button type="button" onClick={() => setShowSaveModal(true)}>
+            Guardar
+          </button>
         </form>
       </main>
     </div>

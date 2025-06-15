@@ -37,6 +37,7 @@ input, button {
     padding: 5px;
     font-size: 20px;
     font-weight: bolder;
+    width: 100%;
 }
 
 .discount, .final-price {
@@ -54,5 +55,4 @@ input, button {
 button {
     margin-top: 16px;
     background-color: #FFD365;
-    width: 100%;
 }
