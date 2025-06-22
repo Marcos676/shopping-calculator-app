@@ -1,8 +1,8 @@
-import "../styles/ModalSaveCalc.css"
+import "../styles/ModalSaveItem.css"
 import { useState } from "react";
 
 
-export const ModalSaveCalc = ({isVisible, isNotVisible, save}) => {
+export const ModalSaveItem = ({isVisible, isNotVisible, save}) => {
     const [name, setName] = useState("");
     if (isVisible) {
         return (

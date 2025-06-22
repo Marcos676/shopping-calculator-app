@@ -1,0 +1,103 @@
+.sidebar-shopping-cart {
+  background-color: #fff3b0;
+  padding: 16px;
+  position: fixed;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.sidebar-shopping-cart-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  flex-grow: 0;
+}
+.sidebar-shopping-cart-header .header-row-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+.header-row-container .cart-shopping-class {
+  font-size: 20px;
+}
+.header-row-container .xmark-class {
+  font-size: 21px;
+}
+.sidebar-shopping-cart-header .info-circle-class {
+  padding: 16px;
+  font-size: 20px;
+}
+
+/* Items List */
+.sidebar-shopping-cart .cart-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 83%;
+  flex-basis: content;
+}
+.sidebar-shopping-cart .items-list {
+  margin-bottom: 7px;
+  overflow-y: scroll;
+}
+.sidebar-shopping-cart .item-container,
+.sidebar-shopping-cart .total-container {
+  background-color: #fffefa;
+  border-radius: 16px;
+  padding: 12px;
+}
+.sidebar-shopping-cart .item-container:not(:last-child) {
+  margin-bottom: 7px;
+}
+.sidebar-shopping-cart .name-price-item {
+  font-size: 19px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+.sidebar-shopping-cart .dropdawn-detail-item {
+  display: flex;
+  justify-content: space-between;
+}
+.sidebar-shopping-cart .detail-item {
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-shopping-cart .detail-item span {
+  padding-top: 4px;
+  font-size: 15px;
+}
+.sidebar-shopping-cart .detail-item span:not(:last-child) {
+  padding-bottom: 4px;
+}
+.sidebar-shopping-cart .action-buttons-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.sidebar-shopping-cart .action-buttons-container .fa-pen,
+.sidebar-shopping-cart .action-buttons-container .fa-trash {
+  font-size: 20px;
+}
+
+/* Resumen */
+.sidebar-shopping-cart .total-container .total-price {
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Vaciar carrito */
+.sidebar-shopping-cart .clean-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.sidebar-shopping-cart .clean-cart .fa-arrow-left {
+  font-size: 12px;
+}

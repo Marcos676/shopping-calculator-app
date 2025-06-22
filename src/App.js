@@ -1,7 +1,8 @@
 import "./styles/App.css";
 import { useState } from "react";
 
-import { ModalSaveCalc } from "./components/ModalSaveCalc";
+import { ModalSaveItem } from "./components/ModalSaveItem";
+import { SidebarShoppingCart } from "./components/SidebarShoppingCart"
 
 function App() {
   const [originalPrice, setOriginalPrice] = useState("");
@@ -10,6 +11,7 @@ function App() {
   const [finalPrice, setFinalPrice] = useState("");
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [saveList, setSaveList] = useState([]);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   // ------ Funciones útiles
 
@@ -51,7 +53,7 @@ function App() {
     }
   };
 
-  //recibe el nombre, pone los datos en un objeto dentro de un array, cierra el modal y limpia los campos
+  //recibe el nombre, pone los datos en un objeto dentro de un array, limpia los campos y cierra el modal
   const HandleSaveList = (name) => {
     setSaveList([
       ...saveList,
@@ -67,14 +69,19 @@ function App() {
 
   return (
     <div className="App">
-      <ModalSaveCalc
+      <ModalSaveItem
         isVisible={showSaveModal}
         isNotVisible={setShowSaveModal}
         save={HandleSaveList}
       />
+      
+      <SidebarShoppingCart show={showSidebar} setShow={setShowSidebar} />
 
       <header className="App-header">
-        <i className="fa-regular fa-bookmark"></i>
+        <i 
+        className="fa-solid fa-cart-shopping"
+        onClick={() => setShowSidebar(true)}
+        ></i>
         <i className="fas fa-info-circle"></i>
       </header>
       <main>
