@@ -2,13 +2,24 @@ import "../styles/Modal.css";
 import { NewProductForm } from "./ModalContent/NewProductForm";
 
 export const Modal = ({ isOpenIn, setIsOpenIn, saveNewProduct }) => {
+  let content;
   switch (isOpenIn) {
     case "NewProductForm":
-      return (
-      <NewProductForm setIsOpenIn={setIsOpenIn} saveNewProduct={saveNewProduct} />
-    );  
+      content = (
+        <NewProductForm
+          setIsOpenIn={setIsOpenIn}
+          saveNewProduct={saveNewProduct}
+        />
+      );
+      break;
     //case "":
     default:
-      break;
+      return
   }
+
+  return (
+    <div className="modal-background">
+      <div className="modal-content">{content}</div>
+    </div>
+  );
 };

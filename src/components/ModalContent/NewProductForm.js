@@ -3,8 +3,6 @@ import { useState } from "react";
 export const NewProductForm = ({ setIsOpenIn, saveNewProduct }) => {
     const [name, setName] = useState("");
     return (
-        <div className="modal-background">
-        <div className="modal-content">
           <form className="reset-form-class">
             <button type="submit" disabled hidden aria-hidden="true"></button>
             <label htmlFor="name">Nombre:</label>
@@ -23,7 +21,5 @@ export const NewProductForm = ({ setIsOpenIn, saveNewProduct }) => {
               </button>
             </div>
           </form>
-        </div>
-      </div>
     )
 }
