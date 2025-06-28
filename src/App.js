@@ -13,7 +13,7 @@ function App() {
   const [discount, setDiscount] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
   // Estados de Modal
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenInModal, setIsOpenInModal] = useState("");
   // Estados de Carrito
   const [cartList, setCartList] = useState([]);
   // Estados de Sidebar
@@ -69,7 +69,7 @@ function App() {
     setPorcentDiscount("");
     setDiscount("");
     setFinalPrice("");
-    setIsOpenModal(false);
+    setIsOpenInModal("");
   };
 
   const HandleSideBar = (show) => {
@@ -87,8 +87,8 @@ function App() {
   return (
     <div className="App">
       <Modal
-        isOpen={isOpenModal}
-        setIsOpen={setIsOpenModal}
+        isOpenIn={isOpenInModal}
+        setIsOpenIn={setIsOpenInModal}
         saveNewProduct={HandleCartList}
       />
 
@@ -139,7 +139,7 @@ function App() {
               Precio final: ${finalPrice}
             </p>
           </div>
-          <button type="button" onClick={() => setIsOpenModal(true)}>
+          <button type="button" onClick={() => setIsOpenInModal("new-product-form")}>
             Guardar
           </button>
         </form>
