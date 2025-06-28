@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const NewProductForm = ({ setIsOpenIn, saveNewProduct }) => {
+export const NewProductForm = ({ setIsOpenIn, addProductCartList }) => {
     const [name, setName] = useState("");
     return (
           <form className="reset-form-class">
@@ -13,7 +13,7 @@ export const NewProductForm = ({ setIsOpenIn, saveNewProduct }) => {
               onInput={(e) => setName(e.target.value)}
             />
             <div className="modal-box-btns">
-              <button type="button" onClick={() => saveNewProduct(name)}>
+              <button type="button" onClick={() => addProductCartList(name)}>
                 Guardar
               </button>
               <button type="button" onClick={() => setIsOpenIn("")}>

@@ -13,7 +13,8 @@ function App() {
   const [discount, setDiscount] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
   // Estado de Modal
-  const [isOpenInModal, setIsOpenInModal] = useState("");
+  const [modalIsOpenIn, setModalIsOpenIn] = useState("");
+  const [modalAction, setModalAction] = useState({});
   // Estado de productos guardados en Carrito
   const [cartList, setCartList] = useState([]);
   // Estado de Sidebar
@@ -56,7 +57,7 @@ function App() {
   };
 
   //recibe el nombre, pone los datos en un objeto dentro de un array, limpia los campos y cierra el modal
-  const HandleCartList = (name) => {
+  const addProductCartList = (name) => {
     setCartList([
       ...cartList,
       { id: getId(), name, originalPrice, porcentDiscount },
@@ -66,7 +67,7 @@ function App() {
     setPorcentDiscount("");
     setDiscount("");
     setFinalPrice("");
-    setIsOpenInModal("");
+    setModalIsOpenIn("");
   };
 
   const HandleSideBar = (show) => {
@@ -81,12 +82,20 @@ function App() {
     }
   };
 
+  const handleModalContent = (modalContent, action, paramsAction) => {
+    setModalAction({
+      methodAction: action,
+      arrayParams: [paramsAction]
+    })
+    setModalIsOpenIn(modalContent)
+  }
+
   return (
     <div className="App">
       <Modal
-        isOpenIn={isOpenInModal}
-        setIsOpenIn={setIsOpenInModal}
-        saveNewProduct={HandleCartList}
+        isOpenIn={modalIsOpenIn}
+        setIsOpenIn={setModalIsOpenIn}
+        action={modalAction}
       />
 
       <SidebarShoppingCart isOpen={HandleSideBar} products={cartList} setCartList={setCartList} />
@@ -136,7 +145,7 @@ function App() {
               Precio final: ${finalPrice}
             </p>
           </div>
-          <button type="button" onClick={() => setIsOpenInModal("NewProductForm")}>
+          <button type="button" onClick={() => handleModalContent("NewProductForm", addProductCartList)}>
             Guardar
           </button>
         </form>

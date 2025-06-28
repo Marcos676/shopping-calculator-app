@@ -2,17 +2,17 @@ import "../styles/Modal.css";
 import { NewProductForm } from "./ModalContent/NewProductForm";
 import { Confirm } from "./ModalContent/Confirm";
 
-export const Modal = ({ isOpenIn, setIsOpenIn, saveNewProduct }) => {
+export const Modal = ({ isOpenIn, setIsOpenIn, action }) => {
   let content;
   switch (isOpenIn) {
     case "NewProductForm":
       content = <NewProductForm
           setIsOpenIn={setIsOpenIn}
-          saveNewProduct={saveNewProduct}
+          addProductCartList={action.methodAction}
         />;
       break;
     case "Confirm":
-      content = <Confirm setIsOpenIn={setIsOpenIn} />
+      content = <Confirm setIsOpenIn={setIsOpenIn} action={action} />
       break;
     default:
       return

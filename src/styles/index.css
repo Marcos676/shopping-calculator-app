@@ -5,3 +5,27 @@
   font-family: "Poppins", sans-serif;
   color: #444444;
 }
+
+label {
+  display: block;
+}
+
+input,
+button {
+  height: 48px;
+  border: 0;
+  border-radius: 12px;
+  padding: 5px;
+  font-size: 20px;
+  font-weight: bolder;
+  width: 100%;
+}
+
+button {
+  margin-top: 16px;
+  background-color: #ffd365;
+}
+
+.text-center {
+  text-align: center;
+}

@@ -14,52 +14,36 @@
   padding: 16px 16px 0 16px;
 }
 .App-header i {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 /* Main */
 main {
-    padding: 16px;
+  padding: 16px;
 }
-.title-description{
-    padding-bottom: 16px;
-    text-align: center;
+
+.title-description {
+  padding-bottom: 16px;
+  text-align: center;
 }
 
 .functional-app {
-    font-size: 16px;
-    font-weight: bolder;
-    background-color: #FFFEFA;
-    border-radius: 25px;   
-    padding: 20px;
+  font-size: 16px;
+  font-weight: bolder;
+  background-color: #fffefa;
+  border-radius: 25px;
+  padding: 20px;
 }
 
-label {
-    display: block;
-}
-input, button {
-    height: 48px;
-    border: 0;
-    border-radius: 12px;
-    padding: 5px;
-    font-size: 20px;
-    font-weight: bolder;
-    width: 100%;
-}
-
-.discount, .final-price {
-    padding-top: 10px;
+.discount,
+.final-price {
+  padding-top: 10px;
 }
 
 .result-icons {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .number-discount {
-    text-decoration: line-through;
-}
-
-button {
-    margin-top: 16px;
-    background-color: #FFD365;
+  text-decoration: line-through;
 }
