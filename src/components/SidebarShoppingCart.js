@@ -1,6 +1,6 @@
 import "../styles/SidebarShoppingCart.css";
 import { useState } from "react";
-
+ 
 import {
   getDiscount,
   getFinalPrice,
@@ -8,8 +8,8 @@ import {
   getTotalDiscount,
 } from "../utils/priceCalculation";
 
-export const SidebarShoppingCart = ({ setShow, products, setCartList }) => {
-  const [showDetail, setShowDetail] = useState(false);
+export const SidebarShoppingCart = ({ isOpen, products, setCartList }) => {
+  const [isOpenDetail, setIsOpenDetail] = useState(false);
 
   const handleDropdownDetail = (id) => {
     let detailBox = document.querySelector(
@@ -19,12 +19,12 @@ export const SidebarShoppingCart = ({ setShow, products, setCartList }) => {
       `.sidebar-shopping-cart .item-${id} .fa-caret-right`
     );
 
-    if (showDetail) {
-      setShowDetail(false);
+    if (isOpenDetail) {
+      setIsOpenDetail(false);
       detailBox.style.height = "0px";
       triangleDropdown.style.transform = "rotate(0deg)";
     } else {
-      setShowDetail(true);
+      setIsOpenDetail(true);
       detailBox.style.height = "71px";
       triangleDropdown.style.transform = "rotate(90deg)";
     }
@@ -38,7 +38,7 @@ export const SidebarShoppingCart = ({ setShow, products, setCartList }) => {
           <h2>Carrito de compras</h2>
           <i
             className="fa-solid fa-xmark xmark-class"
-            onClick={() => setShow(false)}
+            onClick={() => isOpen(false)}
           ></i>
         </div>
         <i className="fas fa-info-circle info-circle-class"></i>
@@ -66,7 +66,6 @@ export const SidebarShoppingCart = ({ setShow, products, setCartList }) => {
                     <span>{`Precio original: $ ${originalPrice}`} </span>
                     <span> {`Descuento: ${porcentDiscount}%`} </span>
                     <span>
-                      {" "}
                       {`Ahorro: $ ${getDiscount(
                         originalPrice,
                         porcentDiscount

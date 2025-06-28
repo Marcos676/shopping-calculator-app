@@ -1,19 +1,23 @@
 import "./styles/App.css";
 import { useState } from "react";
 
-import { ModalSaveItem } from "./components/ModalSaveItem";
+import { Modal } from "./components/Modal";
 import { SidebarShoppingCart } from "./components/SidebarShoppingCart";
 
 import { getDiscount, getFinalPrice } from "./utils/priceCalculation";
 
 function App() {
+  // Estados de calculos
   const [originalPrice, setOriginalPrice] = useState("");
   const [porcentDiscount, setPorcentDiscount] = useState("");
   const [discount, setDiscount] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
-  const [showSaveModal, setShowSaveModal] = useState(false);
+  // Estados de Modal
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  // Estados de Carrito
   const [cartList, setCartList] = useState([]);
-  const [showSidebar, setShowSidebar] = useState(false);
+  // Estados de Sidebar
+  const [isOpenSidebar, setIsOpenSidebar] = useState(false);
 
   // ------ Funciones útiles
 
@@ -60,18 +64,18 @@ function App() {
       ...cartList,
       { id: getId(), name, originalPrice, porcentDiscount },
     ]);
-    handleReset(".class-handle-save");
+    handleReset(".reset-form-class");
     setOriginalPrice("");
     setPorcentDiscount("");
     setDiscount("");
     setFinalPrice("");
-    setShowSaveModal(false);
+    setIsOpenModal(false);
   };
 
   const HandleSideBar = (show) => {
-    setShowSidebar(show ? true : false);
+    setIsOpenSidebar(show ? true : false);
 
-    if (showSidebar) {
+    if (isOpenSidebar) {
       document.querySelector(".sidebar-shopping-cart").style.transform =
         "translateX(-100%)";
     } else {
@@ -82,10 +86,10 @@ function App() {
 
   return (
     <div className="App">
-      <ModalSaveItem
-        isVisible={showSaveModal}
-        isNotVisible={setShowSaveModal}
-        save={HandleCartList}
+      <Modal
+        isOpen={isOpenModal}
+        setIsOpen={setIsOpenModal}
+        saveNewProduct={HandleCartList}
       />
 
       <SidebarShoppingCart setShow={HandleSideBar} products={cartList} setCartList={setCartList} />
@@ -135,7 +139,7 @@ function App() {
               Precio final: ${finalPrice}
             </p>
           </div>
-          <button type="button" onClick={() => setShowSaveModal(true)}>
+          <button type="button" onClick={() => setIsOpenModal(true)}>
             Guardar
           </button>
         </form>
