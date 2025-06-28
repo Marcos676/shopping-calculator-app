@@ -92,7 +92,7 @@ function App() {
         saveNewProduct={HandleCartList}
       />
 
-      <SidebarShoppingCart setShow={HandleSideBar} products={cartList} setCartList={setCartList} />
+      <SidebarShoppingCart isOpen={HandleSideBar} products={cartList} setCartList={setCartList} />
 
       <header className="App-header">
         <i
