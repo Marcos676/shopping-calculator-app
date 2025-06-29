@@ -14,7 +14,7 @@ function App() {
   const [finalPrice, setFinalPrice] = useState("");
   // Estado de Modal
   const [modalIsOpenIn, setModalIsOpenIn] = useState("");
-  const [modalAction, setModalAction] = useState({});
+  const [modalProps, setModalProps] = useState({});
   // Estado de productos guardados en Carrito
   const [cartList, setCartList] = useState([]);
   // Estado de Sidebar
@@ -56,7 +56,7 @@ function App() {
     }
   };
 
-  //recibe el nombre, pone los datos en un objeto dentro de un array, limpia los campos y cierra el modal
+  //recibe el nombre, pone los datos en un objeto dentro de un array, resetea los campos y cierra el modal
   const addProductCartList = (name) => {
     setCartList([
       ...cartList,
@@ -70,6 +70,13 @@ function App() {
     setModalIsOpenIn("");
   };
 
+  const deleteProductCartlist = (id) => {
+    let updatedList = cartList.filter( product => {
+      return product.id !== id
+    })
+    setCartList(updatedList)
+  }
+
   const HandleSideBar = (show) => {
     setIsOpenSidebar(show ? true : false);
 
@@ -82,23 +89,41 @@ function App() {
     }
   };
 
-  const handleModalContent = (modalContent, action, paramsAction) => {
-    setModalAction({
+  /*
+   handleModalContent Recibe como parametros:
+   modalContent = string que definira el contenido del modal
+   action = metodo que podra utilizarse como en un evento onClick
+   paramsAction = parametro para el action si hace falta
+   textContent = Texto dinamico, actualmente utilizado en contenido de modal de Confirm
+  */
+  const handleModalContent = (
+    modalContent,
+    action,
+    paramsAction,
+    textContent
+  ) => {
+    setModalProps({
       methodAction: action,
-      arrayParams: [paramsAction]
-    })
-    setModalIsOpenIn(modalContent)
-  }
+      arrayParams: [paramsAction],
+      textContent
+    });
+    setModalIsOpenIn(modalContent);
+  };
 
   return (
     <div className="App">
+      <SidebarShoppingCart
+        isOpen={HandleSideBar}
+        products={cartList}
+        setCartList={setCartList}
+        deleteProductCartlist={deleteProductCartlist}
+        handleModalContent={handleModalContent}
+      />
       <Modal
         isOpenIn={modalIsOpenIn}
         setIsOpenIn={setModalIsOpenIn}
-        action={modalAction}
+        contentProps={modalProps}
       />
-
-      <SidebarShoppingCart isOpen={HandleSideBar} products={cartList} setCartList={setCartList} />
 
       <header className="App-header">
         <i
@@ -111,7 +136,7 @@ function App() {
         <div className="title-description">
           <h2>Calculá tu descuento al instante</h2>
         </div>
-        <form className="functional-app class-handle-save">
+        <form className="functional-app reset-form-class">
           <div className="inputs-box">
             <label htmlFor="original-price">Precio</label>
             <input
@@ -145,7 +170,12 @@ function App() {
               Precio final: ${finalPrice}
             </p>
           </div>
-          <button type="button" onClick={() => handleModalContent("NewProductForm", addProductCartList)}>
+          <button
+            type="button"
+            onClick={() =>
+              handleModalContent("NewProductForm", addProductCartList)
+            }
+          >
             Guardar
           </button>
         </form>

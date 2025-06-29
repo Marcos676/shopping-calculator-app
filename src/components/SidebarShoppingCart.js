@@ -8,7 +8,7 @@ import {
   getTotalDiscount,
 } from "../utils/priceCalculation";
 
-export const SidebarShoppingCart = ({ isOpen, products, setCartList }) => {
+export const SidebarShoppingCart = ({ isOpen, products, setCartList, deleteProductCartlist, handleModalContent }) => {
   const [isOpenDetail, setIsOpenDetail] = useState(false);
 
   const handleDropdownDetail = (id) => {
@@ -74,7 +74,7 @@ export const SidebarShoppingCart = ({ isOpen, products, setCartList }) => {
                   </div>
                   <div className="action-buttons-container">
                     <i className="fa-solid fa-pen"></i>
-                    <i className="fa-solid fa-trash"></i>
+                    <i className="fa-solid fa-trash" onClick={() => handleModalContent("Confirm", deleteProductCartlist, id, `Esta seguro de que quiere borrar el producto: ${name}?`)}></i>
                   </div>
                 </div>
               </div>
@@ -92,7 +92,7 @@ export const SidebarShoppingCart = ({ isOpen, products, setCartList }) => {
               {`Total ahorrado: $ ${getTotalDiscount(products)}`}
             </p>
           </div>
-          <button className="clean-cart" type="button" onClick={()=> setCartList([])}>
+          <button className="clean-cart" type="button" onClick={()=> handleModalContent("Confirm", setCartList, [], "Esta seguro de que quiere borrar el contenido del carrito?")}>
             <i className="fa-solid fa-cart-shopping"></i>
             <i className="fa-solid fa-arrow-left"></i>
             Vaciar
