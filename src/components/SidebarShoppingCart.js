@@ -1,5 +1,4 @@
 import "../styles/SidebarShoppingCart.css";
-import { useState } from "react";
 
 import {
   getDiscount,
@@ -14,6 +13,7 @@ export const SidebarShoppingCart = ({
   setCartList,
   deleteProductCartlist,
   handleModalContent,
+  quantityProducts
 }) => {
 
   const handleDropdownDetail = (id) => {
@@ -105,6 +105,10 @@ export const SidebarShoppingCart = ({
             <p className="">
               <i className="fa-solid fa-tag result-icons"></i>
               {`Total ahorrado: $ ${getTotalDiscount(products)}`}
+            </p>
+            <p className="">
+              <i className="fa-solid fa-cart-shopping result-icons"></i>
+              {`Cantidad de productos: ${quantityProducts}`}
             </p>
           </div>
           <button

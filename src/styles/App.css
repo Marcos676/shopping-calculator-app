@@ -13,6 +13,26 @@
   justify-content: space-between;
   padding: 16px 16px 0 16px;
 }
+.App-header .cart-sidebar-button {
+  position: relative;
+  z-index: 0;
+}
+.App-header .quantity-products-cart {
+  position: absolute;
+  bottom: -10px;
+  left: 10px;
+  background-color: #ff746c;
+  color: #fffefa;
+  padding: 2px;
+  border: 1px solid #fffefa;
+  border-radius: 50%;
+  width: 23px;
+  height: 23px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
 .App-header i {
   font-size: 20px;
 }

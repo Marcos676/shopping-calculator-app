@@ -9,6 +9,7 @@
   transition: all 0.5s ease-in-out;
   box-shadow: 0px 0px 10px grey;
   border-radius: 0px 25px 25px 0px;
+  z-index: 1;
 }
 
 /* Header */
@@ -101,8 +102,12 @@
 }
 
 /* Resumen */
+.sidebar-shopping-cart .total-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
 .sidebar-shopping-cart .total-container .total-price {
-  padding-bottom: 10px;
   font-weight: bold;
 }
 

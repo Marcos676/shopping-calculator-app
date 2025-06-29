@@ -29,3 +29,13 @@ button {
 .text-center {
   text-align: center;
 }
+
+.red-button {
+  background-color: #ff746c;
+  color: #fffefa;
+}
+
+.green-button {
+  background-color: #77dd77;
+  color: #fffefa;
+}

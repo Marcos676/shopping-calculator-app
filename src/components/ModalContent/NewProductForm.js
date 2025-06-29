@@ -13,10 +13,10 @@ export const NewProductForm = ({ setIsOpenIn, addProductCartList }) => {
               onInput={(e) => setName(e.target.value)}
             />
             <div className="modal-box-btns">
-              <button type="button" onClick={() => addProductCartList(name)}>
+              <button className="green-button" type="button" onClick={() => addProductCartList(name)}>
                 Guardar
               </button>
-              <button type="button" onClick={() => setIsOpenIn("")}>
+              <button className="red-button" type="button" onClick={() => setIsOpenIn("")}>
                 Cancelar
               </button>
             </div>

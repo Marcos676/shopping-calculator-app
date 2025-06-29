@@ -1,10 +1,16 @@
-export const Confirm = ({ setIsOpenIn, actionMethod, paramsActionMethod, textContent }) => {
+export const Confirm = ({
+  setIsOpenIn,
+  actionMethod,
+  paramsActionMethod,
+  textContent,
+}) => {
   return (
     <div className="confirm-content text-center">
       <h3>{textContent}</h3>
 
       <div className="modal-box-btns">
         <button
+          className="green-button"
           onClick={() => {
             actionMethod(paramsActionMethod[0]);
             setIsOpenIn("");
@@ -12,7 +18,9 @@ export const Confirm = ({ setIsOpenIn, actionMethod, paramsActionMethod, textCon
         >
           Confirmar
         </button>
-        <button onClick={() => setIsOpenIn("")}>Cancelar</button>
+        <button className="red-button" onClick={() => setIsOpenIn("")}>
+          Cancelar
+        </button>
       </div>
     </div>
   );

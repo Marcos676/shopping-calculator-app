@@ -1,5 +1,5 @@
 import "./styles/App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Modal } from "./components/Modal";
 import { SidebarShoppingCart } from "./components/SidebarShoppingCart";
@@ -18,6 +18,7 @@ function App() {
   const [modalProps, setModalProps] = useState({});
   // Estado de productos guardados en Carrito
   const [cartList, setCartList] = useState([]);
+  const [quantityProducts, setQuantityProducts] = useState(0);
   // Estado de Sidebar
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
 
@@ -43,13 +44,13 @@ function App() {
 
   const handleValues = (price, disc, quant) => {
     //Actualizacion de valores
-    quant = quant === "" ? 1 : quant
+    quant = quant === "" ? 1 : quant;
     setOriginalPrice(price);
     setPorcentDiscount(disc);
-    setQuantity(quant)
-
+    setQuantity(quant);
+    
     //si algun input esta vacío no muestra ningun resultado
-    if (price === "") {
+    if (price === "" || quant === 0 || Number.isNaN(quant)) {
       //si un input esta vacío devuelve un string vacío
       setDiscount("");
       setFinalPrice("");
@@ -58,6 +59,18 @@ function App() {
       setFinalPrice(getFinalPrice(price, disc, quant));
     }
   };
+
+  useEffect(() => {
+    if (cartList.length !== 0) {
+      let totalProducts = cartList.reduce(
+        (acc, product) => acc + product.quantity,
+        0
+      );
+      setQuantityProducts(totalProducts);
+    } else {
+      setQuantityProducts(0);
+    }
+  }, [cartList]);
 
   //recibe el nombre, pone los datos en un objeto dentro de un array, resetea los campos y cierra el modal
   const addProductCartList = (name) => {
@@ -71,7 +84,7 @@ function App() {
     setDiscount("");
     setFinalPrice("");
     setQuantity(1);
-    setModalIsOpenIn("");    
+    setModalIsOpenIn("");
   };
 
   const deleteProductCartlist = (id) => {
@@ -122,6 +135,7 @@ function App() {
         setCartList={setCartList}
         deleteProductCartlist={deleteProductCartlist}
         handleModalContent={handleModalContent}
+        quantityProducts={quantityProducts}
       />
       <Modal
         isOpenIn={modalIsOpenIn}
@@ -130,10 +144,14 @@ function App() {
       />
 
       <header className="App-header">
-        <i
-          className="fa-solid fa-cart-shopping"
+        <div
+          className="cart-sidebar-button"
           onClick={() => HandleSideBar(true)}
-        ></i>
+        >
+          <i className="fa-solid fa-cart-shopping"></i>
+          <div className="quantity-products-cart">{quantityProducts}</div>
+        </div>
+
         <i className="fas fa-info-circle"></i>
       </header>
       <main>
@@ -149,7 +167,13 @@ function App() {
               type="number"
               min={0}
               placeholder="$"
-              onInput={(e) => handleValues(parseFloat(e.target.value), porcentDiscount, quantity)}
+              onInput={(e) =>
+                handleValues(
+                  parseFloat(e.target.value),
+                  porcentDiscount,
+                  quantity
+                )
+              }
             />
           </div>
           <div className="inputs-box">
@@ -161,7 +185,13 @@ function App() {
               min={0}
               max={100}
               placeholder="%"
-              onInput={(e) => handleValues(originalPrice, parseFloat(e.target.value), quantity)}
+              onInput={(e) =>
+                handleValues(
+                  originalPrice,
+                  parseFloat(e.target.value),
+                  quantity
+                )
+              }
             />
           </div>
           <div className="inputs-box">
@@ -172,7 +202,13 @@ function App() {
               type="number"
               min={1}
               placeholder="Unidades"
-              onInput={(e) => handleValues(originalPrice, porcentDiscount, parseFloat(e.target.value))}
+              onInput={(e) =>
+                handleValues(
+                  originalPrice,
+                  porcentDiscount,
+                  parseFloat(e.target.value)
+                )
+              }
             />
           </div>
           <div>
