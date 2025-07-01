@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { handleValues, getDiscount, getFinalPrice } from "../../utils/priceCalculation";
+import { handleValues, getDiscount, getFinalPrice } from "../../utils/handlerPrices";
 
 export const EditProductForm = ({
   setIsOpenIn,
@@ -17,16 +17,6 @@ export const EditProductForm = ({
   const [quantity, setQuantity] = useState(product.quantity);
   const [discount, setDiscount] = useState(getDiscount(product.originalPrice, product.porcentDiscount, product.quantity));
   const [finalPrice, setFinalPrice] = useState(getFinalPrice(product.originalPrice, product.porcentDiscount, product.quantity));
-
- /*  useEffect(() => {
-    handleValues(originalPrice, porcentDiscount, quantity, {
-      setOriginalPrice,
-      setPorcentDiscount,
-      setQuantity,
-      setDiscount,
-      setFinalPrice,
-    });
-  }, []); */
 
   return (
     <form className="reset-form-class">

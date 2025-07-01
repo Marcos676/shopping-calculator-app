@@ -5,7 +5,7 @@ import {
   getFinalPrice,
   getTotalPrice,
   getTotalDiscount,
-} from "../utils/priceCalculation";
+} from "../utils/handlerPrices";
 
 export const SidebarShoppingCart = ({
   isOpen,

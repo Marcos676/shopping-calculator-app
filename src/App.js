@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Modal } from "./components/Modal";
 import { SidebarShoppingCart } from "./components/SidebarShoppingCart";
 
-import { handleValues } from "./utils/priceCalculation";
+import { handleValues } from "./utils/handlerPrices";
 
 function App() {
   // Estados de calculos
