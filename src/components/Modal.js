@@ -1,6 +1,7 @@
 import "../styles/Modal.css";
 import { useEffect, useRef } from "react";
 import { NewProductForm } from "./ModalContent/NewProductForm";
+import { EditProductForm } from "./ModalContent/EditProductForm"
 import { Confirm } from "./ModalContent/Confirm";
 
 export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
@@ -26,6 +27,15 @@ export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
       );
 
       break;
+      case "EditProductForm":
+        content = (
+          <EditProductForm
+          setIsOpenIn={setIsOpenIn}
+          editProductCartList={contentProps.methodAction}
+          utils={contentProps.otherRequires}
+           />
+        )
+        break;
     case "Confirm":
       content = (
         <Confirm

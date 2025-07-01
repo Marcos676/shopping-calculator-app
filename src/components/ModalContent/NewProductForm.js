@@ -9,7 +9,7 @@ export const NewProductForm = ({ setIsOpenIn, addProductCartList }) => {
             <input
               id="name"
               type="text"
-              placeholder="Ej: Galletita, arroz, banana..."
+              placeholder="Ej: Galletita, Arroz, Banana..."
               onInput={(e) => setName(e.target.value)}
             />
             <div className="modal-box-btns">

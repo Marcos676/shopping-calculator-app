@@ -12,8 +12,9 @@ export const SidebarShoppingCart = ({
   products,
   setCartList,
   deleteProductCartlist,
+  editProductCartList,
   handleModalContent,
-  quantityProducts
+  quantityProducts,
 }) => {
 
   const handleDropdownDetail = (id) => {
@@ -78,14 +79,19 @@ export const SidebarShoppingCart = ({
                     </span>
                   </div>
                   <div className="action-buttons-container">
-                    <i className="fa-solid fa-pen"></i>
+                    <i className="fa-solid fa-pen"
+                    onClick={() =>
+                        handleModalContent(
+                          "EditProductForm", editProductCartList, [], "", { product: { id, name, originalPrice, porcentDiscount, quantity } } )
+                      }
+                    ></i>
                     <i
                       className="fa-solid fa-trash"
                       onClick={() =>
                         handleModalContent(
                           "Confirm",
                           deleteProductCartlist,
-                          id,
+                          [id],
                           `Esta seguro de que quiere borrar el producto: ${name}?`
                         )
                       }

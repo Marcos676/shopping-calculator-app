@@ -4,15 +4,16 @@ import { useState, useEffect } from "react";
 import { Modal } from "./components/Modal";
 import { SidebarShoppingCart } from "./components/SidebarShoppingCart";
 
-import { getDiscount, getFinalPrice } from "./utils/priceCalculation";
+import { handleValues } from "./utils/priceCalculation";
 
 function App() {
   // Estados de calculos
   const [originalPrice, setOriginalPrice] = useState("");
   const [porcentDiscount, setPorcentDiscount] = useState("");
+  const [quantity, setQuantity] = useState(1);
   const [discount, setDiscount] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
-  const [quantity, setQuantity] = useState(1);
+
   // Estado de Modal
   const [modalIsOpenIn, setModalIsOpenIn] = useState("");
   const [modalProps, setModalProps] = useState({});
@@ -34,7 +35,7 @@ function App() {
   };
 
   //Resetea formularios segun query pasada como parametro
-  const handleReset = (classForm) => {
+  const handleResetForm = (classForm) => {
     document.querySelectorAll(classForm).forEach((form) => {
       form.reset();
     });
@@ -42,24 +43,7 @@ function App() {
 
   // --------Manejadores
 
-  const handleValues = (price, disc, quant) => {
-    //Actualizacion de valores
-    quant = quant === "" ? 1 : quant;
-    setOriginalPrice(price);
-    setPorcentDiscount(disc);
-    setQuantity(quant);
-    
-    //si algun input esta vacío no muestra ningun resultado
-    if (price === "" || quant === 0 || Number.isNaN(quant)) {
-      //si un input esta vacío devuelve un string vacío
-      setDiscount("");
-      setFinalPrice("");
-    } else {
-      setDiscount(getDiscount(price, disc, quant));
-      setFinalPrice(getFinalPrice(price, disc, quant));
-    }
-  };
-
+  // Actualiza cantidad de productos en el carrito
   useEffect(() => {
     if (cartList.length !== 0) {
       let totalProducts = cartList.reduce(
@@ -78,12 +62,27 @@ function App() {
       ...cartList,
       { id: getId(), name, originalPrice, porcentDiscount, quantity },
     ]);
-    handleReset(".reset-form-class");
+    handleResetForm(".reset-form-class");
     setOriginalPrice("");
     setPorcentDiscount("");
     setDiscount("");
     setFinalPrice("");
     setQuantity(1);
+    setModalIsOpenIn("");
+  };
+
+  const editProductCartList = (updatedData) => {
+    let updatedList = cartList.map((product) =>
+      product.id === updatedData.id ? updatedData : product
+    );
+    setCartList(updatedList);
+
+    handleResetForm(".reset-form-class");
+    setOriginalPrice("");
+    setPorcentDiscount("");
+    setQuantity(1);
+    setDiscount("");
+    setFinalPrice("");
     setModalIsOpenIn("");
   };
 
@@ -108,21 +107,24 @@ function App() {
 
   /*
    handleModalContent Recibe como parametros:
-   modalContent = string que definira el contenido del modal
+   modalContent = string que definira el contenido del modal, se puede apreciar los valores esperados en el Switch del archivo Modal.js
    action = metodo que podra utilizarse como en un evento onClick
-   paramsAction = parametro para el action si hace falta
+   paramsAction = parametro para el action si hace falta, debe recibir un array
    textContent = Texto dinamico, actualmente utilizado en contenido de modal de Confirm
+   otherRequires = debe recibir un objeto literal con lo que se desea incluir
   */
   const handleModalContent = (
     modalContent,
     action,
     paramsAction,
-    textContent
+    textContent,
+    otherRequires
   ) => {
     setModalProps({
       methodAction: action,
-      arrayParams: [paramsAction],
+      arrayParams: paramsAction,
       textContent,
+      otherRequires,
     });
     setModalIsOpenIn(modalContent);
   };
@@ -134,6 +136,7 @@ function App() {
         products={cartList}
         setCartList={setCartList}
         deleteProductCartlist={deleteProductCartlist}
+        editProductCartList={editProductCartList}
         handleModalContent={handleModalContent}
         quantityProducts={quantityProducts}
       />
@@ -159,7 +162,7 @@ function App() {
           <h2>Calculá tu descuento al instante</h2>
         </div>
         <form className="functional-app reset-form-class">
-          <div className="inputs-box">
+          <div>
             <label htmlFor="original-price">Precio</label>
             <input
               id="original-price"
@@ -171,12 +174,19 @@ function App() {
                 handleValues(
                   parseFloat(e.target.value),
                   porcentDiscount,
-                  quantity
+                  quantity,
+                  {
+                    setOriginalPrice,
+                    setPorcentDiscount,
+                    setQuantity,
+                    setDiscount,
+                    setFinalPrice,
+                  }
                 )
               }
             />
           </div>
-          <div className="inputs-box">
+          <div>
             <label htmlFor="porcent-to-discount">Descuento</label>
             <input
               id="porcent-to-discount"
@@ -189,24 +199,39 @@ function App() {
                 handleValues(
                   originalPrice,
                   parseFloat(e.target.value),
-                  quantity
+                  quantity,
+                  {
+                    setOriginalPrice,
+                    setPorcentDiscount,
+                    setQuantity,
+                    setDiscount,
+                    setFinalPrice,
+                  }
                 )
               }
             />
           </div>
-          <div className="inputs-box">
+          <div>
             <label htmlFor="quantity">Cantidad</label>
             <input
               id="quantity"
               className="original-price"
               type="number"
               min={1}
+              value={quantity}
               placeholder="Unidades"
               onInput={(e) =>
                 handleValues(
                   originalPrice,
                   porcentDiscount,
-                  parseFloat(e.target.value)
+                  parseFloat(e.target.value),
+                  {
+                    setOriginalPrice,
+                    setPorcentDiscount,
+                    setQuantity,
+                    setDiscount,
+                    setFinalPrice,
+                  }
                 )
               }
             />

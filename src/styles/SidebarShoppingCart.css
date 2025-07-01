@@ -49,6 +49,7 @@
 .sidebar-shopping-cart .items-list {
   margin-bottom: 7px;
   overflow-y: scroll;
+  scrollbar-width: none;
 }
 .sidebar-shopping-cart .empty-legend {
   text-align: center;
@@ -70,7 +71,7 @@
   justify-content: space-between;
 }
 .sidebar-shopping-cart .fa-caret-right {
-   transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 .sidebar-shopping-cart .dropdown-detail-item {
   height: 0px;
