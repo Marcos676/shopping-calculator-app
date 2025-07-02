@@ -61,16 +61,19 @@ export const SidebarShoppingCart = ({
                   className="name-price-item"
                   onClick={() => handleDropdownDetail(id)}
                 >
+                  <div className="caret-right-name">
+                  <i className="fa-solid fa-caret-right result-icons"></i>
+                  <span>{quantity}</span>
                   <span>
-                    <i className="fa-solid fa-caret-right result-icons"></i>
-                    {` ${quantity} ${name}`}
+                    {`${name}`}
                   </span>
-                  <span>$ {getFinalPrice(originalPrice, porcentDiscount, quantity)}</span>
+                  </div>
+                  <span className="product-final-price">${getFinalPrice(originalPrice, porcentDiscount, quantity)}</span>
                 </div>
                 <div className={`dropdown-detail-item`}>
                   <div className="detail-item">
                     <span>{`Precio original: $ ${originalPrice}`} </span>
-                    <span> {`Descuento: ${porcentDiscount}%`} </span>
+                    <span> {`Descuento: ${porcentDiscount} %`} </span>
                     <span>
                       {`Ahorro: $ ${getDiscount(
                         originalPrice,

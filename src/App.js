@@ -60,18 +60,28 @@ function App() {
   const addProductCartList = (name) => {
     setCartList([
       ...cartList,
-      { id: getId(), name, originalPrice, porcentDiscount, quantity },
+      {
+        id: getId(),
+        name,
+        originalPrice,
+        porcentDiscount: porcentDiscount === "" ? 0 : porcentDiscount,
+        quantity: quantity === "" ? 1 : quantity,
+      },
     ]);
+
     handleResetForm(".reset-form-class");
     setOriginalPrice("");
     setPorcentDiscount("");
+    setQuantity(1);
     setDiscount("");
     setFinalPrice("");
-    setQuantity(1);
     setModalIsOpenIn("");
   };
 
   const editProductCartList = (updatedData) => {
+    updatedData.porcentDiscount = updatedData.porcentDiscount === "" ? 0 : updatedData.porcentDiscount;
+    updatedData.quantity = updatedData.quantity === "" ? 1 : updatedData.quantity
+
     let updatedList = cartList.map((product) =>
       product.id === updatedData.id ? updatedData : product
     );

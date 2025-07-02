@@ -41,18 +41,26 @@ const handleValues = (
   }
 ) => {
   //Actualizacion de valores
-  quant = quant === "" ? 1 : quant;
-  disc = disc === "" || Number.isNaN(disc) ? 0 : disc;
+  price = Number.isNaN(price) ? "" : price;
+  disc = Number.isNaN(disc) ? "" : disc;
+  quant = Number.isNaN(quant) ? "" : quant;
+
   setOriginalPrice(price);
   setPorcentDiscount(disc);
   setQuantity(quant);
 
-  //si algun input esta vacío no muestra ningun resultado
-  if (price === "" || Number.isNaN(price) || quant === 0 || Number.isNaN(quant)) {
+  //si algun input esta vacío no muestra ningun resultado o no es un número
+  if (
+    price === "" ||
+    quant === 0 || quant === ""
+  ) {
     //si un input esta vacío devuelve un string vacío
     setDiscount("");
     setFinalPrice("");
   } else {
+    disc = disc === "" ? 0 : disc;
+    quant = quant === "" ? 1 : quant;
+
     setDiscount(getDiscount(price, disc, quant));
     setFinalPrice(getFinalPrice(price, disc, quant));
   }

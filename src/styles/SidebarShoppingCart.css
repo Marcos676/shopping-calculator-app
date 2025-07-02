@@ -69,9 +69,20 @@
   font-weight: bold;
   display: flex;
   justify-content: space-between;
+  text-align: center;
+  gap: 5px;
 }
 .sidebar-shopping-cart .fa-caret-right {
   transition: all 0.3s ease-in-out;
+}
+.sidebar-shopping-cart .caret-right-name {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 5px;
+}
+.sidebar-shopping-cart .product-final-price {
+  align-content: center;
 }
 .sidebar-shopping-cart .dropdown-detail-item {
   height: 0px;
