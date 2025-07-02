@@ -86,13 +86,6 @@ function App() {
       product.id === updatedData.id ? updatedData : product
     );
     setCartList(updatedList);
-
-    handleResetForm(".reset-form-class");
-    setOriginalPrice("");
-    setPorcentDiscount("");
-    setQuantity(1);
-    setDiscount("");
-    setFinalPrice("");
     setModalIsOpenIn("");
   };
 
