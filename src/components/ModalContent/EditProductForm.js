@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { handleValues, getDiscount, getFinalPrice } from "../../utils/handlerPrices";
+import { handleValues, getDiscount, getFinalPrice, formatToCurrency } from "../../utils/handlerPrices";
 
 export const EditProductForm = ({
   setIsOpenIn,
@@ -105,11 +105,11 @@ export const EditProductForm = ({
       <div>
         <p className="discount">
           <i className="fas fa-arrow-right result-icons"></i>
-          Ahorro: $<span className="number-discount">{discount}</span>
+          Ahorro: <span className="number-discount">{formatToCurrency(discount)}</span>
         </p>
         <p className="final-price">
           <i className="fa-solid fa-sack-dollar result-icons"></i>
-          Precio final: ${finalPrice}
+          Precio final: {formatToCurrency(finalPrice)}
         </p>
       </div>
       <div className="modal-box-btns">

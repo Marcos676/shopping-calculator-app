@@ -66,10 +66,13 @@ const handleValues = (
   }
 };
 
+const formatToCurrency = (number) => new Intl.NumberFormat("de-DE", { style: "currency", currency: "USD" }).format(number)
+
 module.exports = {
   getDiscount,
   getFinalPrice,
   getTotalPrice,
   getTotalDiscount,
   handleValues,
+  formatToCurrency
 };

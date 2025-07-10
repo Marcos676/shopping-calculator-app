@@ -5,6 +5,7 @@ import {
   getFinalPrice,
   getTotalPrice,
   getTotalDiscount,
+  formatToCurrency
 } from "../utils/handlerPrices";
 
 export const SidebarShoppingCart = ({
@@ -68,17 +69,17 @@ export const SidebarShoppingCart = ({
                     {`${name}`}
                   </span>
                   </div>
-                  <span className="product-final-price">${getFinalPrice(originalPrice, porcentDiscount, quantity)}</span>
+                  <span className="product-final-price">{formatToCurrency(getFinalPrice(originalPrice, porcentDiscount, quantity))}</span>
                 </div>
                 <div className={`dropdown-detail-item`}>
                   <div className="detail-item">
-                    <span>{`Precio original: $ ${originalPrice}`} </span>
+                    <span>{`Precio original: ${formatToCurrency(originalPrice)}`} </span>
                     <span> {`Descuento: ${porcentDiscount} %`} </span>
                     <span>
-                      {`Ahorro: $ ${getDiscount(
+                      {`Ahorro: ${formatToCurrency(getDiscount(
                         originalPrice,
                         porcentDiscount, quantity
-                      )}`}
+                      ))}`}
                     </span>
                   </div>
                   <div className="action-buttons-container">
@@ -109,11 +110,11 @@ export const SidebarShoppingCart = ({
           <div className="total-container">
             <p className="total-price">
               <i className="fa-solid fa-sack-dollar result-icons"></i>{" "}
-              {`Total a pagar: $ ${getTotalPrice(products)}`}
+              {`Total a pagar: ${formatToCurrency(getTotalPrice(products))}`}
             </p>
             <p className="">
               <i className="fa-solid fa-tag result-icons"></i>
-              {`Total ahorrado: $ ${getTotalDiscount(products)}`}
+              {`Total ahorrado: ${formatToCurrency(getTotalDiscount(products))}`}
             </p>
             <p className="">
               <i className="fa-solid fa-cart-shopping result-icons"></i>
