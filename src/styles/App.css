@@ -5,6 +5,35 @@
   position: relative;
 }
 
+/* Toast */
+.toast {
+  position: fixed;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fffefa;
+  color: #77dd77;
+  padding: 5px 9px;
+  border-radius: 12px;
+  border: 1px solid #77dd77;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: bolder;
+  text-align: center;
+  opacity: 0;
+  animation: fade-in-out 3s ease-in-out forwards;
+}
+.toast .fa-cart-shopping, .toast .fa-circle-check {
+    color: #77dd77;
+    font-size: 14px;
+}
+
+@keyframes fade-in-out {
+  0%, 80%   { opacity: 0; }
+  10%, 70%  { opacity: 1; }
+  100%      { opacity: 0; }
+}
+
 /* Header */
 .App-header {
   width: 100%;

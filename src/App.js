@@ -31,14 +31,10 @@ function App() {
   const [isMounted, setIsMounted] = useState(false);
 
   // Se ejecuta solo durante el primer montaje y si existe una cookie
-  if (
-    !isMounted &&
-    typeof cookies["userCookies"] !== "undefined"
-  ) {
+  if (!isMounted && typeof cookies["userCookies"] !== "undefined") {
     setCartList(cookies["userCookies"].cartList);
   }
   !isMounted && setIsMounted(true);
-
 
   // ------ Funciones útiles
   //Obtiene ID
@@ -114,7 +110,9 @@ function App() {
       return product.id !== id;
     });
     setCartList(updatedList);
-    updatedList.length === 0 ? removeCookie("userCookies") : setCookie("userCookies", { cartList: updatedList }, { path: "/" });
+    updatedList.length === 0
+      ? removeCookie("userCookies")
+      : setCookie("userCookies", { cartList: updatedList }, { path: "/" });
   };
 
   const cleanCartList = (cleanedArray) => {
@@ -175,7 +173,9 @@ function App() {
         setIsOpenIn={setModalIsOpenIn}
         contentProps={modalProps}
       />
-      
+      {/* Toast */}
+      <div className="toast"><i class="fa-solid fa-circle-check"></i> Agregado al <i className="fa-solid fa-cart-shopping"></i></div>
+      {/* -------- */}
       <header className="App-header">
         <div
           className="cart-sidebar-button"
@@ -269,7 +269,10 @@ function App() {
           <div>
             <p className="discount">
               <i className="fas fa-arrow-right result-icons"></i>
-              Ahorro: <span className="number-discount">{formatToCurrency(discount)}</span>
+              Ahorro:{" "}
+              <span className="number-discount">
+                {formatToCurrency(discount)}
+              </span>
             </p>
             <p className="final-price">
               <i className="fa-solid fa-sack-dollar result-icons"></i>
