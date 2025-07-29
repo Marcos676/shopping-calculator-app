@@ -46,6 +46,16 @@ function App() {
     }
   };
 
+  // Mostrar Toast (mensaje de agregado de producto exitoso)
+  function showToast(message) {
+  const toast = document.querySelector('.toast');
+  toast.innerHTML = message;
+  toast.classList.add('show');
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
   //Resetea formularios segun query pasada como parametro
   const handleResetForm = (classForm) => {
     document.querySelectorAll(classForm).forEach((form) => {
@@ -81,6 +91,8 @@ function App() {
     ];
     setCartList(updatedList);
     setCookie("userCookies", { cartList: updatedList }, { path: "/" });
+
+    showToast(`<i class="fa-solid fa-circle-check"></i> Agregado al <i class="fa-solid fa-cart-shopping"></i>`)
 
     handleResetForm(".reset-form-class");
     setOriginalPrice("");

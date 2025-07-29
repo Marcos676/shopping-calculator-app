@@ -16,22 +16,34 @@
   padding: 5px 9px;
   border-radius: 12px;
   border: 1px solid #77dd77;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: bolder;
   text-align: center;
+  pointer-events: none;
+  z-index: 2;
   opacity: 0;
-  animation: fade-in-out 3s ease-in-out forwards;
 }
-.toast .fa-cart-shopping, .toast .fa-circle-check {
-    color: #77dd77;
-    font-size: 14px;
+.toast .fa-cart-shopping,
+.toast .fa-circle-check {
+  color: #77dd77;
+  font-size: 14px;
 }
-
-@keyframes fade-in-out {
-  0%, 80%   { opacity: 0; }
-  10%, 70%  { opacity: 1; }
-  100%      { opacity: 0; }
+@keyframes toast-in-out {
+  0%,
+  85% {
+    opacity: 0;
+  }
+  10%,
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.toast.show {
+  animation: toast-in-out 3s ease-in-out forwards;
 }
 
 /* Header */
