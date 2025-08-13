@@ -30,13 +30,13 @@ function App() {
   const [cookies, setCookie, removeCookie] = useCookies(["userCookies"]);
   const [isMounted, setIsMounted] = useState(false);
 
-  // Se ejecuta solo durante el primer montaje y si existe una cookie
+  //  Carga el carrito guardado en la cookie. Se ejecuta solo durante el primer montaje y si existe una cookie
   if (!isMounted && typeof cookies["userCookies"] !== "undefined") {
     setCartList(cookies["userCookies"].cartList);
   }
   !isMounted && setIsMounted(true);
 
-  // ------ Funciones útiles
+  // ----- Funciones útiles
   //Obtiene ID
   const getId = () => {
     if (cartList.length === 0) {
@@ -94,6 +94,7 @@ function App() {
     }
   }, [cartList]);
 
+  // ----- CRUD  de productos -----
   //recibe el nombre, pone los datos en un objeto dentro de un array, resetea los campos y cierra el modal
   const addProductCartList = (name) => {
     const updatedList = [
@@ -153,6 +154,7 @@ function App() {
     showOverlay(true, "Carrito vaciado!")
   };
 
+  // ----- Maneja la apertura y cierre del carrito -----
   const HandleSideBar = (show) => {
     setIsOpenSidebar(show ? true : false);
 
@@ -165,6 +167,7 @@ function App() {
     }
   };
 
+  // ----- Maneja el contenido del modal y estructura los datos -----
   /*
    handleModalContent Recibe como parametros:
    modalContent = string que definira el contenido del modal, se puede apreciar los valores esperados en el Switch del archivo Modal.js
@@ -216,7 +219,6 @@ function App() {
         <div className="text" id="overlayText">
         </div>
       </div>
-
       {/* -------- */}
       <header className="App-header">
         <div
@@ -226,7 +228,6 @@ function App() {
           <i className="fa-solid fa-cart-shopping"></i>
           <div className="quantity-products-cart">{quantityProducts}</div>
         </div>
-
         <i className="fas fa-info-circle"></i>
       </header>
       <main>
