@@ -148,8 +148,8 @@ function App() {
       : setCookie("userCookies", { cartList: updatedList }, { path: "/" });
   };
 
-  const cleanCartList = (cleanedArray) => {
-    setCartList(cleanedArray);
+  const cleanCartList = () => {
+    setCartList([]);
     removeCookie("userCookies");
     showOverlay(true, "Carrito vaciado!")
   };

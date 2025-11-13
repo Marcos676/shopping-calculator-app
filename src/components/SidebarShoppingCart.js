@@ -128,7 +128,7 @@ export const SidebarShoppingCart = ({
               handleModalContent(
                 "Confirm",
                 cleanCartList,
-                [[]],
+                [],
                 "Esta seguro de que quiere borrar el contenido del carrito?"
               )
             }
