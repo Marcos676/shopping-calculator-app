@@ -41,15 +41,12 @@ export const SidebarShoppingCart = ({
   return (
     <div className="sidebar-shopping-cart">
       <header className="sidebar-shopping-cart-header">
-        <div className="header-row-container">
           <i className="fa-solid fa-cart-shopping cart-shopping-class "></i>
           <h2>Carrito de compras</h2>
           <i
             className="fa-solid fa-xmark xmark-class"
             onClick={() => isOpen(false)}
           ></i>
-        </div>
-        <i className="fas fa-info-circle info-circle-class"></i>
       </header>
       <div className="cart-content">
         <div className="items-list">

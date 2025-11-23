@@ -16,25 +16,20 @@
 .sidebar-shopping-cart-header {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  width: 100%;
-}
-.sidebar-shopping-cart-header .header-row-container {
-  display: flex;
   justify-content: space-between;
   width: 100%;
   align-items: center;
+  margin-bottom: 12px;
 }
 
-.header-row-container .cart-shopping-class {
+.sidebar-shopping-cart-header h2 {
+  padding: 0 12px;
+}
+.sidebar-shopping-cart-header .cart-shopping-class {
   font-size: 20px;
 }
-.header-row-container .xmark-class {
+.sidebar-shopping-cart-header .xmark-class {
   font-size: 21px;
-}
-.sidebar-shopping-cart-header .info-circle-class {
-  padding: 16px;
-  font-size: 20px;
 }
 
 /* Items List */

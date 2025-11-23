@@ -116,8 +116,11 @@
   align-items: center;
   font-size: 12px;
 }
-.App-header i {
+.App-header .fa-cart-shopping {
   font-size: 20px;
+}
+.App-header .fa-circle-user {
+  font-size: 23px;
 }
 
 /* Main */

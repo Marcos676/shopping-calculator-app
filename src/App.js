@@ -232,7 +232,7 @@ function App() {
           <i className="fa-solid fa-cart-shopping"></i>
           <div className="quantity-products-cart">{quantityProducts}</div>
         </div>
-        <i className="fas fa-info-circle"></i>
+        <div><i className="fa-solid fa-circle-user"></i></div>
       </header>
       <main>
         <div className="title-description">
