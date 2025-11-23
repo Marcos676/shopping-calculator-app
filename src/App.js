@@ -6,6 +6,11 @@ import { Modal } from "./components/Modal";
 import { SidebarShoppingCart } from "./components/SidebarShoppingCart";
 
 import { handleValues, formatToCurrency } from "./utils/handlerPrices";
+import {
+  originalPriceValidation,
+  porcentDiscountValidation,
+  quantityValidation,
+} from "./validations/productValidation";
 
 function App() {
   // Estados de calculos
@@ -59,12 +64,12 @@ function App() {
   }
 
   //Activa overlay para el mensaje de vaciado de carrito exitoso
-  function showOverlay(success, message) {
+  function showOverlay(simbol, message) {
     const overlay = document.getElementById("overlayFeedback");
     const iconEl = document.getElementById("overlayIcon");
     const textEl = document.getElementById("overlayText");
 
-    iconEl.textContent = success ? "✓" : "✕";
+    iconEl.textContent = simbol;
     textEl.textContent = message;
     overlay.classList.add("show");
 
@@ -151,7 +156,7 @@ function App() {
   const cleanCartList = () => {
     setCartList([]);
     removeCookie("userCookies");
-    showOverlay(true, "Carrito vaciado!")
+    showOverlay("✓", "Carrito vaciado!");
   };
 
   // ----- Maneja la apertura y cierre del carrito -----
@@ -203,6 +208,7 @@ function App() {
         editProductCartList={editProductCartList}
         handleModalContent={handleModalContent}
         quantityProducts={quantityProducts}
+        showOverlay={showOverlay}
       />
       <Modal
         isOpenIn={modalIsOpenIn}
@@ -214,10 +220,8 @@ function App() {
       {/* -------- */}
       {/* Overlay */}
       <div id="overlayFeedback" className="overlay-feedback">
-        <div className="icon" id="overlayIcon">
-        </div>
-        <div className="text" id="overlayText">
-        </div>
+        <div className="icon" id="overlayIcon"></div>
+        <div className="text" id="overlayText"></div>
       </div>
       {/* -------- */}
       <header className="App-header">
@@ -243,7 +247,7 @@ function App() {
               type="number"
               min={0}
               placeholder="$"
-              onInput={(e) =>
+              onInput={(e) => {
                 handleValues(
                   parseFloat(e.target.value),
                   porcentDiscount,
@@ -255,20 +259,25 @@ function App() {
                     setDiscount,
                     setFinalPrice,
                   }
-                )
-              }
+                );
+                originalPriceValidation(
+                  e.target,
+                  ".error-message-original-price"
+                );
+              }}
             />
+            <p className="err-message error-message-original-price"></p>
           </div>
           <div>
-            <label htmlFor="porcent-to-discount">Descuento</label>
+            <label htmlFor="porcent-to-discount">Descuento %</label>
             <input
               id="porcent-to-discount"
               className="porcent-to-discount"
               type="number"
               min={0}
               max={100}
-              placeholder="%"
-              onInput={(e) =>
+              placeholder="0"
+              onInput={(e) => {
                 handleValues(
                   originalPrice,
                   parseFloat(e.target.value),
@@ -280,9 +289,14 @@ function App() {
                     setDiscount,
                     setFinalPrice,
                   }
-                )
-              }
+                );
+                porcentDiscountValidation(
+                  e.target,
+                  ".error-message-porcent-to-discount"
+                );
+              }}
             />
+            <p className="err-message error-message-porcent-to-discount"></p>
           </div>
           <div>
             <label htmlFor="quantity">Cantidad</label>
@@ -291,9 +305,8 @@ function App() {
               className="original-price"
               type="number"
               min={1}
-              value={quantity}
-              placeholder="Unidades"
-              onInput={(e) =>
+              placeholder="1"
+              onInput={(e) => {
                 handleValues(
                   originalPrice,
                   porcentDiscount,
@@ -305,9 +318,14 @@ function App() {
                     setDiscount,
                     setFinalPrice,
                   }
-                )
-              }
+                );
+                quantityValidation(
+                  e.target,
+                  ".error-message-quantity"
+                );
+              }}
             />
+            <p className="err-message error-message-quantity"></p>
           </div>
           <div>
             <p className="discount">
@@ -324,9 +342,30 @@ function App() {
           </div>
           <button
             type="button"
-            onClick={() =>
-              handleModalContent("NewProductForm", addProductCartList)
-            }
+            onClick={() => {
+              let inputOrigPrice = document.querySelector("#original-price");
+              let inputDiscount = document.querySelector(
+                "#porcent-to-discount"
+              );
+              let inputQuantity = document.querySelector("#quantity");
+              let passValidation = [
+                originalPriceValidation(
+                  inputOrigPrice,
+                  ".error-message-original-price"
+                ),
+                porcentDiscountValidation(
+                  inputDiscount,
+                  ".error-message-porcent-to-discount"
+                ),
+                quantityValidation(
+                  inputQuantity,
+                  ".error-message-quantity"
+                )
+              ];
+              if (!passValidation.includes(false)) {
+                handleModalContent("NewProductForm", addProductCartList);
+              }
+            }}
           >
             Guardar
           </button>

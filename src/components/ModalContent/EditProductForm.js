@@ -1,22 +1,43 @@
 import { useState } from "react";
-import { handleValues, getDiscount, getFinalPrice, formatToCurrency } from "../../utils/handlerPrices";
+import {
+  handleValues,
+  getDiscount,
+  getFinalPrice,
+  formatToCurrency,
+} from "../../utils/handlerPrices";
+import {
+  nameProductValidation,
+  originalPriceValidation,
+  porcentDiscountValidation,
+  quantityValidation,
+} from "../../validations/productValidation";
 
 export const EditProductForm = ({
   setIsOpenIn,
   editProductCartList,
-  utils
+  utils,
 }) => {
-  const { product } = utils
+  const { product } = utils;
   const [name, setName] = useState(product.name);
-  const [originalPrice, setOriginalPrice] = useState(
-    product.originalPrice
-  );
+  const [originalPrice, setOriginalPrice] = useState(product.originalPrice);
   const [porcentDiscount, setPorcentDiscount] = useState(
     product.porcentDiscount
   );
   const [quantity, setQuantity] = useState(product.quantity);
-  const [discount, setDiscount] = useState(getDiscount(product.originalPrice, product.porcentDiscount, product.quantity));
-  const [finalPrice, setFinalPrice] = useState(getFinalPrice(product.originalPrice, product.porcentDiscount, product.quantity));
+  const [discount, setDiscount] = useState(
+    getDiscount(
+      product.originalPrice,
+      product.porcentDiscount,
+      product.quantity
+    )
+  );
+  const [finalPrice, setFinalPrice] = useState(
+    getFinalPrice(
+      product.originalPrice,
+      product.porcentDiscount,
+      product.quantity
+    )
+  );
 
   return (
     <form className="reset-form-class">
@@ -28,8 +49,12 @@ export const EditProductForm = ({
           type="text"
           placeholder="Ej: Galletita, Arroz, Banana..."
           value={name}
-          onInput={(e) => setName(e.target.value)}
+          onInput={(e) => {
+            setName(e.target.value);
+            nameProductValidation(e.target, ".error-message-name");
+          }}
         />
+        <p className="err-message error-message-name"></p>
       </div>
       <div>
         <label htmlFor="original-price">Precio</label>
@@ -40,7 +65,7 @@ export const EditProductForm = ({
           min={0}
           placeholder="$"
           value={originalPrice}
-          onInput={(e) =>
+          onInput={(e) => {
             handleValues(
               parseFloat(e.target.value),
               porcentDiscount,
@@ -52,30 +77,37 @@ export const EditProductForm = ({
                 setDiscount,
                 setFinalPrice,
               }
-            )
-          }
+            );
+            originalPriceValidation(e.target, ".error-message-original-price");
+          }}
         />
+        <p className="err-message error-message-original-price"></p>
       </div>
       <div>
-        <label htmlFor="porcent-to-discount">Descuento</label>
+        <label htmlFor="porcent-to-discount">Descuento %</label>
         <input
           id="porcent-to-discount"
           className="porcent-to-discount"
           type="number"
           min={0}
           max={100}
-          placeholder="%"
+          placeholder="0"
           value={porcentDiscount}
-          onInput={(e) =>
+          onInput={(e) => {
             handleValues(originalPrice, parseFloat(e.target.value), quantity, {
               setOriginalPrice,
               setPorcentDiscount,
               setQuantity,
               setDiscount,
               setFinalPrice,
-            })
-          }
+            });
+            porcentDiscountValidation(
+              e.target,
+              ".error-message-porcent-to-discount"
+            );
+          }}
         />
+        <p className="err-message error-message-porcent-to-discount"></p>
       </div>
       <div>
         <label htmlFor="quantity">Cantidad</label>
@@ -84,9 +116,9 @@ export const EditProductForm = ({
           className="original-price"
           type="number"
           min={1}
-          placeholder="Unidades"
+          placeholder="1"
           value={quantity}
-          onInput={(e) =>
+          onInput={(e) => {
             handleValues(
               originalPrice,
               porcentDiscount,
@@ -98,14 +130,17 @@ export const EditProductForm = ({
                 setDiscount,
                 setFinalPrice,
               }
-            )
-          }
+            );
+            quantityValidation(e.target, ".error-message-quantity");
+          }}
         />
+        <p className="err-message error-message-quantity"></p>
       </div>
       <div>
         <p className="discount">
           <i className="fas fa-arrow-right result-icons"></i>
-          Ahorro: <span className="number-discount">{formatToCurrency(discount)}</span>
+          Ahorro:{" "}
+          <span className="number-discount">{formatToCurrency(discount)}</span>
         </p>
         <p className="final-price">
           <i className="fa-solid fa-sack-dollar result-icons"></i>
@@ -116,15 +151,33 @@ export const EditProductForm = ({
         <button
           className="green-button"
           type="button"
-          onClick={() =>
-            editProductCartList({
+          onClick={() => {
+            let inputName = document.querySelector("#name");
+            let inputOrigPrice = document.querySelector("#original-price");
+            let inputDiscount = document.querySelector("#porcent-to-discount");
+            let inputQuantity = document.querySelector("#quantity");
+            let passValidation = [
+              nameProductValidation(inputName, ".error-message-name"),
+              originalPriceValidation(
+                inputOrigPrice,
+                ".error-message-original-price"
+              ),
+              porcentDiscountValidation(
+                inputDiscount,
+                ".error-message-porcent-to-discount"
+              ),
+              quantityValidation(inputQuantity, ".error-message-quantity"),
+            ];
+            if (!passValidation.includes(false)) {
+              editProductCartList({
               id: product.id,
               name,
               originalPrice,
               porcentDiscount,
               quantity,
-            })
-          }
+            });
+            }
+          }}
         >
           Guardar
         </button>

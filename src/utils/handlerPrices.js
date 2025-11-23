@@ -51,8 +51,8 @@ const handleValues = (
 
   //si algun input esta vacío no muestra ningun resultado o no es un número
   if (
-    price === "" ||
-    quant === 0 || quant === ""
+    price === "" || price <= 0 || disc < 0 || disc > 100 ||
+    quant <= 0
   ) {
     //si un input esta vacío devuelve un string vacío
     setDiscount("");

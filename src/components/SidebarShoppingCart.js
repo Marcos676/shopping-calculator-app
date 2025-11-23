@@ -16,6 +16,7 @@ export const SidebarShoppingCart = ({
   editProductCartList,
   handleModalContent,
   quantityProducts,
+  showOverlay
 }) => {
 
   const handleDropdownDetail = (id) => {
@@ -124,14 +125,19 @@ export const SidebarShoppingCart = ({
           <button
             className="clean-cart"
             type="button"
-            onClick={() =>
-              handleModalContent(
+            onClick={() => {
+              if (products.length === 0) {
+                showOverlay("!", "El carrito ya está vacío")
+              } else {
+                handleModalContent(
                 "Confirm",
                 cleanCartList,
                 [],
                 "Esta seguro de que quiere borrar el contenido del carrito?"
               )
-            }
+              }
+              
+            }}
           >
             <i className="fa-solid fa-cart-shopping"></i>
             <i className="fa-solid fa-arrow-left"></i>

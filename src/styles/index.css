@@ -13,7 +13,7 @@ label {
 input,
 button {
   height: 48px;
-  border: 0;
+  border: 1px, solid, transparent;
   border-radius: 12px;
   padding: 5px;
   font-size: 20px;
@@ -38,4 +38,16 @@ button {
 .green-button {
   background-color: #77dd77;
   color: #fffefa;
+}
+
+.err-message {
+  color: #ff746c;
+  margin-top: 2px;
+  margin-bottom: 5px;
+}
+.isValid {
+  border-color: #77dd77;
+}
+.isInvalid {
+  border-color: #ff746c;
 }
