@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { NewProductForm } from "./ModalContent/NewProductForm";
 import { EditProductForm } from "./ModalContent/EditProductForm"
 import { Confirm } from "./ModalContent/Confirm";
+import { LoginRegisterUser } from "./ModalContent/LoginRegisterUser";
 
 export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
   /* Mueve el modal de creacion de producto hacia arriba de la pantalla para que en mobile, el teclado no tape los botones. Esto hace que el usuario no tenga que cerrar el teclado para realizar la interaccion final en el formulario. */
@@ -18,6 +19,13 @@ export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
 
   let content;
   switch (isOpenIn) {
+    case "LoginUserForm":
+      content = (
+        <LoginRegisterUser
+          setIsOpenIn={setIsOpenIn}
+        />
+      );
+    break;
     case "NewProductForm":
       content = (
         <NewProductForm
@@ -25,7 +33,6 @@ export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
           addProductCartList={contentProps.methodAction}
         />
       );
-
       break;
       case "EditProductForm":
         content = (
@@ -49,7 +56,6 @@ export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
     default:
       return;
   }
-
   return (
     <div className="modal-background">
       <div ref={refModalContent} className="modal-content">

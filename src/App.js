@@ -232,7 +232,12 @@ function App() {
           <i className="fa-solid fa-cart-shopping"></i>
           <div className="quantity-products-cart">{quantityProducts}</div>
         </div>
-        <div><i className="fa-solid fa-circle-user"></i></div>
+        <div>
+          <i
+            className="fa-solid fa-circle-user"
+            onClick={() => handleModalContent("LoginUserForm")}
+          ></i>
+        </div>
       </header>
       <main>
         <div className="title-description">
@@ -319,10 +324,7 @@ function App() {
                     setFinalPrice,
                   }
                 );
-                quantityValidation(
-                  e.target,
-                  ".error-message-quantity"
-                );
+                quantityValidation(e.target, ".error-message-quantity");
               }}
             />
             <p className="err-message error-message-quantity"></p>
@@ -357,10 +359,7 @@ function App() {
                   inputDiscount,
                   ".error-message-porcent-to-discount"
                 ),
-                quantityValidation(
-                  inputQuantity,
-                  ".error-message-quantity"
-                )
+                quantityValidation(inputQuantity, ".error-message-quantity"),
               ];
               if (!passValidation.includes(false)) {
                 handleModalContent("NewProductForm", addProductCartList);

@@ -16,3 +16,17 @@
     border-radius: 25px;   
     padding: 20px;
 }
+
+/* Estilos de modal LoginRegisterUser */
+
+.login-register-user-container .btn-container {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+.login-register-user-container .btn-container .btn{
+  background-color: #fff3b0;
+  padding: 10px 13px;
+  border-radius: 12px;
+}
+
