@@ -6,9 +6,8 @@ import userRouter from './routes/usersRouter.js';
 import ticketRouter from './routes/ticketsRouter.js'
 
 /* Para que la api pueda comunicarse con otra aplicacion
- (el front) se debe instalar y configurar cors
- npm install cors */
-// import cors from 'cors'
+ (el front) */
+ import cors from 'cors'
 
 dotenv.config();
 
@@ -16,12 +15,12 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Configuracion de cors
-/* const corsOptions = {
+const corsOptions = {
     origin: 'http://localhost:3000',
     credentials: true,
     optionsSuccessStatus: 200,
 };
-app.use(cors(corsOptions)); */
+app.use(cors(corsOptions));
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
