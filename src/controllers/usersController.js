@@ -24,8 +24,6 @@ const userList = async (req, res) => {
             "id",
             "name",
             "product_list",
-            "total_discount",
-            "final_price",
           ],
         },
       ],
@@ -49,7 +47,7 @@ const createUser = async (req, res) => {
       password: passwordHash,
     });
     let user = { id, name, email };
-    const token = jwt.sign(user, process.env.JWT_SECRET_KEY, { expiresIn: "15m" });
+    const token = jwt.sign(user, process.env.JWT_SECRET_KEY, { expiresIn: "12h" });
     return res.json({
       ok: true,
       user,
@@ -72,7 +70,7 @@ const loginUser = async (req, res) => {
       },
     });
     let user = { id, name, email };
-    const token = jwt.sign(user, process.env.JWT_SECRET_KEY, { expiresIn: "15m" });    
+    const token = jwt.sign(user, process.env.JWT_SECRET_KEY, { expiresIn: "12h" });    
     return res.json({
       ok: true,
       user,

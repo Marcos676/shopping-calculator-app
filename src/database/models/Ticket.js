@@ -15,14 +15,6 @@ const Ticket = sequelize.define("ticket", {
     type: DataTypes.JSON,
     allowNull: false,
   },
-  total_discount: {
-    type: DataTypes.DECIMAL,
-    allowNull: false,
-  },
-    final_price: {
-    type: DataTypes.DECIMAL,
-    allowNull: false,
-  },
 user_id: {
     type: DataTypes.INTEGER,
     allowNull: false
