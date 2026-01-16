@@ -3,15 +3,6 @@ import jwt from "jsonwebtoken";
 import { User, Ticket } from "../database/models/index.js";
 import { validationResult } from "express-validator";
 
-function sendError(valError, res) {
-  let errors = valError;
-  if (!errors.isEmpty()) {
-    return res.json({
-      errors: errors.mapped(),
-    });
-  }
-}
-
 const userList = async (req, res) => {
   try {
     const users = await User.findAll({
@@ -20,11 +11,7 @@ const userList = async (req, res) => {
         {
           model: Ticket,
           as: "tickets",
-          attributes: [
-            "id",
-            "name",
-            "product_list",
-          ],
+          attributes: ["id", "name", "product_list"],
         },
       ],
     });
@@ -36,7 +23,11 @@ const userList = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-  sendError(validationResult(req), res);
+  if (!validationResult(req).isEmpty()) {
+    return res.json({
+      errors: errors.mapped(),
+    });
+  }
 
   let body = req.body;
   try {
@@ -47,7 +38,9 @@ const createUser = async (req, res) => {
       password: passwordHash,
     });
     let user = { id, name, email };
-    const token = jwt.sign(user, process.env.JWT_SECRET_KEY, { expiresIn: "12h" });
+    const token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
+      expiresIn: "12h",
+    });
     return res.json({
       ok: true,
       user,
@@ -60,7 +53,11 @@ const createUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  sendError(validationResult(req), res);
+  if (!validationResult(req).isEmpty()) {
+    return res.json({
+      errors: errors.mapped(),
+    });
+  }
 
   let body = req.body;
   try {
@@ -70,7 +67,9 @@ const loginUser = async (req, res) => {
       },
     });
     let user = { id, name, email };
-    const token = jwt.sign(user, process.env.JWT_SECRET_KEY, { expiresIn: "12h" });    
+    const token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
+      expiresIn: "12h",
+    });
     return res.json({
       ok: true,
       user,

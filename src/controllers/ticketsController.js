@@ -1,15 +1,6 @@
 import { User, Ticket } from "../database/models/index.js";
 import { validationResult } from "express-validator";
 
-function sendError(valError, res) {
-  let errors = valError;
-  if (!errors.isEmpty()) {
-    return res.json({
-      errors: errors.mapped(),
-    });
-  }
-}
-
 const allTicketsList = async (req, res) => {
   try {
     const lists = await Ticket.findAll({
@@ -39,7 +30,11 @@ const ticketsList = async (req, res) => {
 };
 
 const createTicket = async (req, res) => {
-  sendError(validationResult(req), res);
+  if (!validationResult(req).isEmpty()) {
+    return res.json({
+      errors: errors.mapped(),
+    });
+  }
   let body = req.body;
 
   try {
