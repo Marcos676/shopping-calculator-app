@@ -1,14 +1,60 @@
 import { useState } from "react";
 
-
-
 export const RegisterUserForm = ({ setIsOpenIn }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleRegister = async () => {
+    let formInfo = {
+      name,
+      email,
+      password,
+      confirm: confirmPassword,
+    };
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_API_URL + "users/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formInfo),
+        },
+      );
+      switch (response.status) {
+        case 200:
+          const userData = await response.json();
+          console.log("Form data submitted:", userData);
+          //Manejar guardado de datos de usuario en cookie o sesion, reseteo del formulario y cierre de modal
+          break;
+        case 400:
+          const formErrors = await response.json();
+          console.log("Form data submitted with errors:", formErrors);
+          //Manejo de errores en el formulario
+          
+          break;
+        case 500:
+          const serverError = await response.json();
+          console.log("Server error:", serverError);
+          //Manejo de mensaje de error en el servidor
+          break;
+        default:
+          break;
+      }
+
+      if (!response.ok) {
+        throw new Error("Error en la solicitud");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
-    <form className="reset-form-class">
+    <form className="reset-form-class login-register-form-container">
       <button type="submit" disabled hidden aria-hidden="true"></button>
       <div>
         <label htmlFor="name">Nombre de usuario:</label>
@@ -68,6 +114,7 @@ export const RegisterUserForm = ({ setIsOpenIn }) => {
           className="green-button"
           type="button"
           onClick={() => {
+            handleRegister();
           }}
         >
           Registrarse

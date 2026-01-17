@@ -5,7 +5,7 @@ export const LoginUserForm = ({ setIsOpenIn }) => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   return (
-    <form className="reset-form-class">
+    <form className="reset-form-class login-register-form-container">
       <button type="submit" disabled hidden aria-hidden="true"></button>
       <div>
         <label htmlFor="name">Nombre de usuario o email:</label>
