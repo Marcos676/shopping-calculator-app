@@ -8,7 +8,7 @@ const validations = [
     .withMessage("Se requiere un nombre de usuario"),
   body("name")
     .custom((value) => value.trim().length < 31)
-    .withMessage("Solo puede tener hasta 30 caracteres"), //Menos de 30 caracteres
+    .withMessage("Puede tener hasta 30 caracteres"), //Menos de 30 caracteres
   body("name")
     .custom(async (value) => {
       const user = await User.findOne({ where: { name: value.trim() } });
@@ -33,7 +33,7 @@ const validations = [
       return regExPass.test(value);
     })
     .withMessage(
-      "La contraseña debe tener:\n- Al menos una letra minúscula\n - Al menos una letra mayúscula\n - Al menos un dígito\n - Al menos 8 caracteres"
+      "La contraseña debe tener al menos una letra minúscula, una letra mayúscula, un dígito y al menos 8 caracteres"
     ),
   body("confirm")
     .custom((value, { req }) => value === req.body.password)
