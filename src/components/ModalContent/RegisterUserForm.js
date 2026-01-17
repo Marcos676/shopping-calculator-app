@@ -34,7 +34,35 @@ export const RegisterUserForm = ({ setIsOpenIn }) => {
           const formErrors = await response.json();
           console.log("Form data submitted with errors:", formErrors);
           //Manejo de errores en el formulario
-          
+          if (formErrors.errors.name) {
+            const input = document.querySelector('#name')
+            const boxError = document.querySelector('.error-message-name')
+            input.classList.remove("isValid");
+            input.classList.add("isInvalid");
+            boxError.textContent = formErrors.errors.name.msg;
+          }
+          if (formErrors.errors.email) {
+            const input = document.querySelector('#email')
+            const boxError = document.querySelector('.error-message-email')
+            input.classList.remove("isValid");
+            input.classList.add("isInvalid");
+            boxError.textContent = formErrors.errors.email.msg;
+          }
+          if (formErrors.errors.password) {
+            const input = document.querySelector('#password')
+            const boxError = document.querySelector('.error-message-password')
+            input.classList.remove("isValid");
+            input.classList.add("isInvalid");
+            boxError.textContent = formErrors.errors.password.msg;
+          }
+          if (formErrors.errors.confirm) {
+            const input = document.querySelector('#confirmPassword')
+            const boxError = document.querySelector('.error-message-confirm-password')
+            input.classList.remove("isValid");
+            input.classList.add("isInvalid");
+            boxError.textContent = formErrors.errors.confirm.msg;
+          }
+
           break;
         case 500:
           const serverError = await response.json();
