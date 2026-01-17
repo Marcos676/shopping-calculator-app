@@ -15,7 +15,7 @@ const userList = async (req, res) => {
         },
       ],
     });
-    res.json(users);
+    res.status(200).json(users);
   } catch (error) {
     console.error("Error al obtener usuarios:", error);
     res.status(500).json({ error: "Error al obtener usuarios" });
@@ -24,8 +24,8 @@ const userList = async (req, res) => {
 
 const createUser = async (req, res) => {
   if (!validationResult(req).isEmpty()) {
-    return res.json({
-      errors: errors.mapped(),
+    return res.status(400).json({
+      errors: validationResult(req).mapped(),
     });
   }
 
@@ -41,7 +41,7 @@ const createUser = async (req, res) => {
     const token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
       expiresIn: "12h",
     });
-    return res.json({
+    return res.status(200).json({
       ok: true,
       user,
       token,
@@ -54,8 +54,8 @@ const createUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   if (!validationResult(req).isEmpty()) {
-    return res.json({
-      errors: errors.mapped(),
+    return res.status(400).json({
+      errors: validationResult(req).mapped(),
     });
   }
 
@@ -70,7 +70,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
       expiresIn: "12h",
     });
-    return res.json({
+    return res.status(200).json({
       ok: true,
       user,
       token,
