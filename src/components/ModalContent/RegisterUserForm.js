@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { nameUserValidation } from "../../validations/registerUserValidation";
 
 export const RegisterUserForm = ({ setIsOpenIn }) => {
   const [name, setName] = useState("");
@@ -95,7 +96,7 @@ export const RegisterUserForm = ({ setIsOpenIn }) => {
           placeholder=""
           onInput={(e) => {
             setName(e.target.value);
-            //nameProductValidation(e.target, ".error-message-name");
+            nameUserValidation(e.target, ".error-message-name");
           }}
         />
         <p className="err-message error-message-name"></p>
