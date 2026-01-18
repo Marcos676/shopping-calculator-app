@@ -2,6 +2,7 @@ import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import { User, Ticket } from "../database/models/index.js";
 import { validationResult } from "express-validator";
+import { where } from "sequelize";
 
 const userList = async (req, res) => {
   try {
@@ -19,6 +20,22 @@ const userList = async (req, res) => {
   } catch (error) {
     console.error("Error al obtener usuarios:", error);
     res.status(500).json({ error: "Error al obtener usuarios" });
+  }
+};
+
+const userNameCheck = async (req, res) => {
+  try {
+    const response = await User.findOne({
+      attributes: ["name"],
+      where: { name: req.params.userName },
+    });
+    // Si no encuentra ningun usuario devuelve null
+
+    res.status(200).json({ ok: true, finded: response ? true : false });
+
+  } catch (error) {
+    console.error("Error al buscar usuario:", error);
+    res.status(500).json({ error: "Error al buscar usuario" });
   }
 };
 
@@ -81,4 +98,4 @@ const loginUser = async (req, res) => {
   }
 };
 
-export { userList, createUser, loginUser };
+export { userList, createUser, loginUser, userNameCheck };
