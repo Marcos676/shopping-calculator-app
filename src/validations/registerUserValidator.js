@@ -26,7 +26,7 @@ const validations = [
         throw new Error("Error en la busqueda de usuario");
       }
     })
-    .withMessage("Este email ya existe"),
+    .withMessage("Este email ya está registrado"),
   body("password")
     .custom((value) => {
       let regExPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/; // Condiciones de la expresion: al menos una letra minúscula - al menos una letra mayúscula - al menos un dígito - al menos 8 caracteres
@@ -35,6 +35,7 @@ const validations = [
     .withMessage(
       "La contraseña debe tener al menos una letra minúscula, una letra mayúscula, un dígito y al menos 8 caracteres"
     ),
+  check("confirm").notEmpty().withMessage("Se requiere que repita la contraseña"),
   body("confirm")
     .custom((value, { req }) => value === req.body.password)
     .withMessage("Las contraseñas no coinciden"),
