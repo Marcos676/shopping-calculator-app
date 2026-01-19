@@ -17,7 +17,7 @@ function toggleClass(box, add, remove) {
 const nameValidation = async (input, boxMessageError) => {
   
   const boxError = document.querySelector(boxMessageError);
-  const valueInput = input.value.trim();
+  const valueInput = input.value.trim()
 
   if (valueInput !== "" && valueInput.length <= 30) {
     try {

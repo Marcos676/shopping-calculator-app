@@ -119,7 +119,10 @@ export const RegisterUserForm = ({ setIsOpenIn }) => {
           placeholder=""
           onInput={(e) => {
             setName(e.target);
-            nameValidation(e.target.value, ".error-message-name");
+            nameValidation(e.target, ".error-message-name");
+          }}
+          onFocus={(e) => {
+            nameValidation(e.target, ".error-message-name");
           }}
         />
         <p className="err-message error-message-name"></p>
@@ -132,6 +135,9 @@ export const RegisterUserForm = ({ setIsOpenIn }) => {
           placeholder=""
           onInput={(e) => {
             setEmail(e.target.value);
+            emailValidation(e.target, ".error-message-email");
+          }}
+          onFocus={(e) => {
             emailValidation(e.target, ".error-message-email");
           }}
         />
@@ -147,6 +153,9 @@ export const RegisterUserForm = ({ setIsOpenIn }) => {
             setPassword(e.target.value);
             passwordValidator(e.target, ".error-message-password");
           }}
+          onFocus={(e) => {
+            passwordValidator(e.target, ".error-message-password");
+          }}
         />
         <p className="err-message error-message-password"></p>
       </div>
@@ -158,6 +167,13 @@ export const RegisterUserForm = ({ setIsOpenIn }) => {
           placeholder=""
           onInput={(e) => {
             setConfirmPassword(e.target.value);
+            confirmPasswordValidator(
+              e.target,
+              password,
+              ".error-message-confirm-password",
+            );
+          }}
+          onFocus={(e) => {
             confirmPasswordValidator(
               e.target,
               password,
