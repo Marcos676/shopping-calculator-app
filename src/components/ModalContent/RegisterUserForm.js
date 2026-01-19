@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { nameUserValidation } from "../../validations/registerUserValidation";
+import {
+  nameValidation,
+  emailValidation,
+  passwordValidator,
+  confirmPasswordValidator,
+} from "../../validations/registerUserValidation";
 
 export const RegisterUserForm = ({ setIsOpenIn }) => {
   const [name, setName] = useState("");
@@ -16,6 +21,24 @@ export const RegisterUserForm = ({ setIsOpenIn }) => {
   };
 
   const handleRegister = async () => {
+    let testValidations = [
+      nameValidation(document.querySelector("#name"), ".error-message-name"),
+      emailValidation(document.querySelector("#email"), ".error-message-email"),
+      passwordValidator(
+        document.querySelector("#password"),
+        ".error-message-password",
+      ),
+      confirmPasswordValidator(
+        document.querySelector("#confirmPassword"),
+        password,
+        ".error-message-confirm-password",
+      ),
+    ];
+
+    if (testValidations.includes(false)) {
+      return
+    }
+
     let formInfo = {
       name,
       email,
@@ -95,8 +118,8 @@ export const RegisterUserForm = ({ setIsOpenIn }) => {
           type="text"
           placeholder=""
           onInput={(e) => {
-            setName(e.target.value);
-            nameUserValidation(e.target, ".error-message-name");
+            setName(e.target);
+            nameValidation(e.target.value, ".error-message-name");
           }}
         />
         <p className="err-message error-message-name"></p>
@@ -109,7 +132,7 @@ export const RegisterUserForm = ({ setIsOpenIn }) => {
           placeholder=""
           onInput={(e) => {
             setEmail(e.target.value);
-            //nameProductValidation(e.target, ".error-message-email");
+            emailValidation(e.target, ".error-message-email");
           }}
         />
         <p className="err-message error-message-email"></p>
@@ -122,7 +145,7 @@ export const RegisterUserForm = ({ setIsOpenIn }) => {
           placeholder=""
           onInput={(e) => {
             setPassword(e.target.value);
-            //nameProductValidation(e.target, ".error-message-password");
+            passwordValidator(e.target, ".error-message-password");
           }}
         />
         <p className="err-message error-message-password"></p>
@@ -135,7 +158,11 @@ export const RegisterUserForm = ({ setIsOpenIn }) => {
           placeholder=""
           onInput={(e) => {
             setConfirmPassword(e.target.value);
-            //nameProductValidation(e.target, ".error-message-confirm-password");
+            confirmPasswordValidator(
+              e.target,
+              password,
+              ".error-message-confirm-password",
+            );
           }}
         />
         <p className="err-message error-message-confirm-password"></p>
