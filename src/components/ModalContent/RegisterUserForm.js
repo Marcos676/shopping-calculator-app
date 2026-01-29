@@ -6,7 +6,7 @@ import {
   confirmPasswordValidator,
 } from "../../validations/registerUserValidation";
 
-export const RegisterUserForm = ({ setIsOpenIn }) => {
+export const RegisterUserForm = ({ setIsOpenIn, setUserName }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -47,20 +47,23 @@ export const RegisterUserForm = ({ setIsOpenIn }) => {
     };
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL + "users/register",
+        process.env.REACT_APP_API_URL + "user/register",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formInfo),
+          credentials: 'include'
         },
       );
       switch (response.status) {
         case 200:
+          //Guarda datos de usuario en session Storage
           const userData = await response.json();
-          console.log("Form data submitted:", userData);
-          //Manejar guardado de datos de usuario en cookie o sesion, reseteo del formulario y cierre de modal
+          sessionStorage.setItem('userName', JSON.stringify(userData.userName));
+          setUserName(userData.userName);
+          setIsOpenIn("")
           break;
         case 400:
           const formErrors = await response.json();
@@ -93,8 +96,9 @@ export const RegisterUserForm = ({ setIsOpenIn }) => {
           break;
         case 500:
           const serverError = await response.json();
-          console.log("Server error:", serverError);
           //Manejo de mensaje de error en el servidor
+          console.log("Error del servidor:", serverError);
+          
           break;
         default:
           break;
@@ -118,7 +122,7 @@ export const RegisterUserForm = ({ setIsOpenIn }) => {
           type="text"
           placeholder=""
           onInput={(e) => {
-            setName(e.target);
+            setName(e.target.value);            
             nameValidation(e.target, ".error-message-name");
           }}
           onFocus={(e) => {

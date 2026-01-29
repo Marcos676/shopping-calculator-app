@@ -13,6 +13,9 @@ import {
 } from "./validations/productValidation";
 
 function App() {
+  //Estado de usuario
+  const [userName, setUserName] = useState("");
+
   // Estados de calculos
   const [originalPrice, setOriginalPrice] = useState("");
   const [porcentDiscount, setPorcentDiscount] = useState("");
@@ -32,23 +35,57 @@ function App() {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
 
   // Seteo de cookie
-  const [cookies, setCookie, removeCookie] = useCookies(["userCookies"]);
-  const [isMounted, setIsMounted] = useState(false);
+  const [cookies, setCookies, removeCookie] = useCookies(["cartCookie"]);
 
-  //  Carga el carrito guardado en la cookie. Se ejecuta solo durante el primer montaje y si existe una cookie
-  if (!isMounted && typeof cookies["userCookies"] !== "undefined") {
-    setCartList(cookies["userCookies"].cartList);
-  }
-  !isMounted && setIsMounted(true);
+  //  Carga el carrito guardado en la cookie y checkea si el usuario está logueado durante el primer montaje
+  useEffect(() => {
+    if (typeof cookies["cartCookie"] !== "undefined") {
+      setCartList(cookies["cartCookie"].cartList);
+    }
+    const tokenUserCheck = async () => {
+      try {
+        const response = await fetch(
+          process.env.REACT_APP_API_URL + "user/session-check",
+          {
+            method: "POST",
+            credentials: "include",
+          },
+        );
+        switch (response.status) {
+          case 200: // refresh token válido y actualizacion de tokens. Recupera datos de sesion previa
+            const userData = await response.json();            
+            setUserName(userData.userName);
+            break;
+          case 401: // no existe refresh token, no hay sesiones previas
+            const error401Data = await response.json();
+            console.log("Error 401: ", error401Data);
+            break;
+          case 403: // Token vencido o error en token, solicitar que se vuelva a iniciar sesion
+            const error403Data = await response.json();
+            console.log("Error 403: ", error403Data);
+            sessionStorage.setItem(
+              "expiredUserData",
+              JSON.stringify(error403Data.name),
+            );
+            handleModalContent("LoginUserForm");
+            break;
+          default:
+            break;
+        }
+      } catch (error) {
+        console.log("Error en el checkeo de token: ", error);
+      }
+    };
+    tokenUserCheck();
+  }, []);
 
   // ----- Funciones útiles
-  //Obtiene ID
+  //Obtiene ID de los itrems del carrito
   const getId = () => {
     if (cartList.length === 0) {
       return 1;
-    } else {
-      return cartList[cartList.length - 1].id + 1;
     }
+    return cartList[cartList.length - 1].id + 1;
   };
 
   // Mostrar Toast (mensaje de agregado y editado de producto exitoso)
@@ -91,7 +128,7 @@ function App() {
     if (cartList.length !== 0) {
       let totalProducts = cartList.reduce(
         (acc, product) => acc + product.quantity,
-        0
+        0,
       );
       setQuantityProducts(totalProducts);
     } else {
@@ -113,9 +150,9 @@ function App() {
       },
     ];
     setCartList(updatedList);
-    setCookie("userCookies", { cartList: updatedList }, { path: "/" });
+    setCookies("cartCookie", { cartList: updatedList }, { path: "/" });
     showToast(
-      `<i class="fa-solid fa-circle-check"></i> Agregado al <i class="fa-solid fa-cart-shopping"></i>`
+      `<i class="fa-solid fa-circle-check"></i> Agregado al <i class="fa-solid fa-cart-shopping"></i>`,
     );
 
     handleResetForm(".reset-form-class");
@@ -134,10 +171,10 @@ function App() {
       updatedData.quantity === "" ? 1 : updatedData.quantity;
 
     const updatedList = cartList.map((product) =>
-      product.id === updatedData.id ? updatedData : product
+      product.id === updatedData.id ? updatedData : product,
     );
     setCartList(updatedList);
-    setCookie("userCookies", { cartList: updatedList }, { path: "/" });
+    setCookies("cartCookie", { cartList: updatedList }, { path: "/" });
     showToast(`<i class="fa-solid fa-circle-check"></i> Producto editado</i>`);
 
     setModalIsOpenIn("");
@@ -149,13 +186,13 @@ function App() {
     });
     setCartList(updatedList);
     updatedList.length === 0
-      ? removeCookie("userCookies")
-      : setCookie("userCookies", { cartList: updatedList }, { path: "/" });
+      ? removeCookie("cartCookie")
+      : setCookies("cartCookie", { cartList: updatedList }, { path: "/" });
   };
 
   const cleanCartList = () => {
     setCartList([]);
-    removeCookie("userCookies");
+    removeCookie("cartCookie");
     showOverlay("✓", "Carrito vaciado!");
   };
 
@@ -187,7 +224,7 @@ function App() {
     action,
     paramsAction,
     textContent,
-    otherRequires
+    otherRequires,
   ) => {
     setModalProps({
       methodAction: action,
@@ -233,10 +270,13 @@ function App() {
           <div className="quantity-products-cart">{quantityProducts}</div>
         </div>
         <div>
-          <i
+          {
+            userName ? (<span> {userName} </span>) : (<i
             className="fa-solid fa-circle-user"
-            onClick={() => handleModalContent("LoginUserForm")}
-          ></i>
+            onClick={() => handleModalContent("LoginUserForm", setUserName)}
+          ></i>)
+          }
+          
         </div>
       </header>
       <main>
@@ -263,11 +303,11 @@ function App() {
                     setQuantity,
                     setDiscount,
                     setFinalPrice,
-                  }
+                  },
                 );
                 originalPriceValidation(
                   e.target,
-                  ".error-message-original-price"
+                  ".error-message-original-price",
                 );
               }}
             />
@@ -293,11 +333,11 @@ function App() {
                     setQuantity,
                     setDiscount,
                     setFinalPrice,
-                  }
+                  },
                 );
                 porcentDiscountValidation(
                   e.target,
-                  ".error-message-porcent-to-discount"
+                  ".error-message-porcent-to-discount",
                 );
               }}
             />
@@ -322,7 +362,7 @@ function App() {
                     setQuantity,
                     setDiscount,
                     setFinalPrice,
-                  }
+                  },
                 );
                 quantityValidation(e.target, ".error-message-quantity");
               }}
@@ -347,17 +387,17 @@ function App() {
             onClick={() => {
               let inputOrigPrice = document.querySelector("#original-price");
               let inputDiscount = document.querySelector(
-                "#porcent-to-discount"
+                "#porcent-to-discount",
               );
               let inputQuantity = document.querySelector("#quantity");
               let passValidation = [
                 originalPriceValidation(
                   inputOrigPrice,
-                  ".error-message-original-price"
+                  ".error-message-original-price",
                 ),
                 porcentDiscountValidation(
                   inputDiscount,
-                  ".error-message-porcent-to-discount"
+                  ".error-message-porcent-to-discount",
                 ),
                 quantityValidation(inputQuantity, ".error-message-quantity"),
               ];

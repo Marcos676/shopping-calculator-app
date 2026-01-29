@@ -9,6 +9,7 @@ boxMessageError: la clase de la etiqueta en la que se mostrara el mensaje de err
 box = elemento html previamente selexionado con querySelector o similar a editar
 add = Nombre de la clase a agregar a la caja (string)
 remove = Nombre de la clase a remover de la caja (string) */
+
 function toggleClass(box, add, remove) {
   box.classList.remove(remove);
   box.classList.add(add);
@@ -22,7 +23,7 @@ const nameValidation = async (input, boxMessageError) => {
   if (valueInput !== "" && valueInput.length <= 30) {
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL + "users/" + valueInput,
+        process.env.REACT_APP_API_URL + "user/verify-name/" + valueInput,
       );
       const user = await response.json();
       if (user.finded) {
@@ -31,7 +32,7 @@ const nameValidation = async (input, boxMessageError) => {
         return false;
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error al checkear el nombre de usuario", error);
     }
     //Caso válido
     toggleClass(input, "isValid", "isInvalid");

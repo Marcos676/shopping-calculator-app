@@ -1,9 +1,16 @@
 import { useState } from "react";
 
-
 export const LoginUserForm = ({ setIsOpenIn }) => {
-  const [name, setName] = useState("");
+    // autocompleta nombre de session previa
+  let storedUser = sessionStorage.getItem("expiredUserData");
+  storedUser = storedUser && JSON.parse(storedUser);
+  const [name, setName] = useState(storedUser ? storedUser : "");
+  storedUser && sessionStorage.removeItem("expiredUserData");
+  
   const [password, setPassword] = useState("");
+
+
+
   return (
     <form className="reset-form-class login-register-form-container">
       <button type="submit" disabled hidden aria-hidden="true"></button>
@@ -13,6 +20,7 @@ export const LoginUserForm = ({ setIsOpenIn }) => {
           id="name"
           type="text"
           placeholder=""
+          value={name}
           onInput={(e) => {
             setName(e.target.value);
             //nameProductValidation(e.target, ".error-message-name");
@@ -34,13 +42,7 @@ export const LoginUserForm = ({ setIsOpenIn }) => {
         <p className="err-message error-message-password"></p>
       </div>
       <div className="modal-box-btns">
-        <button
-          className="green-button"
-          type="button"
-          onClick={() => {
-            
-          }}
-        >
+        <button className="green-button" type="button" onClick={() => {}}>
           Ingresar
         </button>
         <button
