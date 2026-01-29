@@ -190,4 +190,28 @@ const loginUser = async (req, res) => {
   }
 };
 
-export { userList, createUser, loginUser, userNameCheck, sessionCheck };
+const logout = (req, res) => {
+  // accede a las cookies firmadas
+  const refreshToken = req.signedCookies["refreshToken"];
+  const accessToken = req.signedCookies["accessToken"];
+      console.log("refreshToken: ", refreshToken);
+      console.log("accessToken: ", accessToken);
+  // Borra las cookies existendes de accesToken y refresh Token
+  accessToken && res.clearCookie("accessToken", {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "strict",
+  signed: true,
+  path: "/" 
+});
+  refreshToken && res.clearCookie("refreshToken", {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "strict",
+  signed: true,
+  path: "/" 
+});
+return res.status(200).json("Cookies eliminadas")
+}
+
+export { userList, createUser, loginUser, userNameCheck, sessionCheck, logout };
