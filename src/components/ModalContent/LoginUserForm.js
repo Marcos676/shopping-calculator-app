@@ -15,11 +15,10 @@ export const LoginUserForm = ({ setIsOpenIn }) => {
     <form className="reset-form-class login-register-form-container">
       <button type="submit" disabled hidden aria-hidden="true"></button>
       <div>
-        <label htmlFor="name">Nombre de usuario o email:</label>
+        <label htmlFor="name">Nombre de usuario:</label>
         <input
           id="name"
           type="text"
-          placeholder=""
           value={name}
           onInput={(e) => {
             setName(e.target.value);

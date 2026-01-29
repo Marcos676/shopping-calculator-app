@@ -235,6 +235,27 @@ function App() {
     setModalIsOpenIn(modalContent);
   };
 
+  const handleLogout = async () => {
+    console.log("ejecucion de handleLogout");
+    try {
+      const response = await fetch(
+          process.env.REACT_APP_API_URL + "user/logout",
+          {
+            method: "POST",
+            credentials: "include",
+          },
+        );
+        console.log(response.status);
+        const responseParsed = await response.json();
+        console.log(responseParsed);
+        setUserName("")
+        
+    } catch (error) {
+      console.log("Error en logout", error);
+      
+    }
+  }
+
   return (
     <div className="App">
       <SidebarShoppingCart
@@ -271,7 +292,7 @@ function App() {
         </div>
         <div>
           {
-            userName ? (<span> {userName} </span>) : (<i
+            userName ? (<span onClick={handleLogout}> {userName} </span>) : (<i
             className="fa-solid fa-circle-user"
             onClick={() => handleModalContent("LoginUserForm", setUserName)}
           ></i>)
