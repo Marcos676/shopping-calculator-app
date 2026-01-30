@@ -37,7 +37,7 @@ export const LoginRegisterUser = ({ setIsOpenIn, setUserName }) => {
         </div>
       </div>
       {showForm === "login" ? (
-        <LoginUserForm setIsOpenIn={setIsOpenIn} />
+        <LoginUserForm setIsOpenIn={setIsOpenIn} setUserName={setUserName} />
       ) : (
         <RegisterUserForm setIsOpenIn={setIsOpenIn} setUserName={setUserName} />
       )}

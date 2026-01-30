@@ -59,9 +59,8 @@ export const RegisterUserForm = ({ setIsOpenIn, setUserName }) => {
       );
       switch (response.status) {
         case 200:
-          //Guarda datos de usuario en session Storage
+          //Guarda datos de usuario en estado
           const userData = await response.json();
-          sessionStorage.setItem('userName', JSON.stringify(userData.userName));
           setUserName(userData.userName);
           setIsOpenIn("")
           break;
@@ -98,7 +97,6 @@ export const RegisterUserForm = ({ setIsOpenIn, setUserName }) => {
           const serverError = await response.json();
           //Manejo de mensaje de error en el servidor
           console.log("Error del servidor:", serverError);
-          
           break;
         default:
           break;
