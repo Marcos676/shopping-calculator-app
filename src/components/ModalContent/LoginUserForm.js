@@ -19,6 +19,18 @@ export const LoginUserForm = ({
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
+    //Checkea validacioses del front en cada input
+    let testValidations = [
+      nameValidation(document.querySelector("#name"), ".error-message-name"),
+      passwordValidator(
+        document.querySelector("#password"),
+        ".error-message-password",
+      ),
+    ];
+    //Si existe alguna finaliza la funcion
+    if (testValidations.includes(false)) {
+      return;
+    }
     // envía la informacion del formulario al metodo de login
     const formInfo = {
       name,
@@ -43,12 +55,10 @@ export const LoginUserForm = ({
           const userData = await response.json();
           setUserName(userData.userName);
           setIsOpenIn("");
-          console.log(userData);
           break;
         case 400:
           //Maneja los errores del formulario del servidor
           const formErrors = await response.json();
-          console.log("Validaciones del servidor:", formErrors);
           //Manejo de validaciones del servidor
           formErrors.errors.name &&
             handleBackValidations(
@@ -90,6 +100,9 @@ export const LoginUserForm = ({
             setName(e.target.value);
             nameValidation(e.target, ".error-message-name");
           }}
+          onFocus={(e) => {
+            nameValidation(e.target, ".error-message-name");
+          }}
         />
         <p className="err-message error-message-name"></p>
       </div>
@@ -101,6 +114,9 @@ export const LoginUserForm = ({
           placeholder=""
           onInput={(e) => {
             setPassword(e.target.value);
+            passwordValidator(e.target, ".error-message-password");
+          }}
+          onFocus={(e) => {
             passwordValidator(e.target, ".error-message-password");
           }}
         />

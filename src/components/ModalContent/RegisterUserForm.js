@@ -13,6 +13,7 @@ export const RegisterUserForm = ({ setIsOpenIn, setUserName, handleBackValidatio
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleRegister = async () => {
+    //Checkea validacioses del front en cada input
     let testValidations = [
       nameValidation(document.querySelector("#name"), ".error-message-name"),
       emailValidation(document.querySelector("#email"), ".error-message-email"),
@@ -26,11 +27,11 @@ export const RegisterUserForm = ({ setIsOpenIn, setUserName, handleBackValidatio
         ".error-message-confirm-password",
       ),
     ];
-
+    //Si existe alguna finaliza la funcion
     if (testValidations.includes(false)) {
       return
     }
-
+//ordena los datos y los envia al endpoint
     let formInfo = {
       name,
       email,
@@ -49,6 +50,8 @@ export const RegisterUserForm = ({ setIsOpenIn, setUserName, handleBackValidatio
           credentials: 'include'
         },
       );
+            // Maneja la respuesta segun el status de la respuesta
+
       switch (response.status) {
         case 200:
           //Guarda datos de usuario en estado
@@ -58,7 +61,6 @@ export const RegisterUserForm = ({ setIsOpenIn, setUserName, handleBackValidatio
           break;
         case 400:
           const formErrors = await response.json();
-          console.log("Form data submitted with errors:", formErrors);
           //Manejo de validaciones del servidor
           formErrors.errors.name &&
             handleBackValidations(
@@ -93,12 +95,8 @@ export const RegisterUserForm = ({ setIsOpenIn, setUserName, handleBackValidatio
         default:
           break;
       }
-
-      if (!response.ok) {
-        throw new Error("Error en la solicitud");
-      }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error del servidor:", error);
     }
   };
 
