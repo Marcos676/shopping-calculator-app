@@ -1,5 +1,10 @@
 import { useState } from "react";
 
+import {
+  nameValidation,
+  passwordValidator,
+} from "../../validations/loginUserValidator";
+
 export const LoginUserForm = ({
   setIsOpenIn,
   setUserName,
@@ -83,7 +88,7 @@ export const LoginUserForm = ({
           value={name}
           onInput={(e) => {
             setName(e.target.value);
-            //nameProductValidation(e.target, ".error-message-name");
+            nameValidation(e.target, ".error-message-name");
           }}
         />
         <p className="err-message error-message-name"></p>
@@ -96,7 +101,7 @@ export const LoginUserForm = ({
           placeholder=""
           onInput={(e) => {
             setPassword(e.target.value);
-            //nameProductValidation(e.target, ".error-message-password");
+            passwordValidator(e.target, ".error-message-password");
           }}
         />
         <p className="err-message error-message-password"></p>
