@@ -6,19 +6,11 @@ import {
   confirmPasswordValidator,
 } from "../../validations/registerUserValidation";
 
-export const RegisterUserForm = ({ setIsOpenIn, setUserName }) => {
+export const RegisterUserForm = ({ setIsOpenIn, setUserName, handleBackValidations }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const handleBackValidations = (inputId, boxErrorClass, msg) => {
-    const input = document.querySelector(inputId);
-    const boxError = document.querySelector(boxErrorClass);
-    input.classList.remove("isValid");
-    input.classList.add("isInvalid");
-    boxError.textContent = msg;
-  };
 
   const handleRegister = async () => {
     let testValidations = [

@@ -18,6 +18,14 @@ export const LoginRegisterUser = ({ setIsOpenIn, setUserName }) => {
     }
   };
 
+     const handleBackValidations = (inputId, boxErrorClass, msg) => {
+    const input = document.querySelector(inputId);
+    const boxError = document.querySelector(boxErrorClass);
+    input.classList.remove("isValid");
+    input.classList.add("isInvalid");
+    boxError.textContent = msg;
+  };
+
   return (
     <div className="login-register-user-container">
       <div className="btn-container">
@@ -37,9 +45,9 @@ export const LoginRegisterUser = ({ setIsOpenIn, setUserName }) => {
         </div>
       </div>
       {showForm === "login" ? (
-        <LoginUserForm setIsOpenIn={setIsOpenIn} setUserName={setUserName} />
+        <LoginUserForm setIsOpenIn={setIsOpenIn} setUserName={setUserName} handleBackValidations={handleBackValidations} />
       ) : (
-        <RegisterUserForm setIsOpenIn={setIsOpenIn} setUserName={setUserName} />
+        <RegisterUserForm setIsOpenIn={setIsOpenIn} setUserName={setUserName} handleBackValidations={handleBackValidations} />
       )}
     </div>
   );

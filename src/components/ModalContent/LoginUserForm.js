@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export const LoginUserForm = ({ setIsOpenIn, setUserName }) => {
+export const LoginUserForm = ({
+  setIsOpenIn,
+  setUserName,
+  handleBackValidations,
+}) => {
   // autocompleta nombre de session previa
   let storedUser = sessionStorage.getItem("expiredUserData");
   storedUser = storedUser && JSON.parse(storedUser);
@@ -9,18 +13,7 @@ export const LoginUserForm = ({ setIsOpenIn, setUserName }) => {
 
   const [password, setPassword] = useState("");
 
-  
-   const handleBackValidations = (inputId, boxErrorClass, msg) => {
-    const input = document.querySelector(inputId);
-    const boxError = document.querySelector(boxErrorClass);
-    input.classList.remove("isValid");
-    input.classList.add("isInvalid");
-    boxError.textContent = msg;
-  };
-
   const handleLogin = async () => {
-    console.log("Activa el método de logueo");
-    
     // envía la informacion del formulario al metodo de login
     const formInfo = {
       name,
@@ -40,6 +33,7 @@ export const LoginUserForm = ({ setIsOpenIn, setUserName }) => {
       );
       // Maneja la respuesta segun el status de la respuesta
       switch (response.status) {
+        // obtiene el nombre de usuario y lo gaurda en estado
         case 200:
           const userData = await response.json();
           setUserName(userData.userName);
@@ -47,6 +41,7 @@ export const LoginUserForm = ({ setIsOpenIn, setUserName }) => {
           console.log(userData);
           break;
         case 400:
+          //Maneja los errores del formulario del servidor
           const formErrors = await response.json();
           console.log("Validaciones del servidor:", formErrors);
           //Manejo de validaciones del servidor
@@ -62,11 +57,11 @@ export const LoginUserForm = ({ setIsOpenIn, setUserName }) => {
               ".error-message-password",
               formErrors.errors.password.msg,
             );
-          
+
           break;
         case 500:
-          const serverError = await response.json();
           //Manejo de mensaje de error en el servidor
+          const serverError = await response.json();
           console.log("Error del servidor:", serverError);
           break;
         default:
