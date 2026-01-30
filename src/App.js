@@ -236,7 +236,8 @@ function App() {
   };
 
   const handleLogout = async () => {
-    console.log("ejecucion de handleLogout");
+    //Falta checkear el token antes de ejecutar el logout
+    // accede al endpoint de deslogueo
     try {
       const response = await fetch(
           process.env.REACT_APP_API_URL + "user/logout",
@@ -245,9 +246,9 @@ function App() {
             credentials: "include",
           },
         );
-        console.log(response.status);
         const responseParsed = await response.json();
         console.log(responseParsed);
+        // borra el nombre de usuario del estado
         setUserName("")
         
     } catch (error) {
