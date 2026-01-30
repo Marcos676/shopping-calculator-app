@@ -194,8 +194,6 @@ const logout = (req, res) => {
   // accede a las cookies firmadas
   const refreshToken = req.signedCookies["refreshToken"];
   const accessToken = req.signedCookies["accessToken"];
-      console.log("refreshToken: ", refreshToken);
-      console.log("accessToken: ", accessToken);
   // Borra las cookies existendes de accesToken y refresh Token
   accessToken && res.clearCookie("accessToken", {
   httpOnly: true,
