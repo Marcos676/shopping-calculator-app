@@ -37,46 +37,49 @@ function App() {
   // Seteo de cookie
   const [cookies, setCookies, removeCookie] = useCookies(["cartCookie"]);
 
+  //Función que actualiza el accessToken y refreshToken, en caso de existir y ejecuta una funcion pasada por parámetro en caso de actualizacion de token exitosa
+  const refreshTokenUserCheck = async (someFunction) => {
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_API_URL + "user/session-check",
+        {
+          method: "POST",
+          credentials: "include",
+        },
+      );
+      switch (response.status) {
+        case 200: // refresh token válido y actualizacion de tokens. Recupera datos de sesion previa
+          const userData = await response.json();
+          setUserName(userData.userName);
+          someFunction && someFunction()
+          break;
+        case 401: // no existe refresh token, no hay sesiones previas
+          const error401Data = await response.json();
+          console.log("Error 401: ", error401Data);
+          break;
+        case 403: // Token vencido o error en token, solicitar que se vuelva a iniciar sesion
+          const error403Data = await response.json();
+          console.log("Error 403: ", error403Data);
+          sessionStorage.setItem(
+            "expiredUserData",
+            JSON.stringify(error403Data.name),
+          );
+          handleModalContent("LoginUserForm");
+          break;
+        default:
+          break;
+      }
+    } catch (error) {
+      console.log("Error en el checkeo de token: ", error);
+    }
+  };
+
   //  Carga el carrito guardado en la cookie y checkea si el usuario está logueado durante el primer montaje
   useEffect(() => {
     if (typeof cookies["cartCookie"] !== "undefined") {
       setCartList(cookies["cartCookie"].cartList);
     }
-    const tokenUserCheck = async () => {
-      try {
-        const response = await fetch(
-          process.env.REACT_APP_API_URL + "user/session-check",
-          {
-            method: "POST",
-            credentials: "include",
-          },
-        );
-        switch (response.status) {
-          case 200: // refresh token válido y actualizacion de tokens. Recupera datos de sesion previa
-            const userData = await response.json();            
-            setUserName(userData.userName);
-            break;
-          case 401: // no existe refresh token, no hay sesiones previas
-            const error401Data = await response.json();
-            console.log("Error 401: ", error401Data);
-            break;
-          case 403: // Token vencido o error en token, solicitar que se vuelva a iniciar sesion
-            const error403Data = await response.json();
-            console.log("Error 403: ", error403Data);
-            sessionStorage.setItem(
-              "expiredUserData",
-              JSON.stringify(error403Data.name),
-            );
-            handleModalContent("LoginUserForm");
-            break;
-          default:
-            break;
-        }
-      } catch (error) {
-        console.log("Error en el checkeo de token: ", error);
-      }
-    };
-    tokenUserCheck();
+    refreshTokenUserCheck();
   }, []);
 
   // ----- Funciones útiles
@@ -236,26 +239,39 @@ function App() {
   };
 
   const handleLogout = async () => {
-    //Falta checkear el token antes de ejecutar el logout
     // accede al endpoint de deslogueo
     try {
       const response = await fetch(
-          process.env.REACT_APP_API_URL + "user/logout",
-          {
-            method: "POST",
-            credentials: "include",
-          },
-        );
-        const responseParsed = await response.json();
-        console.log(responseParsed);
-        // borra el nombre de usuario del estado
-        setUserName("")
-        
+        process.env.REACT_APP_API_URL + "user/logout",
+        {
+          method: "POST",
+          credentials: "include",
+        },
+      );
+      switch (response.status) {
+        case 200:
+          const responseParsed = await response.json();
+          console.log(responseParsed);
+          // borra el nombre de usuario del estado
+          setUserName("");
+          break;
+        case 401:
+          // Ejecuta el refresh token con refreshTokenUserCheck pasandole esta funcion para que va luevva a ejecutar luego de actualizar los token
+          const error401Parsed = await response.json();
+          console.log("Error 401 en logout: ", error401Parsed);
+          refreshTokenUserCheck(handleLogout);
+          break;
+        case 403:
+          const error403Parsed = await response.json();
+          console.log("Error 403 en logout: ", error403Parsed);
+          break;
+        default:
+          break;
+      }
     } catch (error) {
       console.log("Error en logout", error);
-      
     }
-  }
+  };
 
   return (
     <div className="App">
@@ -292,13 +308,14 @@ function App() {
           <div className="quantity-products-cart">{quantityProducts}</div>
         </div>
         <div>
-          {
-            userName ? (<span onClick={handleLogout}> {userName} </span>) : (<i
-            className="fa-solid fa-circle-user"
-            onClick={() => handleModalContent("LoginUserForm", setUserName)}
-          ></i>)
-          }
-          
+          {userName ? (
+            <span onClick={handleLogout}> {userName} </span>
+          ) : (
+            <i
+              className="fa-solid fa-circle-user"
+              onClick={() => handleModalContent("LoginUserForm", setUserName)}
+            ></i>
+          )}
         </div>
       </header>
       <main>
