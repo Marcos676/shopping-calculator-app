@@ -24,10 +24,10 @@ export const Header = ({
       );
       switch (response.status) {
         case 200:
-            //el back elimina las cookies con los tokens y aqui elimina el nombre de usuario del estado
+          //el back elimina las cookies con los tokens y aqui elimina el nombre de usuario del estado
           const responseParsed = await response.json();
           console.log(responseParsed);
-          setShowMenuUser(false)
+          setShowMenuUser(false);
           setUserName("");
           break;
         case 401:
@@ -57,16 +57,38 @@ export const Header = ({
 
       <div className="user-button">
         {userName ? (
-          <span onClick={() => setShowMenuUser(showMenuUser === true ? false : true)}> {userName} </span>
+          <span
+            onClick={() =>
+              setShowMenuUser(showMenuUser === true ? false : true)
+            }
+          >
+            {" "}
+            {userName}{" "}
+          </span>
         ) : (
           <i
             className="fa-regular fa-circle-user login-user-icon"
             onClick={() => handleModalContent("LoginUserForm", setUserName)}
           ></i>
         )}
-        <ul className="user-menu" style={{display: showMenuUser ? "flex" : "none"}}>
-          <li><i className="fa-solid fa-receipt"></i> Mis tickets</li>
-          <li onClick={handleLogout}> <i className="fa-solid fa-circle-user"></i> Cerrar sesion</li>
+        <ul
+          className="user-menu"
+          style={{ display: showMenuUser ? "flex" : "none" }}
+        >
+          <li>
+            <i className="fa-solid fa-receipt"></i> Mis tickets
+          </li>
+          <li
+            onClick={() => handleModalContent(
+              "Confirm",
+              handleLogout,
+              [],
+              "Esta seguro de que quiere cerrar sesion?",
+            )}
+          >
+            {" "}
+            <i className="fa-solid fa-circle-user"></i> Cerrar sesion
+          </li>
         </ul>
       </div>
     </header>
