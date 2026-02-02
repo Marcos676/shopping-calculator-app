@@ -31,8 +31,8 @@ const ticketsList = async (req, res) => {
 
 const createTicket = async (req, res) => {
   if (!validationResult(req).isEmpty()) {
-    return res.json({
-      errors: errors.mapped(),
+    return res.status(400).json({
+      errors: validationResult(req).mapped(),
     });
   }
   let body = req.body;
@@ -43,7 +43,7 @@ const createTicket = async (req, res) => {
       product_list: body.productList,
       user_id: req.user.id,
     });
-    res.json({
+    res.status(200).json({
       ok: true,
     });
   } catch (error) {
