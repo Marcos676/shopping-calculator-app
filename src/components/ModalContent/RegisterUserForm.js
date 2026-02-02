@@ -6,7 +6,11 @@ import {
   confirmPasswordValidator,
 } from "../../validations/registerUserValidation";
 
-export const RegisterUserForm = ({ setIsOpenIn, setUserName, handleBackValidations }) => {
+export const RegisterUserForm = ({
+  setIsOpenIn,
+  setUserName,
+  handleBackValidations,
+}) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,9 +33,9 @@ export const RegisterUserForm = ({ setIsOpenIn, setUserName, handleBackValidatio
     ];
     //Si existe alguna finaliza la funcion
     if (testValidations.includes(false)) {
-      return
+      return;
     }
-//ordena los datos y los envia al endpoint
+    //ordena los datos y los envia al endpoint
     let formInfo = {
       name,
       email,
@@ -47,17 +51,17 @@ export const RegisterUserForm = ({ setIsOpenIn, setUserName, handleBackValidatio
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formInfo),
-          credentials: 'include'
+          credentials: "include",
         },
       );
-            // Maneja la respuesta segun el status de la respuesta
+      // Maneja la respuesta segun el status de la respuesta
 
       switch (response.status) {
         case 200:
           //Guarda datos de usuario en estado
           const userData = await response.json();
           setUserName(userData.userName);
-          setIsOpenIn("")
+          setIsOpenIn("");
           break;
         case 400:
           const formErrors = await response.json();
@@ -110,7 +114,7 @@ export const RegisterUserForm = ({ setIsOpenIn, setUserName, handleBackValidatio
           type="text"
           placeholder=""
           onInput={(e) => {
-            setName(e.target.value);            
+            setName(e.target.value);
             nameValidation(e.target, ".error-message-name");
           }}
           onFocus={(e) => {

@@ -117,14 +117,35 @@
 .sidebar-shopping-cart .total-container .total-price {
   font-weight: bold;
 }
-
+/* Caja de guardado y vaciado de carrito */
+.sidebar-shopping-cart .box-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  gap: 10px
+}
 /* Vaciar carrito */
-.sidebar-shopping-cart .clean-cart {
+.sidebar-shopping-cart .box-buttons .clean-cart {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
+  margin-top: 0px;
+  flex-grow: 1;
+  width: auto;
 }
-.sidebar-shopping-cart .clean-cart .fa-arrow-left {
+.sidebar-shopping-cart .box-buttons .clean-cart .fa-arrow-left {
   font-size: 12px;
 }
+/* Guarda carrito en ticket */
+.sidebar-shopping-cart .box-buttons .save-cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-top: 0px;
+  flex-grow: 2;
+  background-color: #77dd77;
+}
+

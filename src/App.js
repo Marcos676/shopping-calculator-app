@@ -252,6 +252,8 @@ function App() {
         handleModalContent={handleModalContent}
         quantityProducts={quantityProducts}
         showOverlay={showOverlay}
+        userName={userName}
+        setUserName={setUserName}
       />
       <Modal
         isOpenIn={modalIsOpenIn}
