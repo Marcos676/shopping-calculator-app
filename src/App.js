@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 import { Modal } from "./components/Modal";
 import { SidebarShoppingCart } from "./components/SidebarShoppingCart";
+import { Header } from "./components/Header";
 
 import { handleValues, formatToCurrency } from "./utils/handlerPrices";
 import {
@@ -238,40 +239,7 @@ function App() {
     setModalIsOpenIn(modalContent);
   };
 
-  const handleLogout = async () => {
-    // accede al endpoint de deslogueo
-    try {
-      const response = await fetch(
-        process.env.REACT_APP_API_URL + "user/logout",
-        {
-          method: "POST",
-          credentials: "include",
-        },
-      );
-      switch (response.status) {
-        case 200:
-          const responseParsed = await response.json();
-          console.log(responseParsed);
-          // borra el nombre de usuario del estado
-          setUserName("");
-          break;
-        case 401:
-          // Ejecuta el refresh token con refreshTokenUserCheck pasandole esta funcion para que va luevva a ejecutar luego de actualizar los token
-          const error401Parsed = await response.json();
-          console.log("Error 401 en logout: ", error401Parsed);
-          refreshTokenUserCheck(handleLogout);
-          break;
-        case 403:
-          const error403Parsed = await response.json();
-          console.log("Error 403 en logout: ", error403Parsed);
-          break;
-        default:
-          break;
-      }
-    } catch (error) {
-      console.log("Error en logout", error);
-    }
-  };
+
 
   return (
     <div className="App">
@@ -299,25 +267,13 @@ function App() {
         <div className="text" id="overlayText"></div>
       </div>
       {/* -------- */}
-      <header className="App-header">
-        <div
-          className="cart-sidebar-button"
-          onClick={() => HandleSideBar(true)}
-        >
-          <i className="fa-solid fa-cart-shopping"></i>
-          <div className="quantity-products-cart">{quantityProducts}</div>
-        </div>
-        <div>
-          {userName ? (
-            <span onClick={handleLogout}> {userName} </span>
-          ) : (
-            <i
-              className="fa-solid fa-circle-user"
-              onClick={() => handleModalContent("LoginUserForm", setUserName)}
-            ></i>
-          )}
-        </div>
-      </header>
+      <Header
+      HandleSideBar={HandleSideBar}
+      quantityProducts={quantityProducts}
+      handleModalContent={handleModalContent}
+      refreshTokenUserCheck={refreshTokenUserCheck} 
+      userName={userName}
+      setUserName={setUserName}/>
       <main>
         <div className="title-description">
           <h2>Calculá tu descuento al instante</h2>

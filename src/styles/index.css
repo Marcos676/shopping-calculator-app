@@ -26,6 +26,10 @@ button {
   background-color: #ffd365;
 }
 
+ul {
+  list-style-type: none;
+}
+
 .text-center {
   text-align: center;
 }
