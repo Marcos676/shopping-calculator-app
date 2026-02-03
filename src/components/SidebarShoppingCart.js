@@ -8,6 +8,10 @@ import {
   formatToCurrency,
 } from "../utils/handlerPrices";
 
+import { handleServerValidations } from "../utils/handleServerValidations";
+
+import { nameTicketValidation } from "../validations/ticketValidation";
+
 export const SidebarShoppingCart = ({
   isOpen,
   products,
@@ -19,6 +23,7 @@ export const SidebarShoppingCart = ({
   showOverlay,
   userName,
   setUserName,
+  refreshTokenUserCheck
 }) => {
   const handleDropdownDetail = (id) => {
     let detailBox = document.querySelector(
@@ -40,12 +45,6 @@ export const SidebarShoppingCart = ({
   };
 
   const handleSaveTicket = async (name) => {
-    // condiciones enviando avisos al usuario para que no guarde un carrito vacío y esté logueado
-    if (products.length === 0)
-      return showOverlay("!", "No puede guardar un carrito vacío");
-    if (userName === "")
-      return handleModalContent("LoginUserForm", setUserName);
-
     try {
       const response = await fetch(
         process.env.REACT_APP_API_URL + "ticket/crear",
@@ -59,24 +58,37 @@ export const SidebarShoppingCart = ({
             name,
             productList: products,
           }),
-        }
+        },
       );
       switch (response.status) {
         case 200:
-          console.log(response);
-      const responseParsed = await response.json();
-      console.log(responseParsed);
+          cleanCartList("Ticket guardado")
           break;
         case 400:
-        // prepararlo para manejar los errores del nombre en el formulario del modal
-        break;
+          const formErrors = await response.json();
+          //Manejo de validaciones del servidor
+          formErrors.errors.name &&
+            handleServerValidations(
+              "#name",
+              ".error-message-name",
+              formErrors.errors.name.msg,
+            );
+             formErrors.errors.productList && showOverlay("!", formErrors.errors.productList.msg);
+          break;
+          case 401:
+            refreshTokenUserCheck()
+            handleSaveTicket(name)
+          break;
+          case 403:
+            const tokenError = await response.json();
+            console.log("TokenError: ", tokenError);
+            
+          break;
         default:
           break;
       }
-      
     } catch (error) {
-      console.log("Error del catch:", error);
-      
+      console.log("Error de handleServerValidations: ", error);
     }
   };
 
@@ -191,7 +203,7 @@ export const SidebarShoppingCart = ({
                   handleModalContent(
                     "Confirm",
                     cleanCartList,
-                    [],
+                    ["Carrito vaciado!"],
                     "Esta seguro de que quiere borrar el contenido del carrito?",
                   );
                 }
@@ -202,7 +214,21 @@ export const SidebarShoppingCart = ({
             <button
               className="save-cart"
               type="button"
-              onClick={() => handleSaveTicket()}
+              onClick={() => {
+                // condiciones enviando avisos al usuario para que no guarde un carrito vacío y esté logueado
+                if (products.length === 0)
+                  return showOverlay("!", "No se puede guardar un carrito vacío");
+                if (userName === "")
+                  return handleModalContent("LoginUserForm", setUserName);
+                // activa modal para nombrar ticket
+                handleModalContent(
+                  "NameForm",
+                  handleSaveTicket,
+                  "",
+                  "Nombre del ticket:",
+                  { inputValidation: nameTicketValidation },
+                );
+              }}
             >
               <i className="fa-solid fa-receipt"></i> Guardar ticket
             </button>

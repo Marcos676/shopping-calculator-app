@@ -31,10 +31,11 @@ export const Header = ({
           setUserName("");
           break;
         case 401:
-          // Ejecuta el refresh token con refreshTokenUserCheck pasandole esta funcion para que va luevva a ejecutar luego de actualizar los token
+          // Ejecuta el refresh token con refreshTokenUserCheck y vuelve a ejecutar luego de actualizar los token
           const error401Parsed = await response.json();
           console.log("Error 401 en logout: ", error401Parsed);
-          refreshTokenUserCheck(handleLogout);
+          refreshTokenUserCheck();
+          handleLogout()
           break;
         case 403:
           const error403Parsed = await response.json();

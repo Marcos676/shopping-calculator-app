@@ -6,10 +6,11 @@ import {
   confirmPasswordValidator,
 } from "../../validations/registerUserValidation";
 
+import { handleServerValidations } from "../../utils/handleServerValidations"
+
 export const RegisterUserForm = ({
   setIsOpenIn,
   setUserName,
-  handleBackValidations,
 }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -67,25 +68,25 @@ export const RegisterUserForm = ({
           const formErrors = await response.json();
           //Manejo de validaciones del servidor
           formErrors.errors.name &&
-            handleBackValidations(
+            handleServerValidations(
               "#name",
               ".error-message-name",
               formErrors.errors.name.msg,
             );
           formErrors.errors.email &&
-            handleBackValidations(
+            handleServerValidations(
               "#email",
               ".error-message-email",
               formErrors.errors.email.msg,
             );
           formErrors.errors.password &&
-            handleBackValidations(
+            handleServerValidations(
               "#password",
               ".error-message-password",
               formErrors.errors.password.msg,
             );
           formErrors.errors.confirm &&
-            handleBackValidations(
+            handleServerValidations(
               "#confirmPassword",
               ".error-message-confirm-password",
               formErrors.errors.confirm.msg,

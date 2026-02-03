@@ -40,7 +40,7 @@ function App() {
   const [cookies, setCookies, removeCookie] = useCookies(["cartCookie"]);
 
   //Función que actualiza el accessToken y refreshToken, en caso de existir y ejecuta una funcion pasada por parámetro en caso de actualizacion de token exitosa
-  const refreshTokenUserCheck = async (someFunction) => {
+  const refreshTokenUserCheck = async () => {
     try {
       const response = await fetch(
         process.env.REACT_APP_API_URL + "user/session-check",
@@ -53,7 +53,6 @@ function App() {
         case 200: // refresh token válido y actualizacion de tokens. Recupera datos de sesion previa
           const userData = await response.json();
           setUserName(userData.userName);
-          someFunction && someFunction();
           break;
         case 401: // no existe refresh token, no hay sesiones previas
           const error401Data = await response.json();
@@ -199,10 +198,10 @@ function App() {
       : setCookies("cartCookie", { cartList: updatedList }, { path: "/" });
   };
 
-  const cleanCartList = () => {
+  const cleanCartList = (mensaje) => {
     setCartList([]);
     removeCookie("cartCookie");
-    showOverlay("✓", "Carrito vaciado!");
+    showOverlay("✓", mensaje);
   };
 
   // ----- Maneja la apertura y cierre del carrito -----
@@ -257,6 +256,7 @@ function App() {
         showOverlay={showOverlay}
         userName={userName}
         setUserName={setUserName}
+        refreshTokenUserCheck={refreshTokenUserCheck}
       />
       <Modal
         isOpenIn={modalIsOpenIn}
@@ -403,7 +403,7 @@ function App() {
                 quantityValidation(inputQuantity, ".error-message-quantity"),
               ];
               if (!passValidation.includes(false)) {
-                handleModalContent("NameForm", addProductCartList, "", "Nombre de producto:", {inputValidation: nameProductValidation});
+                handleModalContent("NameForm", addProductCartList, "", "Nombre del producto:", {inputValidation: nameProductValidation});
               }
             }}
           >

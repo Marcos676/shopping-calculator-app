@@ -5,10 +5,11 @@ import {
   passwordValidator,
 } from "../../validations/loginUserValidator";
 
+import { handleServerValidations } from "../../utils/handleServerValidations"
+
 export const LoginUserForm = ({
   setIsOpenIn,
   setUserName,
-  handleBackValidations,
 }) => {
   // autocompleta nombre de session previa
   let storedUser = sessionStorage.getItem("expiredUserData");
@@ -61,13 +62,13 @@ export const LoginUserForm = ({
           const formErrors = await response.json();
           //Manejo de validaciones del servidor
           formErrors.errors.name &&
-            handleBackValidations(
+            handleServerValidations(
               "#name",
               ".error-message-name",
               formErrors.errors.name.msg,
             );
           formErrors.errors.password &&
-            handleBackValidations(
+            handleServerValidations(
               "#password",
               ".error-message-password",
               formErrors.errors.password.msg,

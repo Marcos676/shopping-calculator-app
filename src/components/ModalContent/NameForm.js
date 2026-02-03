@@ -11,7 +11,7 @@ export const NameForm = ({ setIsOpenIn, methodAction, textContent, inputValidati
       <input
         id="name"
         type="text"
-        placeholder="Ej: Galletita, Arroz, Banana..."
+        placeholder="Nombre"
         onInput={(e) => {
           setName(e.target.value);
           inputValidation(e.target, ".error-message-name");
@@ -30,6 +30,7 @@ export const NameForm = ({ setIsOpenIn, methodAction, textContent, inputValidati
               )
             )
               methodAction(name);
+              setIsOpenIn("")
           }}
         >
           Guardar
