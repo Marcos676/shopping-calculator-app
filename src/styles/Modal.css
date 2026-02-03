@@ -18,13 +18,10 @@
 }
 
 /* Estilos de modal LoginRegisterUser */
-
-
 .login-register-user-container .btn-container {
   display: flex;
   justify-content: space-between;
   background-color: #fffefa;
-  
 }
 .login-register-user-container .btn-container .btn {
   padding: 10px 13px;
@@ -45,4 +42,6 @@ border-radius: 0 20px 0 0;
   background-color: #fff3b0;
   padding: 10px;
   border-radius: 0 0 20px 20px;
+  overflow: auto;
+  max-height: 72vh;
 }
