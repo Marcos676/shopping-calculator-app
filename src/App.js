@@ -11,6 +11,7 @@ import {
   originalPriceValidation,
   porcentDiscountValidation,
   quantityValidation,
+  nameProductValidation
 } from "./validations/productValidation";
 
 function App() {
@@ -52,7 +53,7 @@ function App() {
         case 200: // refresh token válido y actualizacion de tokens. Recupera datos de sesion previa
           const userData = await response.json();
           setUserName(userData.userName);
-          someFunction && someFunction()
+          someFunction && someFunction();
           break;
         case 401: // no existe refresh token, no hay sesiones previas
           const error401Data = await response.json();
@@ -153,6 +154,10 @@ function App() {
         quantity: quantity === "" ? 1 : quantity,
       },
     ];
+    let inputs = ["#original-price", "#porcent-to-discount", "#quantity"];
+    inputs.forEach((idInput) => {
+      document.querySelector(idInput).classList.remove("isValid");
+    });
     setCartList(updatedList);
     setCookies("cartCookie", { cartList: updatedList }, { path: "/" });
     showToast(
@@ -216,11 +221,11 @@ function App() {
   // ----- Maneja el contenido del modal y estructura los datos -----
   /*
    handleModalContent Recibe como parametros:
-   modalContent = string que definira el contenido del modal, se puede apreciar los valores esperados en el Switch del archivo Modal.js
-   action = metodo que podra utilizarse como en un evento onClick
-   paramsAction = parametro para el action si hace falta, debe recibir un array en el cual, dentro se deben poner los parametros a utilizar
-   textContent = Texto dinamico, actualmente utilizado en contenido de modal de Confirm
-   otherRequires = debe recibir un objeto literal con lo que se desea incluir
+   - modalContent = string que definira el contenido del modal, se puede apreciar los valores esperados en el Switch del archivo Modal.js
+   - action = metodo que podra utilizarse como en un evento onClick
+   - paramsAction = parametro para el action si hace falta, debe recibir un array en el cual, dentro se deben poner los parametros a utilizar
+   - textContent = Texto dinamico, actualmente utilizado en contenido de modal de Confirm
+   - otherRequires = debe recibir un objeto literal con lo que se desea incluir.
    Nota: si no necesitas por ejemplo paramsAction puedes mandar un "" para luego poner textContent, si se requiere
   */
   const handleModalContent = (
@@ -238,8 +243,6 @@ function App() {
     });
     setModalIsOpenIn(modalContent);
   };
-
-
 
   return (
     <div className="App">
@@ -270,12 +273,13 @@ function App() {
       </div>
       {/* -------- */}
       <Header
-      HandleSideBar={HandleSideBar}
-      quantityProducts={quantityProducts}
-      handleModalContent={handleModalContent}
-      refreshTokenUserCheck={refreshTokenUserCheck} 
-      userName={userName}
-      setUserName={setUserName}/>
+        HandleSideBar={HandleSideBar}
+        quantityProducts={quantityProducts}
+        handleModalContent={handleModalContent}
+        refreshTokenUserCheck={refreshTokenUserCheck}
+        userName={userName}
+        setUserName={setUserName}
+      />
       <main>
         <div className="title-description">
           <h2>Calculá tu descuento al instante</h2>
@@ -399,7 +403,7 @@ function App() {
                 quantityValidation(inputQuantity, ".error-message-quantity"),
               ];
               if (!passValidation.includes(false)) {
-                handleModalContent("NewProductForm", addProductCartList);
+                handleModalContent("NameForm", addProductCartList, "", "Nombre de producto:", {inputValidation: nameProductValidation});
               }
             }}
           >

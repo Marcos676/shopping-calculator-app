@@ -1,6 +1,6 @@
 import "../styles/Modal.css";
 import { useEffect, useRef } from "react";
-import { NewProductForm } from "./ModalContent/NewProductForm";
+import { NameForm } from "./ModalContent/NameForm";
 import { EditProductForm } from "./ModalContent/EditProductForm"
 import { Confirm } from "./ModalContent/Confirm";
 import { LoginRegisterUser } from "./ModalContent/LoginRegisterUser";
@@ -9,10 +9,10 @@ export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
   /* Mueve el modal de creacion de producto hacia arriba de la pantalla para que en mobile, el teclado no tape los botones. Esto hace que el usuario no tenga que cerrar el teclado para realizar la interaccion final en el formulario. */
   const refModalContent = useRef(null);
   useEffect(() => {
-    if (isOpenIn === "NewProductForm" && refModalContent.current !== null) {
+    if (isOpenIn === "NameForm" && refModalContent.current !== null) {
       refModalContent.current.style.marginBottom = "270px";
     }
-    if (isOpenIn !== "NewProductForm" && refModalContent.current !== null) {
+    if (isOpenIn !== "NameForm" && refModalContent.current !== null) {
       refModalContent.current.style.marginBottom = "0px";
     }
   }, [isOpenIn]);
@@ -27,11 +27,13 @@ export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
         />
       );
     break;
-    case "NewProductForm":
+    case "NameForm":
       content = (
-        <NewProductForm
+        <NameForm
           setIsOpenIn={setIsOpenIn}
-          addProductCartList={contentProps.methodAction}
+          methodAction={contentProps.methodAction}
+          textContent={contentProps.textContent}
+          inputValidation={contentProps.otherRequires.inputValidation}
         />
       );
       break;
