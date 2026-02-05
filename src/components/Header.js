@@ -1,4 +1,5 @@
 import "../styles/Header.css";
+import { Link } from 'react-router-dom';
 import { useState } from "react";
 
 export const Header = ({
@@ -72,13 +73,18 @@ export const Header = ({
             onClick={() => handleModalContent("LoginUserForm", setUserName)}
           ></i>
         )}
-        <ul
-          className="user-menu"
-          style={{ display: showMenuUser ? "flex" : "none" }}
+        <nav className="user-menu" style={{ display: showMenuUser ? "block" : "none" }}>
+          <ul className="user-menu-list"
+          
         >
+          <Link  to="/">
           <li>
+            <i className="fa-solid fa-calculator"></i> Calcular
+            </li>
+          </Link>
+          <Link to="/mis-tikets">
             <i className="fa-solid fa-receipt"></i> Mis tickets
-          </li>
+          </Link>
           <li
             onClick={() => handleModalContent(
               "Confirm",
@@ -91,6 +97,7 @@ export const Header = ({
             <i className="fa-solid fa-circle-user"></i> Cerrar sesion
           </li>
         </ul>
+        </nav>
       </div>
     </header>
   );
