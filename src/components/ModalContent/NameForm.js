@@ -1,8 +1,11 @@
 import { useState } from "react";
 
-/* import { nameProductValidation } from "../../validations/productValidation"; */
-
-export const NameForm = ({ setIsOpenIn, methodAction, textContent, inputValidation }) => {
+export const NameForm = ({
+  setIsOpenIn,
+  methodAction,
+  textContent,
+  inputValidation,
+}) => {
   const [name, setName] = useState("");
   return (
     <form className="reset-form-class">
@@ -28,9 +31,10 @@ export const NameForm = ({ setIsOpenIn, methodAction, textContent, inputValidati
                 document.querySelector("#name"),
                 ".error-message-name",
               )
-            )
+            ) {
               methodAction(name);
-              setIsOpenIn("")
+              setIsOpenIn("");
+            }
           }}
         >
           Guardar

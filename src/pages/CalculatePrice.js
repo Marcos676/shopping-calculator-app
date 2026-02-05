@@ -16,43 +16,38 @@ export const CalculatePrice = ({cartList, setCartList, setCookies, showToast, ha
   const [discount, setDiscount] = useState("");
   const [finalPrice, setFinalPrice] = useState("");
 
-  //Obtiene ID de los itrems del carrito
-  const getId = () => {
-    if (cartList.length === 0) {
-      return 1;
-    }
-    return cartList[cartList.length - 1].id + 1;
-  };
-
   //recibe el nombre, pone los datos en un objeto dentro de un array, resetea los campos y cierra el modal
   const addProductCartList = (name) => {
+    // crea una nueva lista actualizada
     const updatedList = [
       ...cartList,
       {
-        id: getId(),
+        id: cartList.length === 0 ? 1 : cartList[cartList.length - 1].id + 1,
         name,
         originalPrice,
         porcentDiscount: porcentDiscount === "" ? 0 : porcentDiscount,
         quantity: quantity === "" ? 1 : quantity,
       },
     ];
+    //Remueve la clase isValid de los inputs
     let inputs = ["#original-price", "#porcent-to-discount", "#quantity"];
     inputs.forEach((idInput) => {
       document.querySelector(idInput).classList.remove("isValid");
     });
+    //Guarda la nueva lista actualizada en el estado y la cookie
     setCartList(updatedList);
     setCookies("cartCookie", { cartList: updatedList }, { path: "/" });
+    // Muestra el toast con el mensaje de producto guardado
     showToast(
       `<i class="fa-solid fa-circle-check"></i> Agregado al <i class="fa-solid fa-cart-shopping"></i>`,
     );
-
+// Resetea el formulario y los estados
     handleResetForm(".reset-form-class");
     setOriginalPrice("");
     setPorcentDiscount("");
     setQuantity(1);
     setDiscount("");
     setFinalPrice("");
-    setModalIsOpenIn("");
   };
 
   return (
