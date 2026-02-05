@@ -1,0 +1,17 @@
+.ticket-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 77vh;
+}
+
+.ticket-list .item-list {
+  background-color: #fffefa;
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
