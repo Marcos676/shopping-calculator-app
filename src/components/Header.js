@@ -82,7 +82,7 @@ export const Header = ({
             <i className="fa-solid fa-calculator"></i> Calcular
             </li>
           </Link>
-          <Link to="/mis-tikets">
+          <Link to="/mis-tickets">
             <i className="fa-solid fa-receipt"></i> Mis tickets
           </Link>
           <li
