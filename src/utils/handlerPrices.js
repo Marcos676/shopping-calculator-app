@@ -27,6 +27,13 @@ const getTotalDiscount = (products) =>
       )).toFixed(2)),
     0
   );
+  const getTotalWithoutDiscount = (products) =>
+  products.reduce(
+    (acc, product) =>
+      parseFloat((acc +
+      product.originalPrice * product.quantity).toFixed(2)),
+    0
+  );
 
 const handleValues = (
   price,
@@ -73,6 +80,7 @@ module.exports = {
   getFinalPrice,
   getTotalPrice,
   getTotalDiscount,
+  getTotalWithoutDiscount,
   handleValues,
   formatToCurrency
 };

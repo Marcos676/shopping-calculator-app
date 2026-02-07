@@ -13,8 +13,22 @@
 .modal-content {
   font-weight: bolder;
   background-color: #fffefa;
-  border-radius: 25px;
+  border-radius: 15px;
   padding: 20px;
+  position: relative;
+}
+.modal-content .close-modal {
+  position: absolute;
+  padding: 5px;
+  right: 0px;
+  top: -1px;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content .close-modal i {
+  font-size: 20px;
 }
 
 /* Estilos de modal LoginRegisterUser */
@@ -62,7 +76,7 @@ border-radius: 0 20px 0 0;
   gap: 5px;
   overflow-y: scroll;
   scrollbar-width: none;
-  height: 60vh;
+  height: 53vh;
 }
 .ticket-detail .product-list .product-item {
   background-color: #fff3b0;

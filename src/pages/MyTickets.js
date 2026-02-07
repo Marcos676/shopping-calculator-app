@@ -33,6 +33,8 @@ export const MyTickets = ({handleModalContent}) => {
     useEffect(()=> {
 getTickets()
     }, [])
+    console.log(tickets);
+    
 
   return (
     <>
@@ -40,23 +42,9 @@ getTickets()
         <h2>Mis Tickets</h2>
       </div>
       <ul className="ticket-list" >
-        {tickets.map(({id, name, products_list, created_at}) => {
-            return (<li className={`item-list item-id-${id}`} key={id} onClick={() => handleModalContent("TicketDetail", "", "", "", {name, products: products_list, created_at})}><div>{name}</div><div>{created_at}</div></li>)
+        {tickets.map(({id, name, product_list, created_at}) => {
+            return (<li className={`item-list item-id-${id}`} key={id} onClick={() => handleModalContent("TicketDetail", "", "", "", {name, products: product_list, created_at})}><div>{name}</div><div>{created_at}</div></li>)
         })}
-        
-{/*         <li className="item-list"><div>Coto</div><div>1/02/2026</div></li>
-        <li className="item-list"><div>Coto</div><div>1/02/2026</div></li>
-        <li className="item-list"><div>Coto</div><div>1/02/2026</div></li>
-        <li className="item-list"><div>Coto</div><div>1/02/2026</div></li>
-        <li className="item-list"><div>Coto</div><div>1/02/2026</div></li>
-        <li className="item-list"><div>Coto</div><div>1/02/2026</div></li>
-        <li className="item-list"><div>Coto</div><div>1/02/2026</div></li>
-        <li className="item-list"><div>Coto</div><div>1/02/2026</div></li>
-        <li className="item-list"><div>Coto</div><div>1/02/2026</div></li>
-        <li className="item-list"><div>Coto</div><div>1/02/2026</div></li>
-        <li className="item-list"><div>Coto</div><div>1/02/2026</div></li>
-        <li className="item-list"><div>Coto</div><div>1/02/2026</div></li>
-         */}
       </ul>
     </>
   );

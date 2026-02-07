@@ -1,86 +1,53 @@
-export const TicketDetail = ({ setIsOpenIn, ticketData }) => {
+import { getDiscount, getFinalPrice, getTotalDiscount, getTotalPrice, getTotalWithoutDiscount, formatToCurrency } from "../../utils/handlerPrices";
+
+export const TicketDetail = ({ ticketData }) => {
+  let { name, created_at, products } = ticketData;
+  console.log(products);
+  
   return (
     <div className="ticket-detail">
       <header>
-        <h2>{ticketData.name}</h2>
-        <p>{ticketData.created_at}</p>
+        <h2>{name}</h2>
+        <p>{created_at}</p>
       </header>
       <ul className="product-list">
-        <li className="product-item">
-            <div className="item-row name-final-price-item">
-                <span>Galletitas de salvado Granix</span>
-                <span>$1500</span>
-            </div>
-            <div className="item-row price-quantity-total-price-item">
-                <span>Precio: 2000 x 1</span>
-                <span>$2000</span>
-            </div>
-            <div className="item-row discount-item">
-                <span>Descuento: 25%</span>
-                <span>$500</span>
-            </div>
-        </li>
-        <li className="product-item">
-            <div className="item-row name-final-price-item">
-                <span>Galletitas</span>
-                <span>$1500</span>
-            </div>
-            <div className="item-row price-quantity-total-price-item">
-                <span>Precio: 2000 x 1</span>
-                <span>$2000</span>
-            </div>
-            <div className="item-row discount-item">
-                <span>Descuento: 25%</span>
-                <span>$500</span>
-            </div>
-        </li>
-        <li className="product-item">
-            <div className="item-row name-final-price-item">
-                <span>Bananas</span>
-                <span>$1500</span>
-            </div>
-            <div className="item-row price-quantity-total-price-item">
-                <span>Precio: 2000 x 1</span>
-                <span>$2000</span>
-            </div>
-            <div className="item-row discount-item">
-                <span>Descuento: 25%</span>
-                <span>$500</span>
-            </div>
-        </li>
-        <li className="product-item">
-            <div className="item-row name-final-price-item">
-                <span>Bananas</span>
-                <span>$1500</span>
-            </div>
-            <div className="item-row price-quantity-total-price-item">
-                <span>Precio: 2000 x 1</span>
-                <span>$2000</span>
-            </div>
-            <div className="item-row discount-item">
-                <span>Descuento: 25%</span>
-                <span>$500</span>
-            </div>
-        </li>
-        <li className="product-item">
-            <div className="item-row name-final-price-item">
-                <span>Bananas</span>
-                <span>$1500</span>
-            </div>
-            <div className="item-row price-quantity-total-price-item">
-                <span>Precio: 2000 x 1</span>
-                <span>$2000</span>
-            </div>
-            <div className="item-row discount-item">
-                <span>Descuento: 25%</span>
-                <span>$500</span>
-            </div>
-        </li>
+        {products.map(({id, name, quantity, originalPrice
+, porcentDiscount}) => {
+          return (
+            <li className="product-item" key={id}>
+              <div className="item-row name-final-price-item">
+                <span>{name}</span>
+                <span>{formatToCurrency(getFinalPrice(originalPrice
+, porcentDiscount, quantity))}</span>
+              </div>
+              <div className="item-row price-quantity-total-price-item">
+                <span>Precio: {originalPrice
+} x {quantity}</span>
+                <span>{formatToCurrency(originalPrice
+ * quantity)}</span>
+              </div>
+              <div className="item-row discount-item">
+                <span>Descuento: {porcentDiscount}%</span>
+                <span>{formatToCurrency(getDiscount(originalPrice
+, porcentDiscount, quantity))}</span>
+              </div>
+            </li>
+          );
+        })}
       </ul>
       <div className="totals-section">
-        <div className="total-row"><span>Total sin descuento: </span><span>$2000</span></div>
-        <div className="total-row"><span>Descuento total: </span><span>$500</span></div>
-        <div className="total-row total-price"><span>Total: </span><span>$1500</span></div>
+        <div className="total-row">
+          <span>Total sin descuento: </span>
+          <span>{formatToCurrency(getTotalWithoutDiscount(products))}</span>
+        </div>
+        <div className="total-row">
+          <span>Descuento total: </span>
+          <span>{formatToCurrency(getTotalDiscount(products))}</span>
+        </div>
+        <div className="total-row total-price">
+          <span>Total: </span>
+          <span>{formatToCurrency(getTotalPrice(products))}</span>
+        </div>
       </div>
     </div>
   );

@@ -60,7 +60,6 @@ export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
       case "TicketDetail":
         content = (
         <TicketDetail
-          setIsOpenIn={setIsOpenIn}
           ticketData={contentProps.otherRequires}
         />
       );
@@ -71,6 +70,10 @@ export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
   return (
     <div className="modal-background">
       <div ref={refModalContent} className="modal-content">
+        <div className="close-modal"><i
+          className="fa-solid fa-xmark xmark-class"
+          onClick={() => setIsOpenIn("")}
+        ></i></div>
         {content}
       </div>
     </div>
