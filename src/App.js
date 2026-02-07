@@ -236,7 +236,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<CalculatePrice cartList={cartList} setCartList={setCartList} setCookies={setCookies} showToast={showToast} handleResetForm={handleResetForm} setModalIsOpenIn={setModalIsOpenIn} handleModalContent={handleModalContent} />} />
-          <Route path="/mis-tickets" element={<MyTickets handleModalContent={handleModalContent} />} />
+          <Route path="/mis-tickets" element={<MyTickets handleModalContent={handleModalContent} refreshTokenUserCheck={refreshTokenUserCheck} />} />
         </Routes>
         
       </main>

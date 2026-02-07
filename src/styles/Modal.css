@@ -19,7 +19,7 @@
 }
 .modal-content .close-modal {
   position: absolute;
-  padding: 5px;
+  padding: 6px;
   right: 0px;
   top: -1px;
   width: fit-content;

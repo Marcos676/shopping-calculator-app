@@ -1,9 +1,15 @@
-import { getDiscount, getFinalPrice, getTotalDiscount, getTotalPrice, getTotalWithoutDiscount, formatToCurrency } from "../../utils/handlerPrices";
+import {
+  getDiscount,
+  getFinalPrice,
+  getTotalDiscount,
+  getTotalPrice,
+  getTotalWithoutDiscount,
+  formatToCurrency,
+} from "../../utils/handlerPrices";
 
 export const TicketDetail = ({ ticketData }) => {
   let { name, created_at, products } = ticketData;
-  console.log(products);
-  
+
   return (
     <div className="ticket-detail">
       <header>
@@ -11,29 +17,36 @@ export const TicketDetail = ({ ticketData }) => {
         <p>{created_at}</p>
       </header>
       <ul className="product-list">
-        {products.map(({id, name, quantity, originalPrice
-, porcentDiscount}) => {
-          return (
-            <li className="product-item" key={id}>
-              <div className="item-row name-final-price-item">
-                <span>{name}</span>
-                <span>{formatToCurrency(getFinalPrice(originalPrice
-, porcentDiscount, quantity))}</span>
-              </div>
-              <div className="item-row price-quantity-total-price-item">
-                <span>Precio: {originalPrice
-} x {quantity}</span>
-                <span>{formatToCurrency(originalPrice
- * quantity)}</span>
-              </div>
-              <div className="item-row discount-item">
-                <span>Descuento: {porcentDiscount}%</span>
-                <span>{formatToCurrency(getDiscount(originalPrice
-, porcentDiscount, quantity))}</span>
-              </div>
-            </li>
-          );
-        })}
+        {products.map(
+          ({ id, name, quantity, originalPrice, porcentDiscount }) => {
+            return (
+              <li className="product-item" key={id}>
+                <div className="item-row name-final-price-item">
+                  <span>{name}</span>
+                  <span>
+                    {formatToCurrency(
+                      getFinalPrice(originalPrice, porcentDiscount, quantity),
+                    )}
+                  </span>
+                </div>
+                <div className="item-row price-quantity-total-price-item">
+                  <span>
+                    Precio: {originalPrice} x {quantity}
+                  </span>
+                  <span>{formatToCurrency(originalPrice * quantity)}</span>
+                </div>
+                <div className="item-row discount-item">
+                  <span>Descuento: {porcentDiscount}%</span>
+                  <span>
+                    {formatToCurrency(
+                      getDiscount(originalPrice, porcentDiscount, quantity),
+                    )}
+                  </span>
+                </div>
+              </li>
+            );
+          },
+        )}
       </ul>
       <div className="totals-section">
         <div className="total-row">

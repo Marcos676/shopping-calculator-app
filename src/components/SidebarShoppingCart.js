@@ -82,7 +82,6 @@ export const SidebarShoppingCart = ({
           case 403:
             const tokenError = await response.json();
             console.log("TokenError: ", tokenError);
-            
           break;
         default:
           break;
