@@ -43,7 +43,7 @@ const createTicket = async (req, res) => {
       product_list: body.productList,
       user_id: req.user.id,
     });
-    res.status(200);
+    res.status(200).json({ok: true});
   } catch (error) {
     console.error("Error al crear el ticket:", error);
     res.status(500).json({ error: "Error al crear el ticket" });
