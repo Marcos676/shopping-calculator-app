@@ -4,6 +4,7 @@ import { NameForm } from "./ModalContent/NameForm";
 import { EditProductForm } from "./ModalContent/EditProductForm"
 import { Confirm } from "./ModalContent/Confirm";
 import { LoginRegisterUser } from "./ModalContent/LoginRegisterUser";
+import { TicketDetail } from "./ModalContent/TicketDetail";
 
 export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
   /* Mueve el modal de creacion de producto hacia arriba de la pantalla para que en mobile, el teclado no tape los botones. Esto hace que el usuario no tenga que cerrar el teclado para realizar la interaccion final en el formulario. */
@@ -53,6 +54,14 @@ export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
           actionMethod={contentProps.methodAction}
           paramsActionMethod={contentProps.arrayParams}
           textContent={contentProps.textContent}
+        />
+      );
+      break;
+      case "TicketDetail":
+        content = (
+        <TicketDetail
+          setIsOpenIn={setIsOpenIn}
+          ticketData={contentProps.otherRequires}
         />
       );
       break;

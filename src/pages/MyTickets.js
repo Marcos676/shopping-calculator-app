@@ -3,7 +3,7 @@ import { parseISO, format } from 'date-fns';
 import { useState, useEffect } from "react";
 
 
-export const MyTickets = () => {
+export const MyTickets = ({handleModalContent}) => {
  const [tickets, setTickets] = useState([]);
 
     const getTickets = async () => {
@@ -27,14 +27,12 @@ export const MyTickets = () => {
         }
         } catch (error) {
             console.log(error);
-            
         }
     }
 
     useEffect(()=> {
 getTickets()
     }, [])
-
 
   return (
     <>
@@ -43,7 +41,7 @@ getTickets()
       </div>
       <ul className="ticket-list" >
         {tickets.map(({id, name, products_list, created_at}) => {
-            return (<li className={`item-list item-id-${id}`} key={id}><div>{name}</div><div>{created_at}</div></li>)
+            return (<li className={`item-list item-id-${id}`} key={id} onClick={() => handleModalContent("TicketDetail", "", "", "", {name, products: products_list, created_at})}><div>{name}</div><div>{created_at}</div></li>)
         })}
         
 {/*         <li className="item-list"><div>Coto</div><div>1/02/2026</div></li>

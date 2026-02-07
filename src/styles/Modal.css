@@ -45,3 +45,45 @@ border-radius: 0 20px 0 0;
   overflow: auto;
   max-height: 72vh;
 }
+
+/* Estilos de modal TicketDetail */
+.ticket-detail  header{
+  text-align: center;
+}
+.ticket-detail .product-list {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 60vh;
+}
+.ticket-detail .product-list .product-item {
+  background-color: #fff3b0;
+  padding:6px;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+.ticket-detail .product-list .product-item .item-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+.ticket-detail .product-list .product-item .name-final-price-item {
+  font-size: 20px;
+}
+
+.ticket-detail .totals-section {
+  padding: 5px;
+}
+.ticket-detail .totals-section .total-row{
+  display: flex;
+  justify-content: space-between;
+}
+.ticket-detail .totals-section .total-price {
+  font-size: 20px;
+}
