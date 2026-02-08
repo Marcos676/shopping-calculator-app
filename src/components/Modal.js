@@ -1,5 +1,4 @@
 import "../styles/Modal.css";
-import { useEffect, useRef } from "react";
 import { NameForm } from "./ModalContent/NameForm";
 import { EditProductForm } from "./ModalContent/EditProductForm"
 import { Confirm } from "./ModalContent/Confirm";
@@ -7,16 +6,6 @@ import { LoginRegisterUser } from "./ModalContent/LoginRegisterUser";
 import { TicketDetail } from "./ModalContent/TicketDetail";
 
 export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
-  /* Mueve el modal de creacion de producto hacia arriba de la pantalla para que en mobile, el teclado no tape los botones. Esto hace que el usuario no tenga que cerrar el teclado para realizar la interaccion final en el formulario. */
-  const refModalContent = useRef(null);
-  useEffect(() => {
-    if (isOpenIn === "NameForm" && refModalContent.current !== null) {
-      refModalContent.current.style.marginBottom = "270px";
-    }
-    if (isOpenIn !== "NameForm" && refModalContent.current !== null) {
-      refModalContent.current.style.marginBottom = "0px";
-    }
-  }, [isOpenIn]);
 
   let content;
   switch (isOpenIn) {
@@ -69,7 +58,7 @@ export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
   }
   return (
     <div className="modal-background">
-      <div ref={refModalContent} className="modal-content">
+      <div className="modal-content">
         <div className="close-modal"><i
           className="fa-solid fa-xmark xmark-class"
           onClick={() => setIsOpenIn("")}
