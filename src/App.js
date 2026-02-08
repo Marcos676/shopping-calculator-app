@@ -8,6 +8,7 @@ import { SidebarShoppingCart } from "./components/SidebarShoppingCart";
 import { Header } from "./components/Header";
 import { CalculatePrice } from './pages/CalculatePrice';
 import { MyTickets } from './pages/MyTickets';
+import { PrivateRoute } from './components/PrivateRoute';
 
 function App() {
   //Estado de usuario
@@ -236,7 +237,9 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<CalculatePrice cartList={cartList} setCartList={setCartList} setCookies={setCookies} showToast={showToast} handleResetForm={handleResetForm} setModalIsOpenIn={setModalIsOpenIn} handleModalContent={handleModalContent} />} />
-          <Route path="/mis-tickets" element={<MyTickets handleModalContent={handleModalContent} refreshTokenUserCheck={refreshTokenUserCheck} />} />
+          <Route element={<PrivateRoute userName={userName} />} >
+            <Route path="/mis-tickets" element={<MyTickets handleModalContent={handleModalContent} refreshTokenUserCheck={refreshTokenUserCheck} />} />
+          </Route>
         </Routes>
         
       </main>
