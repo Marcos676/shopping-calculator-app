@@ -1,5 +1,5 @@
 import "../styles/Header.css";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export const Header = ({
@@ -26,8 +26,6 @@ export const Header = ({
       switch (response.status) {
         case 200:
           //el back elimina las cookies con los tokens y aqui elimina el nombre de usuario del estado
-          const responseParsed = await response.json();
-          console.log(responseParsed);
           setShowMenuUser(false);
           setUserName("");
           break;
@@ -36,7 +34,7 @@ export const Header = ({
           const error401Parsed = await response.json();
           console.log("Error 401 en logout: ", error401Parsed);
           refreshTokenUserCheck();
-          handleLogout()
+          handleLogout();
           break;
         case 403:
           const error403Parsed = await response.json();
@@ -73,30 +71,33 @@ export const Header = ({
             onClick={() => handleModalContent("LoginUserForm", setUserName)}
           ></i>
         )}
-        <nav className="user-menu" style={{ display: showMenuUser ? "block" : "none" }}>
-          <ul className="user-menu-list"
-          
+        <nav
+          className="user-menu"
+          style={{ display: showMenuUser ? "block" : "none" }}
         >
-          <Link  to="/">
-          <li>
-            <i className="fa-solid fa-calculator"></i> Calcular
+          <ul className="user-menu-list">
+            <Link to="/" onClick={() => setShowMenuUser(false)} >
+              <li>
+                <i className="fa-solid fa-calculator"></i> Calcular
+              </li>
+            </Link>
+            <Link to="/mis-tickets" onClick={() => setShowMenuUser(false)} >
+              <i className="fa-solid fa-receipt"></i> Mis tickets
+            </Link>
+            <li
+              onClick={() =>
+                handleModalContent(
+                  "Confirm",
+                  handleLogout,
+                  [],
+                  "Esta seguro de que quiere cerrar sesion?",
+                )
+              }
+            >
+              {" "}
+              <i className="fa-solid fa-circle-user"></i> Cerrar sesion
             </li>
-          </Link>
-          <Link to="/mis-tickets">
-            <i className="fa-solid fa-receipt"></i> Mis tickets
-          </Link>
-          <li
-            onClick={() => handleModalContent(
-              "Confirm",
-              handleLogout,
-              [],
-              "Esta seguro de que quiere cerrar sesion?",
-            )}
-          >
-            {" "}
-            <i className="fa-solid fa-circle-user"></i> Cerrar sesion
-          </li>
-        </ul>
+          </ul>
         </nav>
       </div>
     </header>
