@@ -209,7 +209,7 @@ const logout = (req, res) => {
   signed: true,
   path: "/" 
 });
-return res.status(200).json("Cookies eliminadas")
+return res.status(200).json({ok: true})
 }
 
 export { userList, createUser, loginUser, userNameCheck, sessionCheck, logout };
