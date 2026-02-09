@@ -30,6 +30,7 @@
 }
 .sidebar-shopping-cart-header .xmark-class {
   font-size: 21px;
+  cursor: pointer;
 }
 
 /* Items List */
