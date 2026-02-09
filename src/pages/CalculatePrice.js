@@ -53,7 +53,7 @@ export const CalculatePrice = ({cartList, setCartList, setCookies, showToast, ha
   return (
     <>
       <div className="title-description">
-        <h2>Calculá tu descuento al instante</h2>
+        <h2>Calculá tu compra</h2>
       </div>
       <form className="functional-app reset-form-class">
         <div>
@@ -182,7 +182,7 @@ export const CalculatePrice = ({cartList, setCartList, setCookies, showToast, ha
             }
           }}
         >
-          Guardar
+          Nombrar
         </button>
       </form>
     </>

@@ -16,6 +16,7 @@
   border-radius: 15px;
   padding: 20px;
   position: relative;
+  max-height: 100%;
 }
 .modal-content .close-modal {
   position: absolute;
@@ -32,6 +33,11 @@
 }
 
 /* Estilos de modal LoginRegisterUser */
+.login-register-user-container {
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 .login-register-user-container .btn-container {
   display: flex;
   justify-content: space-between;
@@ -45,28 +51,35 @@
   border-radius: 20px 0 0 0;
 }
 .login-register-user-container .btn-container .btn-r {
-border-radius: 20px 0 0 0;
-background-color: #fff3b0;
+  border-radius: 15px 0 0 0;
+  background-color: #fff3b0;
 }
 .login-register-user-container .btn-container .btn-l {
-border-radius: 0 20px 0 0;
+  border-radius: 0 15px 0 0;
 }
 
 .login-register-form-container {
   background-color: #fff3b0;
   padding: 10px;
-  border-radius: 0 0 20px 20px;
+  border-radius: 0 0 15px 15px;
   overflow: auto;
   max-height: 72vh;
+
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
 }
 
 /* Estilos de modal TicketDetail */
-.ticket-detail{
+.ticket-detail {
   padding: 5px;
   border: 1px solid #444444;
   border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
 }
-.ticket-detail  header{
+.ticket-detail header {
   text-align: center;
 }
 .ticket-detail .product-list {
@@ -76,11 +89,11 @@ border-radius: 0 20px 0 0;
   gap: 5px;
   overflow-y: scroll;
   scrollbar-width: none;
-  height: 53vh;
+  max-height: 100%;
 }
 .ticket-detail .product-list .product-item {
   background-color: #fff3b0;
-  padding:6px;
+  padding: 6px;
   border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
@@ -99,11 +112,11 @@ border-radius: 0 20px 0 0;
 .ticket-detail .totals-section {
   padding: 5px;
   border-top: 1px solid #444444;
-display: flex;
+  display: flex;
   flex-direction: column;
   gap: 5px;
 }
-.ticket-detail .totals-section .total-row{
+.ticket-detail .totals-section .total-row {
   display: flex;
   justify-content: space-between;
 }

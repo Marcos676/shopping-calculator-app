@@ -3,6 +3,8 @@
   height: 100vh;
   width: 100vw;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Toast */
@@ -31,14 +33,14 @@
   font-size: 14px;
 }
 @keyframes toast-in-out {
-  15%, 85% {
+  15%,
+  85% {
     opacity: 1;
   }
   100% {
     opacity: 0;
     display: none;
   }
-
 }
 .toast.show {
   animation: toast-in-out 3s ease-in-out forwards;
@@ -48,9 +50,10 @@
 /* Overlay */
 .overlay-feedback {
   position: fixed;
-  top: 50%; left: 50%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%) scale(0.8);
-  background: rgba(255,255,255,0.95);
+  background: rgba(255, 255, 255, 0.95);
   padding: 24px;
   border-radius: 16px;
   display: none;
@@ -58,10 +61,13 @@
   align-items: center;
   z-index: 1001;
   opacity: 0;
-  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+  transition:
+    transform 0.4s ease-out,
+    opacity 0.4s ease-out;
 }
 @keyframes overlay-in-out {
-  20%, 80% {
+  20%,
+  80% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
@@ -81,17 +87,18 @@
   margin-bottom: 8px;
 }
 .overlay-feedback .text {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 18px;
   font-weight: bolder;
   text-align: center;
   color: #444444;
 }
 
-
 /* Main */
 main {
   padding: 16px;
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 
 .title-description {
