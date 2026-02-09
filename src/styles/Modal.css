@@ -70,6 +70,17 @@
   max-height: 100%;
 }
 
+/* Estilos para campos de contraseña en login y register */
+.login-register-form-container .field-password {
+  position: relative;
+}
+.login-register-form-container .field-password i {
+  position: absolute;
+  top: 32px;
+  right: 6px;
+  font-size: 20px;
+}
+
 /* Estilos de modal TicketDetail */
 .ticket-detail {
   padding: 5px;

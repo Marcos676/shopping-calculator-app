@@ -5,12 +5,9 @@ import {
   passwordValidator,
 } from "../../validations/loginUserValidator";
 
-import { handleServerValidations } from "../../utils/handleServerValidations"
+import { handleServerValidations } from "../../utils/handleServerValidations";
 
-export const LoginUserForm = ({
-  setIsOpenIn,
-  setUserName,
-}) => {
+export const LoginUserForm = ({ setIsOpenIn, setUserName, showPassword }) => {
   // autocompleta nombre de session previa
   let storedUser = sessionStorage.getItem("expiredUserData");
   storedUser = storedUser && JSON.parse(storedUser);
@@ -107,7 +104,12 @@ export const LoginUserForm = ({
         />
         <p className="err-message error-message-name"></p>
       </div>
-      <div>
+      <div className="field-password">
+        <i
+          className="fa-regular fa-eye-slash"
+          onClick={(e) => showPassword("#password", e.target)}
+        ></i>
+
         <label htmlFor="password">Contraseña:</label>
         <input
           id="password"

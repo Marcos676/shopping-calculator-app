@@ -18,6 +18,18 @@ export const LoginRegisterUser = ({ setIsOpenIn, setUserName }) => {
     }
   };
 
+    //Funcion que maneja la visualizacion de la contraseña
+  const showPassword = (inputId, icon) => {
+    const input = document.querySelector(inputId)
+    if (input.type === "password") {
+      input.type = "text";
+      icon.classList.replace('fa-eye-slash', 'fa-eye')
+      return
+    }
+    input.type = "password";
+    icon.classList.replace('fa-eye', 'fa-eye-slash')
+  }
+
   return (
     <div className="login-register-user-container">
       <div className="btn-container">
@@ -40,11 +52,13 @@ export const LoginRegisterUser = ({ setIsOpenIn, setUserName }) => {
         <LoginUserForm
           setIsOpenIn={setIsOpenIn}
           setUserName={setUserName}
+          showPassword={showPassword}
         />
       ) : (
         <RegisterUserForm
           setIsOpenIn={setIsOpenIn}
           setUserName={setUserName}
+          showPassword={showPassword}
         />
       )}
     </div>

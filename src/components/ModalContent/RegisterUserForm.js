@@ -11,6 +11,7 @@ import { handleServerValidations } from "../../utils/handleServerValidations"
 export const RegisterUserForm = ({
   setIsOpenIn,
   setUserName,
+  showPassword,
 }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -140,7 +141,8 @@ export const RegisterUserForm = ({
         />
         <p className="err-message error-message-email"></p>
       </div>
-      <div>
+      <div className="field-password">
+        <i className="fa-regular fa-eye-slash" onClick={ (e) => showPassword("#password", e.target) }></i>
         <label htmlFor="password">Contraseña:</label>
         <input
           id="password"
@@ -156,7 +158,8 @@ export const RegisterUserForm = ({
         />
         <p className="err-message error-message-password"></p>
       </div>
-      <div>
+      <div className="field-password">
+        <i className="fa-regular fa-eye-slash" onClick={ (e) => showPassword("#confirmPassword", e.target) }></i>
         <label htmlFor="confirmPassword">Repita la contraseña:</label>
         <input
           id="confirmPassword"
