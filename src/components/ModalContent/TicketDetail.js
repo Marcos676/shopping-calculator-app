@@ -8,13 +8,13 @@ import {
 } from "../../utils/handlerPrices";
 
 export const TicketDetail = ({ ticketData }) => {
-  let { name, created_at, products } = ticketData;
+  let { name, createdAt, products } = ticketData;
 
   return (
     <div className="ticket-detail">
       <header>
         <h2>{name}</h2>
-        <p>{created_at}</p>
+        <p>{createdAt}</p>
       </header>
       <ul className="product-list">
         {products.map(

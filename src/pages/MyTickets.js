@@ -16,8 +16,8 @@ export const MyTickets = ({ handleModalContent, refreshTokenUserCheck }) => {
           let tickets = await response.json();
           // parcea la fecha de creacion de cada ticket
           tickets.forEach((ticket) => {
-            ticket.created_at = format(
-              parseISO(ticket.created_at),
+            ticket.createdAt = format(
+              parseISO(ticket.createdAt),
               "dd/MM/yyyy",
             );
           });
@@ -50,7 +50,7 @@ export const MyTickets = ({ handleModalContent, refreshTokenUserCheck }) => {
       </div>
       <ul className="ticket-list">
       {tickets.length === 0 && (<p className="empty-legend">No hay tickets</p>)}
-        {tickets.map(({ id, name, product_list, created_at }) => {
+        {tickets.map(({ id, name, productList, createdAt }) => {
           return (
             <li
               className={`item-list item-id-${id}`}
@@ -58,13 +58,13 @@ export const MyTickets = ({ handleModalContent, refreshTokenUserCheck }) => {
               onClick={() =>
                 handleModalContent("TicketDetail", "", "", "", {
                   name,
-                  products: product_list,
-                  created_at,
+                  products: productList,
+                  createdAt,
                 })
               }
             >
               <div>{name}</div>
-              <div>{created_at}</div>
+              <div>{createdAt}</div>
             </li>
           );
         })}
