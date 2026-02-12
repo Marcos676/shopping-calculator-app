@@ -49,6 +49,7 @@ export const MyTickets = ({ handleModalContent, refreshTokenUserCheck }) => {
         <h2>Mis Tickets</h2>
       </div>
       <ul className="ticket-list">
+      {tickets.length === 0 && (<p className="empty-legend">No hay tickets</p>)}
         {tickets.map(({ id, name, product_list, created_at }) => {
           return (
             <li

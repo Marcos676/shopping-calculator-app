@@ -47,10 +47,6 @@
   overflow-y: scroll;
   scrollbar-width: none;
 }
-.sidebar-shopping-cart .empty-legend {
-  text-align: center;
-  font-weight: bold;
-}
 .sidebar-shopping-cart .item-container,
 .sidebar-shopping-cart .total-container {
   background-color: #fffefa;
