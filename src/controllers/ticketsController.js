@@ -1,4 +1,5 @@
-import { User, Ticket } from "../database/models/index.js";
+import models from "../database/models/index.cjs";
+const { User, Ticket } = models;
 import { validationResult } from "express-validator";
 
 const allTicketsList = async (req, res) => {
@@ -15,14 +16,14 @@ const allTicketsList = async (req, res) => {
   }
 };
 
-const ticketsList = async (req, res) => {
+const ticketsList = async (req, res) => {  
   try {
     const lists = await Ticket.findAll({
       where: {
-        user_id: req.user.id,
+        userId: req.user.id,
       },
     });
-    res.json(lists);
+    res.status(200).json(lists);
   } catch (error) {
     console.error("Error al obtener tickets:", error);
     res.status(500).json({ error: "Error al obtener tickets" });
@@ -40,8 +41,8 @@ const createTicket = async (req, res) => {
   try {
     await Ticket.create({
       name: body.name.trim(),
-      product_list: body.productList,
-      user_id: req.user.id,
+      productList: body.productList,
+      userId: req.user.id,
     });
     res.status(200).json({ok: true});
   } catch (error) {

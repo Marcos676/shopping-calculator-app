@@ -1,4 +1,5 @@
-import { User } from "../database/models/index.js";
+import models from "../database/models/index.cjs";
+const { User } = models;
 import { check, body } from "express-validator";
 
 const validations = [

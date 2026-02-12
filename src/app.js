@@ -31,14 +31,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // parcea a JSON los datos entrantes almacenandolos en req.body
 
 // Rutas
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-});
+//Ruta de prueba
+/* app.get('/', (req, res) => {
+    res.send('Servidor ejecutandose')
+}); */
 
-// Obtener todos los usuarios
+// Rutas de usuarios
 app.use('/api/user', userRouter);
 
-// Obtener todas las listas de compra con el usuario
+// Rutas de tickets
 app.use('/api/ticket', ticketRouter );
 
 // Iniciar servidor

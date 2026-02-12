@@ -4,7 +4,7 @@ import { allTicketsList, ticketsList, createTicket } from '../controllers/ticket
 import verifyToken from '../middlewares/verifyToken.js';
 import createTicketValidator from '../validations/createTicketValidator.js';
 
-router.get('/listas', allTicketsList)
+//router.get('/listas', allTicketsList)
 router.get('/', verifyToken, ticketsList)
 router.post('/crear', verifyToken, createTicketValidator, createTicket)
 
