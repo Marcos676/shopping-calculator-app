@@ -26,4 +26,3 @@ const validations = [
 ];
 
 export default validations;
->>>>>>> repo-secundario/main
