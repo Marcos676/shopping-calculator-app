@@ -32,9 +32,9 @@ app.use(express.json()); // parcea a JSON los datos entrantes almacenandolos en 
 
 // Rutas
 //Ruta de prueba
-/* app.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.send('Servidor ejecutandose')
-}); */
+});
 
 // Rutas de usuarios
 app.use('/api/user', userRouter);
