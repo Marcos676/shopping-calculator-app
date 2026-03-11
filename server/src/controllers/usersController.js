@@ -61,7 +61,7 @@ const sessionCheck = async (req, res) => { // se ejecutara al recargar la pagina
     res.cookie("accessToken", accessToken, {
       maxAge: 60 * 60 * 1000, // 1 hora
       httpOnly: true, // Impide acceso desde JavaScript
-      secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
+      //secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
       sameSite: "strict", // Protege contra CSRF
       signed: true, // Habilita firma de cookie
     });
@@ -70,7 +70,7 @@ const sessionCheck = async (req, res) => { // se ejecutara al recargar la pagina
       .cookie("refreshToken", newRefreshToken, {
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
         httpOnly: true, // Impide acceso desde JavaScript
-        secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
+        //secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
         sameSite: "strict", // Protege contra CSRF
         signed: true, // Habilita firma de cookie
       })
@@ -121,7 +121,7 @@ const createUser = async (req, res) => {
     res.cookie("accessToken", accessToken, {
       maxAge: 60 * 60 * 1000, // 1 hora
       httpOnly: true, // Impide acceso desde JavaScript
-      secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
+      //secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
       sameSite: "strict", // Protege contra CSRF
       signed: true, // Habilita firma de cookie
     });
@@ -130,7 +130,7 @@ const createUser = async (req, res) => {
       .cookie("refreshToken", refreshToken, {
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
         httpOnly: true, // Impide acceso desde JavaScript
-        secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
+        //secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
         sameSite: "strict", // Protege contra CSRF
         signed: true, // Habilita firma de cookie
       })
@@ -169,7 +169,7 @@ const loginUser = async (req, res) => {
     res.cookie("accessToken", accessToken, {
       maxAge: 60 * 60 * 1000, // 1 hora
       httpOnly: true, // Impide acceso desde JavaScript
-      secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
+      //secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
       sameSite: "strict", // Protege contra CSRF
       signed: true, // Habilita firma de cookie
     });
@@ -178,7 +178,7 @@ const loginUser = async (req, res) => {
       .cookie("refreshToken", refreshToken, {
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
         httpOnly: true, // Impide acceso desde JavaScript
-        secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
+        //secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
         sameSite: "strict", // Protege contra CSRF
         signed: true, // Habilita firma de cookie
       })
@@ -199,14 +199,14 @@ const logout = (req, res) => {
   // Borra las cookies existendes de accesToken y refresh Token
   accessToken && res.clearCookie("accessToken", {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
+  //secure: process.env.NODE_ENV === "production",
   sameSite: "strict",
   signed: true,
   path: "/" 
 });
   refreshToken && res.clearCookie("refreshToken", {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
+  //secure: process.env.NODE_ENV === "production",
   sameSite: "strict",
   signed: true,
   path: "/" 
