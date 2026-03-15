@@ -29,6 +29,7 @@ services:
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
       - COOKIE_SECRET_KEY=${COOKIE_SECRET_KEY}
       - PORT=${PORT}
+      - PUBLIC_DOMAIN_CLIENT=${PUBLIC_DOMAIN_CLIENT}
       - NODE_ENV=${NODE_ENV}
     depends_on:
       shopping-db:
