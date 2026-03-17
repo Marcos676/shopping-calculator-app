@@ -62,7 +62,7 @@ const sessionCheck = async (req, res) => { // se ejecutara al recargar la pagina
       maxAge: 60 * 60 * 1000, // 1 hora
       httpOnly: true, // Impide acceso desde JavaScript
       secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
-      sameSite: "strict", // Protege contra CSRF
+      sameSite: "none",
       signed: true, // Habilita firma de cookie
     });
     return res
@@ -71,7 +71,7 @@ const sessionCheck = async (req, res) => { // se ejecutara al recargar la pagina
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
         httpOnly: true, // Impide acceso desde JavaScript
         secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
-        sameSite: "strict", // Protege contra CSRF
+        sameSite: "none",
         signed: true, // Habilita firma de cookie
       })
       .json({
@@ -122,7 +122,7 @@ const createUser = async (req, res) => {
       maxAge: 60 * 60 * 1000, // 1 hora
       httpOnly: true, // Impide acceso desde JavaScript
       secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
-      sameSite: "strict", // Protege contra CSRF
+      sameSite: "none",
       signed: true, // Habilita firma de cookie
     });
     return res
@@ -131,7 +131,7 @@ const createUser = async (req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
         httpOnly: true, // Impide acceso desde JavaScript
         secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
-        sameSite: "strict", // Protege contra CSRF
+        sameSite: "none",
         signed: true, // Habilita firma de cookie
       })
       .json({
@@ -170,7 +170,7 @@ const loginUser = async (req, res) => {
       maxAge: 60 * 60 * 1000, // 1 hora
       httpOnly: true, // Impide acceso desde JavaScript
       secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
-      sameSite: "strict", // Protege contra CSRF
+      sameSite: "none",
       signed: true, // Habilita firma de cookie
     });
     return res
@@ -179,7 +179,7 @@ const loginUser = async (req, res) => {
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 días
         httpOnly: true, // Impide acceso desde JavaScript
         secure: process.env.NODE_ENV === "production", // Solo se envía vía HTTPS
-        sameSite: "strict", // Protege contra CSRF
+        sameSite: "none",
         signed: true, // Habilita firma de cookie
       })
       .json({
@@ -200,14 +200,14 @@ const logout = (req, res) => {
   accessToken && res.clearCookie("accessToken", {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: "strict",
+  sameSite: "none",
   signed: true,
   path: "/" 
 });
   refreshToken && res.clearCookie("refreshToken", {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  sameSite: "strict",
+  sameSite: "none",
   signed: true,
   path: "/" 
 });
