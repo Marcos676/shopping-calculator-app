@@ -46,7 +46,7 @@ export const RegisterUserForm = ({
     };
     try {
       const response = await fetch(
-        (process.env.NODE_ENV === 'production' ? `https://${process.env.REACT_APP_API_URL}` : `http://${process.env.REACT_APP_API_URL}`) + "/api/user/register",
+        (process.env.NODE_ENV === "production" ? "https://" : "http://") + process.env.REACT_APP_API_URL + "/api/user/register",
         {
           method: "POST",
           headers: {

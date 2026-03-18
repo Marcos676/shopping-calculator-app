@@ -36,7 +36,7 @@ export const LoginUserForm = ({ setIsOpenIn, setUserName, showPassword }) => {
     };
     try {
       const response = await fetch(
-        (process.env.NODE_ENV === 'production' ? `https://${process.env.REACT_APP_API_URL}` : `http://${process.env.REACT_APP_API_URL}`) + "/api/user/login",
+        (process.env.NODE_ENV === "production" ? "https://" : "http://") + process.env.REACT_APP_API_URL + "/api/user/login",
         {
           method: "POST",
           headers: {

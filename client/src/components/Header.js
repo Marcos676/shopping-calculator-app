@@ -17,7 +17,7 @@ export const Header = ({
     // accede al endpoint de deslogueo
     try {
       const response = await fetch(
-        (process.env.NODE_ENV === 'production' ? `https://${process.env.REACT_APP_API_URL}` : `http://${process.env.REACT_APP_API_URL}`) + "/api/user/logout",
+        (process.env.NODE_ENV === "production" ? "https://" : "http://") + process.env.REACT_APP_API_URL + "/api/user/logout",
         {
           method: "POST",
           credentials: "include",
