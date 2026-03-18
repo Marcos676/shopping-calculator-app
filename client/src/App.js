@@ -31,6 +31,8 @@ function App() {
   //Función que actualiza el accessToken y refreshToken, en caso de existir y ejecuta una funcion pasada por parámetro en caso de actualizacion de token exitosa
   const refreshTokenUserCheck = async () => {
     try {
+      console.log("Checking user session...", process.env.NODE_ENV);
+      
       const response = await fetch(
         (process.env.NODE_ENV === "production" ? "https://" : "http://") + process.env.REACT_APP_API_URL + "/api/user/session-check",
         {
