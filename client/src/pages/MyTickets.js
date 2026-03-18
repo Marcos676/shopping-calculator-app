@@ -7,7 +7,7 @@ export const MyTickets = ({ handleModalContent, refreshTokenUserCheck }) => {
 
   const getTickets = async () => {
     try {
-      const response = await fetch(process.env.REACT_APP_API_URL + "ticket", {
+      const response = await fetch((process.env.NODE_ENV === 'production' ? `https://${process.env.REACT_APP_API_URL}` : `http://${process.env.REACT_APP_API_URL}`) + "/api/ticket", {
         method: "GET",
         credentials: "include",
       });

@@ -23,7 +23,8 @@ const nameValidation = async (input, boxMessageError) => {
   if (valueInput !== "" && valueInput.length <= 30) {
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL + "user/verify-name/" + valueInput,
+        (process.env.NODE_ENV === 'production' ? `https://${process.env.REACT_APP_API_URL}` : `http://${process.env.REACT_APP_API_URL}`) + "/api/user/verify-name/" + valueInput
+        
       );
       const user = await response.json();
       if (user.finded) {

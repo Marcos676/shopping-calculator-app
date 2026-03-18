@@ -47,7 +47,7 @@ export const SidebarShoppingCart = ({
   const handleSaveTicket = async (name) => {
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL + "ticket/crear",
+        (process.env.NODE_ENV === 'production' ? `https://${process.env.REACT_APP_API_URL}` : `http://${process.env.REACT_APP_API_URL}`) + "/api/ticket/crear",
         {
           method: "POST",
           credentials: "include",
