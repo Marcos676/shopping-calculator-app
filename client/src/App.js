@@ -32,7 +32,7 @@ function App() {
   const refreshTokenUserCheck = async () => {
     try {
       const response = await fetch(
-        (process.env.NODE_ENV === "production" ? "https://" : "http://") + process.env.REACT_APP_API_URL + "/api/user/session-check",
+        (process.env.REACT_APP_NODE_ENV === "production" ? "https://" : "http://") + process.env.REACT_APP_API_URL + "/api/user/session-check",
         {
           method: "POST",
           credentials: "include",
