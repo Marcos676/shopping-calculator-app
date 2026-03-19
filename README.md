@@ -1,70 +1,221 @@
-# Applicacion de seguimiento de compras con descuento
-Esta aplicacion permite a los usuarios ingresar el precio original de un producto, el porcentaje de descuento y la cantidad de productos que desean comprar. Luego, la aplicación calcula el precio final después del descuento y muestra el total a pagar.
-Además, los usuarios pueden guardar su historial de compras para futuras referencias y crear una cuenta para acceder a sus compras guardadas.
+# 🛒 Shopping Calculator App
 
-## Funcionalidades
-- Calculo de descuento: La aplicación calcula el precio final después de aplicar el descuento al precio original.
-- Carrito de compras: Permite a los usuarios agregar múltiples productos al carrito y muestra el total acumulado.
-- Edición de productos: Los usuarios pueden editar los detalles de los productos en el carrito, como el nombre, precio original, el porcentaje de descuento y la cantidad.
-- Borrar productos: Los usuarios pueden eliminar productos del carrito si ya no desean comprarlos.
-- Guardar historial: Los usuarios pueden guardar su historial de compras para futuras referencias.
-- Registro de usuarios: Permite a los usuarios crear una cuenta para acceder a sus compras guardadas y su historial.
+Aplicación web fullstack diseñada para ayudar a los usuarios a calcular el costo real de sus compras antes de llegar a la caja, permitiendo llevar un control en tiempo real del gasto y los descuentos aplicados.
 
-## Tecnologias usadas
-### Cliente
+Pensada especialmente para uso móvil, con una interfaz simple e intuitiva, accesible incluso para usuarios con poca experiencia tecnológica.
+
+---
+
+## 🚀 Demo
+
+🔗 https://shopping-calculator-production.up.railway.app/
+
+---
+
+## 🧠 Problema que resuelve
+
+En el día a día, es común no saber con precisión cuánto se va a pagar en una compra hasta el momento de pasar por caja.
+
+Esta aplicación permite:
+
+- Calcular descuentos en tiempo real
+- Visualizar el total acumulado
+- Controlar el ahorro generado
+- Evitar sorpresas al pagar
+
+---
+
+## ✨ Features
+
+### 🔐 Autenticación
+- Registro e inicio de sesión
+- Logout
+- Autenticación con JWT (Access + Refresh Tokens)
+- Tokens almacenados en cookies seguras (`httpOnly`, `secure`)
+- Renovación automática de sesión
+
+---
+
+### 🛒 Gestión de compras
+- Agregar productos al carrito
+- Editar y eliminar productos
+- Cálculo automático de:
+  - Precio con descuento
+  - Ahorro por producto
+  - Total final
+  - Ahorro total
+
+---
+
+### 💾 Persistencia
+- Guardado del carrito como "Ticket"
+- Historial de compras por usuario
+- Visualización de detalle de cada ticket
+
+> Los tickets no pueden ser editados ni eliminados una vez guardados
+
+---
+
+### 📱 UX orientada a mobile
+- Interfaz pensada para uso en supermercado
+- Flujo rápido e intuitivo
+- Accesible para usuarios no técnicos
+
+---
+
+## 🔐 Autenticación (detalle técnico)
+
+- Access Token (exp: 1 hora)
+- Refresh Token (exp: 7 días)
+- Ambos almacenados en cookies seguras
+
+### Flujo:
+1. Login → se generan ambos tokens
+2. Access token se usa para requests autenticadas
+3. Si expira:
+   - Se valida refresh token
+   - Se genera un nuevo access token automáticamente
+4. Middleware backend protege rutas privadas
+
+---
+
+## 🧱 Arquitectura
+
+### Backend (Node.js + Express)
+
+Patrón MVC:
+controllers/
+routes/
+middlewares/
+validations/
+database/
+
+- Sequelize ORM
+- Uso de migrations
+- Separación de responsabilidades
+
+> ⚠️ Actualmente la lógica se encuentra en controllers (mejora futura: capa de servicios)
+
+---
+
+### Base de datos (MySQL)
+
+#### Users
+- id
+- name
+- email
+- password
+
+#### Tickets
+- id
+- userId (FK)
+- name
+- productList (JSON)
+
+---
+
+### Frontend (React)
+
+- React + React Router
+- Protección de rutas
+- Manejo de estado local
+- Validaciones en frontend + backend
+
+#### 🍪 Manejo de carrito
+
+- Persistido en cookies (cliente)
+- Funciona sin autenticación
+- Requiere login para guardarse como ticket
+⚠️ Limitación:
+- No sincroniza entre dispositivos
+
+---
+### ⚙️ Stack tecnológico
+#### Frontend
 - React
-- JavaScript
-- HTML
-- CSS
-### Servidor
+- React Router
+- React Cookie
+
+#### Backend
 - Node.js
 - Express
+- JWT
 - Sequelize
+
+#### Base de datos
 - MySQL
 
-## Como usarlo?
-1. Realizar un clonado `git clone` `https://github.com/Marcos676/porcent-react-app`
-2. Navegar a la carpeta del proyecto usando `cd porcent-react-app`
-### Para el servidor
-1. Navegar a la carpeta del servidor usando `cd server`
-2. Abrir editor de código y hacer en la terminal `npm install`
-3. Crear un archivo `.env` basado en el archivo `.env.example`
-4. Ejecutar `npm run deploy` para crear la base de datos y migrar los modelos
-5. Ejecutar `npm run start` para iniciar el servidor
-### Para el cliente
-1. Navegar a la carpeta del cliente usando `cd client`
-2. Abrir editor de código y hacer en la terminal `npm install`
-3. Ejecutar el proyecto usando `npm start`
-4. Abrir el navegador y acceder a `http://localhost:3000` para usar la aplicación
+#### DevOps
+- Docker
+- Docker compose
+- Railway (deploy)
 
-## Detalles del proyecto
-### Estructura del código
-- El proyecto está dividido en dos partes principales: el cliente (frontend) y el servidor (backend).
-- El cliente está construido con React y se encarga de la interfaz de usuario y la interacción con el usuario.
-- El servidor está construido con Node.js y Express, y se encarga de manejar las solicitudes del cliente, interactuar con la base de datos y gestionar la lógica de negocio.
-#### Librerías utilizadas del cliente
-- React Router: Para manejar la navegación entre diferentes páginas de la aplicación.
-- React Hooks: Para manejar el estado local y los efectos secundarios en los componentes de React.
-- React cookie: Para manejar las cookies de autenticación y mantener la sesión del usuario activa.
-- React router dom: Para manejar la navegación entre diferentes rutas de la aplicación.
-#### Librerías utilizadas del servidor
-- Express: Para crear el servidor y manejar las rutas y solicitudes HTTP.
-- Sequelize: Para interactuar con la base de datos MySQL de manera más sencilla y estructurada.
-- MySQL2: Para conectar el servidor con la base de datos MySQL.
-- Dotenv: Para manejar las variables de entorno y mantener la configuración del proyecto segura.
-- Jsonwebtoken: Para manejar la autenticación de usuarios mediante tokens JWT.
-- Cookie parser: Para manejar las cookies de autenticación y mantener la sesión del usuario activa.
-- Argon2: Para encriptar las contraseñas de los usuarios y mejorar la seguridad de la aplicación.
-- Express-validator: Para validar los datos ingresados por el usuario y evitar errores en el cálculo del descuento.
-- Cors: Para permitir solicitudes desde el cliente al servidor sin problemas de CORS.
+---
+### 🐳 Instalación con Docker (recomendado)
+```
+git clone https://github.com/Marcos676/shopping-calculator-app.git
+cd shopping-calculator-app
+```
+Crear archivo .env basado en:
+```
+.env.example
+```
+Luego ejecutar: 
+```
+docker compose -f docker-compose-dev.yml up
+```
+---
 
-### Base de datos
-- La base de datos utilizada es MySQL, y se maneja a través de Sequelize.
-- La base de datos contiene tablas para usuarios y el historial de compras con el nombre de Tickets.
-- La tabla de usuarios almacena información como el nombre de usuario, correo electrónico y contraseña encriptada.
-- La tabla de tickets almacena información sobre las compras realizadas por los usuarios, incluyendo el nombre que se le da a la compra, un compo JSON con los detalles de los productos comprados, y la fecha de la compra.
+### ⚙️ Instalación manual (sin Docker)
+#### Backend
+```
+cd server
+npm install
+```
+Crear .env y ejecutar:
+```
+npm run deploy:db
+npm run start
+```
+---
+#### Backend
+```
+cd client
+npm install
+npm start
+```
+---
+### 🌐 Deploy
+Aplicación desplegada en Railway:
+- Backend
+- Frontend
+- Base de datos
+Configurados como servicios separados dentro del mismo proyecto.
 
-### Seguridad
-- Las contraseñas de los usuarios se encriptan utilizando Argon2 para mejorar la seguridad de la aplicación.
-- La autenticación de usuarios se maneja mediante tokens JWT (access tokens y refreshTokens) en cookies seguras, lo que permite mantener la sesión del usuario activa sin necesidad de almacenar información sensible en el cliente.
-- Se utilizan las librerías `express-validator` y `cors` para validar los datos ingresados por el usuario y evitar errores en el cálculo del descuento, así como para permitir solicitudes desde el cliente al servidor sin problemas de CORS.
+---
+
+### ⚠️ Limitaciones actuales
+- Carrito basado en cookies (no sincronizado)
+- No se pueden editar/eliminar tickets
+- UI desktop mejorable
+- Sin tests automatizados
+
+---
+
+### Mejoras futuras
+- Implementar capa de servicios en backend
+- Migrar carrito a backend (persistencia real)
+- Agregar tests (Jest / Supertest)
+- Mejorar UI para desktop
+- Manejo global de estado en frontend
+- Interceptors para manejo automático de tokens
+
+---
+
+### 📸 Screenshots
+
+
+---
+
+### Autor
+Desarrollado por Marcos676
