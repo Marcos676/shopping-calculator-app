@@ -125,7 +125,7 @@ database/
 
 - Persistido en cookies (cliente)
 - Funciona sin autenticación
-- Requiere login para guardarse como ticket
+- Requiere login para guardarse como ticket  
 ⚠️ Limitación:
 - No sincroniza entre dispositivos
 
@@ -178,7 +178,7 @@ npm run deploy:db
 npm run start
 ```
 ---
-#### Backend
+#### Frontend
 ```
 cd client
 npm install
@@ -189,7 +189,7 @@ npm start
 Aplicación desplegada en Railway:
 - Backend
 - Frontend
-- Base de datos
+- Base de datos  
 Configurados como servicios separados dentro del mismo proyecto.
 
 ---
