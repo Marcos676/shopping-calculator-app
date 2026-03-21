@@ -214,7 +214,13 @@ Configurados como servicios separados dentro del mismo proyecto.
 
 ### 📸 Screenshots
 
-
+![Seccion de calculos](images/screenshot-calcular.png)
+![Registro](images/screenshot-registro.png)
+![Menu](images/screenshot-menu.png)
+![Carrito](images/screenshot-carrito.png)
+![Editar producto](images/screenshot-editar-producto.png)
+![Lista de tickets](images/screenshot-tickets.png)
+![Detalle de ticket](images/screenshot-detalle-ticket.png)
 ---
 
 ### Autor
