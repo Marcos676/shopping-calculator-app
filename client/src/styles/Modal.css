@@ -1,3 +1,8 @@
+.overflow-container {
+  overflow: auto;
+  max-height: 100%;
+}
+
 .modal-background {
   position: fixed;
   padding: 15px;
@@ -62,12 +67,8 @@
   background-color: #fff3b0;
   padding: 10px;
   border-radius: 0 0 15px 15px;
-  overflow: auto;
-  max-height: 72vh;
-
   display: flex;
   flex-direction: column;
-  max-height: 100%;
 }
 
 /* Estilos para campos de contraseña en login y register */

@@ -107,7 +107,7 @@ export const RegisterUserForm = ({
   };
 
   return (
-    <form className="reset-form-class login-register-form-container">
+    <form className="reset-form-class login-register-form-container overflow-container">
       <button type="submit" disabled hidden aria-hidden="true"></button>
       <div>
         <label htmlFor="name">Nombre de usuario:</label>

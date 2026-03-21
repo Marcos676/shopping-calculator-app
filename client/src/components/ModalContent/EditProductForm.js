@@ -40,7 +40,7 @@ export const EditProductForm = ({
   );
 
   return (
-    <form className="reset-form-class">
+    <form className="reset-form-class overflow-container">
       <button type="submit" disabled hidden aria-hidden="true"></button>
       <div>
         <label htmlFor="name">Nombre:</label>
