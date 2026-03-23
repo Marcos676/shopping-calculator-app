@@ -25,8 +25,24 @@ function App() {
   // Estado de Sidebar
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
 
+  //Estado de pantalla completa
+  const [fullScreen, setFullScreen] = useState(false);
+
   // Seteo de cookie
   const [cookies, setCookies, removeCookie] = useCookies(["cartCookie"]);
+
+// Función para activar o desactivar pantalla completa
+const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+      setFullScreen(true);
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+        setFullScreen(false);
+      }
+    }
+  };
 
   //Función que actualiza el accessToken y refreshToken, en caso de existir y ejecuta una funcion pasada por parámetro en caso de actualizacion de token exitosa
   const refreshTokenUserCheck = async () => {
@@ -225,6 +241,11 @@ function App() {
         <div className="icon" id="overlayIcon"></div>
         <div className="text" id="overlayText"></div>
       </div>
+      {/* -------- */}
+      {/* Boton de FullScreen */}
+            <div className='fullScreen-button' onClick={() => toggleFullScreen() } >
+              {fullScreen ? <i className="fa-solid fa-compress"></i> : <i className="fa-solid fa-expand"></i> } 
+            </div>
       {/* -------- */}
       <Header
         HandleSideBar={HandleSideBar}

@@ -93,6 +93,21 @@
   text-align: center;
   color: #444444;
 }
+/* FullScreen button */
+.fullScreen-button {
+  background-color: #fffefa; /* #ffd365 */
+  font-size: 25px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
 
 /* Main */
 main {
