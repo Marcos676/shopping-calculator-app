@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   nameValidation,
   emailValidation,
@@ -7,12 +7,14 @@ import {
 } from "../../validations/registerUserValidation";
 
 import { handleServerValidations } from "../../utils/handleServerValidations"
+import {UserContext} from "../../contexts/UserContext"
 
 export const RegisterUserForm = ({
   setIsOpenIn,
-  setUserName,
   showPassword,
 }) => {
+  const {setUser} = useContext(UserContext);
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -62,7 +64,7 @@ export const RegisterUserForm = ({
         case 200:
           //Guarda datos de usuario en estado
           const userData = await response.json();
-          setUserName(userData.userName);
+          setUser({name: userData.userName});
           setIsOpenIn("");
           break;
         case 400:

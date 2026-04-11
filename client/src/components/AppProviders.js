@@ -15,7 +15,7 @@ export default function AppProviders({ children }) {
   // Estados globales
 
   // UserContext: Guarda el nombre del usuario logueado, se utiliza para mostrarlo en el header y para manejar la autenticación de las rutas privadas.
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState({name: ""});
 
   // CartContext: Guarda la lista de productos agregados al carrito y la cantidad total de productos, se utiliza para mostrar la cantidad en el icono del carrito y para manejar el contenido del carrito.
   const [cartList, setCartList] = useState([]);

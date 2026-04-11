@@ -1,16 +1,17 @@
 import "../styles/Header.css";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import {UserContext} from "../contexts/UserContext"
 
 export const Header = ({
   HandleSideBar,
   quantityProducts,
   handleModalContent,
   refreshTokenUserCheck,
-  userName,
-  setUserName,
 }) => {
   const [showMenuUser, setShowMenuUser] = useState(false);
+
+  const {user, setUser} = useContext(UserContext);
 
   //Función que se encarga del deslogueo del usuario
   const handleLogout = async () => {
@@ -25,9 +26,9 @@ export const Header = ({
       );
       switch (response.status) {
         case 200:
-          //el back elimina las cookies con los tokens y aqui elimina el nombre de usuario del estado
+          //el back elimina las cookies con los tokens y aqui elimina el nombre de usuario del estado global
           setShowMenuUser(false);
-          setUserName("");
+          setUser({name: ""});
           break;
         case 401:
           // Ejecuta el refresh token con refreshTokenUserCheck y vuelve a ejecutar luego de actualizar los token
@@ -56,19 +57,19 @@ export const Header = ({
       </div>
 
       <div className="user-button">
-        {userName ? (
+        {user.name ? (
           <span
             onClick={() =>
               setShowMenuUser(showMenuUser === true ? false : true)
             }
           >
             {" "}
-            {userName}{" "}
+            {user.name}{" "}
           </span>
         ) : (
           <i
             className="fa-regular fa-circle-user login-user-icon"
-            onClick={() => handleModalContent("LoginUserForm", setUserName)}
+            onClick={() => handleModalContent("LoginUserForm")}
           ></i>
         )}
         <nav

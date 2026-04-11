@@ -1,5 +1,8 @@
 import "../styles/SidebarShoppingCart.css";
+import { useContext } from 'react';
+import { UserContext } from "../contexts/UserContext";
 
+// Importaciones de funciones para manejo de precios y validaciones
 import {
   getDiscount,
   getFinalPrice,
@@ -20,11 +23,12 @@ export const SidebarShoppingCart = ({
   editProductCartList,
   handleModalContent,
   quantityProducts,
-  showOverlay,
-  userName,
-  setUserName,
-  refreshTokenUserCheck
+  refreshTokenUserCheck,
+  showOverlay
 }) => {
+  // Contexto de usuario
+  const { user, setUser } = useContext(UserContext);
+
   const handleDropdownDetail = (id) => {
     let detailBox = document.querySelector(
       `.sidebar-shopping-cart .item-${id} .dropdown-detail-item`,
@@ -217,8 +221,8 @@ export const SidebarShoppingCart = ({
                 // condiciones enviando avisos al usuario para que no guarde un carrito vacío y esté logueado
                 if (products.length === 0)
                   return showOverlay("!", "No se puede guardar un carrito vacío");
-                if (userName === "")
-                  return handleModalContent("LoginUserForm", setUserName);
+                if (user.name === "")
+                  return handleModalContent("LoginUserForm");
                 // activa modal para nombrar ticket
                 handleModalContent(
                   "NameForm",

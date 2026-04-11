@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import {
   nameValidation,
   passwordValidator,
 } from "../../validations/loginUserValidator";
+import {UserContext} from "../../contexts/UserContext"
 
 import { handleServerValidations } from "../../utils/handleServerValidations";
 
-export const LoginUserForm = ({ setIsOpenIn, setUserName, showPassword }) => {
-  // autocompleta nombre de session previa
+export const LoginUserForm = ({ setIsOpenIn, showPassword }) => {
+  const {setUser} = useContext(UserContext);
+
+  // autosetUsercompleta nombre de session previa
   let storedUser = sessionStorage.getItem("expiredUserData");
   storedUser = storedUser && JSON.parse(storedUser);
   const [name, setName] = useState(storedUser ? storedUser : "");
@@ -48,10 +51,10 @@ export const LoginUserForm = ({ setIsOpenIn, setUserName, showPassword }) => {
       );
       // Maneja la respuesta segun el status de la respuesta
       switch (response.status) {
-        // obtiene el nombre de usuario y lo gaurda en estado
+        // obtiene el nombre de usuario y lo guarda en estado
         case 200:
           const userData = await response.json();
-          setUserName(userData.userName);
+          setUser({name: userData.userName});
           setIsOpenIn("");
           break;
         case 400:

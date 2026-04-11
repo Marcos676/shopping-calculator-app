@@ -23,11 +23,8 @@ import { CartContext } from "../contexts/CartContext";
 import { ModalContext } from "../contexts/ModalContext";
 
 function App() {
-  // Estados locales de App.js
-  const [userName, setUserName] = useState(""); // Estado viejo. Rastrear donde más se utiliza y reemplazar por el estado del contexto de usuario
-
   // Estados de Contexto
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const { cartList, setCartList, quantityProducts, setQuantityProducts } =
     useContext(CartContext);
   const { modalIsOpenIn, setModalIsOpenIn, modalProps, setModalProps } =
@@ -77,7 +74,7 @@ function App() {
       switch (response.status) {
         case 200: // refresh token válido y actualizacion de tokens. Recupera datos de sesion previa
           const userData = await response.json();
-          setUserName(userData.userName);
+          setUser({name: userData.userName});
           break;
         case 401: // no existe refresh token, no hay sesiones previas
           const error401Data = await response.json();
@@ -275,8 +272,6 @@ function App() {
         quantityProducts={quantityProducts}
         handleModalContent={handleModalContent}
         refreshTokenUserCheck={refreshTokenUserCheck}
-        userName={userName}
-        setUserName={setUserName}
       />
       <main>
         <Routes>
@@ -294,7 +289,7 @@ function App() {
               />
             }
           />
-          <Route element={<PrivateRoute userName={userName} />}>
+          <Route element={<PrivateRoute />}>
             <Route
               path="/mis-tickets"
               element={

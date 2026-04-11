@@ -13,7 +13,6 @@ export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
       content = (
         <LoginRegisterUser
           setIsOpenIn={setIsOpenIn}
-          setUserName={contentProps.methodAction}
         />
       );
     break;

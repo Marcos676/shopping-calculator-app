@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { LoginUserForm } from "./LoginUserForm";
 import { RegisterUserForm } from "./RegisterUserForm";
 
-export const LoginRegisterUser = ({ setIsOpenIn, setUserName }) => {
+export const LoginRegisterUser = ({ setIsOpenIn }) => {
   const [showForm, setShowForm] = useState("login");
   const btnloginRef = useRef(null);
   const btnRegisterRef = useRef(null);
@@ -51,13 +51,11 @@ export const LoginRegisterUser = ({ setIsOpenIn, setUserName }) => {
       {showForm === "login" ? (
         <LoginUserForm
           setIsOpenIn={setIsOpenIn}
-          setUserName={setUserName}
           showPassword={showPassword}
         />
       ) : (
         <RegisterUserForm
           setIsOpenIn={setIsOpenIn}
-          setUserName={setUserName}
           showPassword={showPassword}
         />
       )}
