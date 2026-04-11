@@ -1,26 +1,45 @@
-import { Routes, Route } from 'react-router-dom';
-import "./styles/App.css";
+import { Routes, Route } from "react-router-dom";
+import "../styles/App.css";
+import { useState, useEffect, useContext } from "react";
+// Importa el hook para manejar cookies
 import { useCookies } from "react-cookie";
-import { useState, useEffect } from "react";
 
-import { Modal } from "./components/Modal";
-import { SidebarShoppingCart } from "./components/SidebarShoppingCart";
-import { Header } from "./components/Header";
-import { CalculatePrice } from './pages/CalculatePrice';
-import { MyTickets } from './pages/MyTickets';
-import { PrivateRoute } from './components/PrivateRoute';
+// Importa las páginas y componentes necesarios
+import { Header } from "./Header";
+import { SidebarShoppingCart } from "./SidebarShoppingCart";
+import { Modal } from "./Modal";
+
+import { MyTickets } from "../pages/MyTickets";
+import { CalculatePrice } from "../pages/CalculatePrice";
+import { PrivateRoute } from "./PrivateRoute"; // Componente para proteger rutas privadas, solo accesibles para usuarios logueados
+
+//Hooks
+//import { useFirstReload } from "../hooks/useEffects";
+//import { useValidateAndRefreshTokens } from "../hooks/useAuth";
+
+//Contextos
+import { UserContext } from "../contexts/UserContext";
+import { CartContext } from "../contexts/CartContext";
+import { ModalContext } from "../contexts/ModalContext";
 
 function App() {
-  //Estado de usuario
-  const [userName, setUserName] = useState("");
-  
-  // Estado de productos guardados en Carrito
-  const [cartList, setCartList] = useState([]);
-  const [quantityProducts, setQuantityProducts] = useState(0);
+  // Estados locales de App.js
+  const [userName, setUserName] = useState(""); // Estado viejo. Rastrear donde más se utiliza y reemplazar por el estado del contexto de usuario
 
-  // Estado de Modal
-  const [modalIsOpenIn, setModalIsOpenIn] = useState("");
-  const [modalProps, setModalProps] = useState({});
+  // Estados de Contexto
+  const { user, setUser } = useContext(UserContext);
+  const { cartList, setCartList, quantityProducts, setQuantityProducts } =
+    useContext(CartContext);
+  const { modalIsOpenIn, setModalIsOpenIn, modalProps, setModalProps } =
+    useContext(ModalContext);
+
+  // Seteo de cookie
+  const [cookies, setCookies, removeCookie] = useCookies(["cartCookie"]);
+
+  //ESTADOS LOCALES DE APP.JS
+
+  // Estado para controlar si es la primera carga de la aplicación
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   // Estado de Sidebar
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
@@ -28,11 +47,8 @@ function App() {
   //Estado de pantalla completa
   const [fullScreen, setFullScreen] = useState(false);
 
-  // Seteo de cookie
-  const [cookies, setCookies, removeCookie] = useCookies(["cartCookie"]);
-
-// Función para activar o desactivar pantalla completa
-const toggleFullScreen = () => {
+  // Función para activar o desactivar pantalla completa
+  const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
       setFullScreen(true);
@@ -44,11 +60,15 @@ const toggleFullScreen = () => {
     }
   };
 
+  /* --------------------------------------------------------------- */
+
   //Función que actualiza el accessToken y refreshToken, en caso de existir y ejecuta una funcion pasada por parámetro en caso de actualizacion de token exitosa
   const refreshTokenUserCheck = async () => {
     try {
       const response = await fetch(
-        (process.env.NODE_ENV === "production" ? "https://" : "http://") + process.env.REACT_APP_API_URL + "/api/user/session-check",
+        (process.env.NODE_ENV === "production" ? "https://" : "http://") +
+          process.env.REACT_APP_API_URL +
+          "/api/user/session-check",
         {
           method: "POST",
           credentials: "include",
@@ -80,16 +100,18 @@ const toggleFullScreen = () => {
     }
   };
 
-  //  Carga el carrito guardado en la cookie y checkea si el usuario está logueado durante el primer montaje
-  useEffect(() => {
+  // En la primera carga de la aplicación, cargar la lista de productos del carrito desde las cookies y validar y refrescar los tokens de autenticación
+  if (isFirstLoad) {
     if (typeof cookies["cartCookie"] !== "undefined") {
       setCartList(cookies["cartCookie"].cartList);
     }
     refreshTokenUserCheck();
-  }, []);
+    setIsFirstLoad(false);
+  }
+
+  /* --------------------------------------------------------------- */
 
   // ----- Funciones útiles
-
 
   // Mostrar Toast (mensaje de agregado y editado de producto exitoso)
   function showToast(message) {
@@ -140,7 +162,6 @@ const toggleFullScreen = () => {
   }, [cartList]);
 
   // ----- CRUD  de productos -----
-  
 
   const editProductCartList = (updatedData) => {
     updatedData.porcentDiscount =
@@ -223,10 +244,8 @@ const toggleFullScreen = () => {
         editProductCartList={editProductCartList}
         handleModalContent={handleModalContent}
         quantityProducts={quantityProducts}
-        showOverlay={showOverlay}
-        userName={userName}
-        setUserName={setUserName}
         refreshTokenUserCheck={refreshTokenUserCheck}
+        showOverlay={showOverlay}
       />
       <Modal
         isOpenIn={modalIsOpenIn}
@@ -243,9 +262,13 @@ const toggleFullScreen = () => {
       </div>
       {/* -------- */}
       {/* Boton de FullScreen */}
-            <div className='fullScreen-button' onClick={() => toggleFullScreen() } >
-              {fullScreen ? <i className="fa-solid fa-compress"></i> : <i className="fa-solid fa-expand"></i> } 
-            </div>
+      <div className="fullScreen-button" onClick={() => toggleFullScreen()}>
+        {fullScreen ? (
+          <i className="fa-solid fa-compress"></i>
+        ) : (
+          <i className="fa-solid fa-expand"></i>
+        )}
+      </div>
       {/* -------- */}
       <Header
         HandleSideBar={HandleSideBar}
@@ -257,12 +280,32 @@ const toggleFullScreen = () => {
       />
       <main>
         <Routes>
-          <Route path="/" element={<CalculatePrice cartList={cartList} setCartList={setCartList} setCookies={setCookies} showToast={showToast} handleResetForm={handleResetForm} setModalIsOpenIn={setModalIsOpenIn} handleModalContent={handleModalContent} />} />
-          <Route element={<PrivateRoute userName={userName} />} >
-            <Route path="/mis-tickets" element={<MyTickets handleModalContent={handleModalContent} refreshTokenUserCheck={refreshTokenUserCheck} />} />
+          <Route
+            path="/"
+            element={
+              <CalculatePrice
+                cartList={cartList}
+                setCartList={setCartList}
+                setCookies={setCookies}
+                showToast={showToast}
+                handleResetForm={handleResetForm}
+                setModalIsOpenIn={setModalIsOpenIn}
+                handleModalContent={handleModalContent}
+              />
+            }
+          />
+          <Route element={<PrivateRoute userName={userName} />}>
+            <Route
+              path="/mis-tickets"
+              element={
+                <MyTickets
+                  handleModalContent={handleModalContent}
+                  refreshTokenUserCheck={refreshTokenUserCheck}
+                />
+              }
+            />
           </Route>
         </Routes>
-        
       </main>
     </div>
   );

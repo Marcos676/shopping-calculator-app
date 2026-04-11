@@ -2,17 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "./styles/index.css";
-import App from "./App";
+import AppProviders from "./components/AppProviders";
+import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
-import { CookiesProvider } from "react-cookie";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-      <CookiesProvider>
-        <App />
-      </CookiesProvider>
+      <AppProviders>
+          <App />
+      </AppProviders>
     </React.StrictMode>
   </BrowserRouter>,
 );
