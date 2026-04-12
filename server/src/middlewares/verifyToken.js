@@ -4,7 +4,7 @@ const verifyToken = async (req, res, next) => {
   //  Busca los tokens
   const accessToken = req.signedCookies["accessToken"];
 
-  // Envia un status 403 si no existe un refresh Token
+  // Envia un status 401 si no existe un access Token
   if (!accessToken)
     return res.status(401).json({ error: "No existe access token" });
 
@@ -21,7 +21,7 @@ const verifyToken = async (req, res, next) => {
     //Si el token expiró, envía un status 401
     if (error.name === "TokenExpiredError")
       return res.status(401).json({ error: "El accessToken expiró" });
-    //Si hay algun otro tipo de error con la verificacion del token envia un status 401 con el tipo de error
+    //Si hay algun otro tipo de error con la verificacion del token envia un status 403 con el tipo de error
     return res
       .status(403)
       .json({ error: "Token inválido", message: error.message }); //token invalido
