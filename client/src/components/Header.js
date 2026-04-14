@@ -2,16 +2,17 @@ import "../styles/Header.css";
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import {UserContext} from "../contexts/UserContext"
+import { CartContext } from "../contexts/CartContext";
 
 export const Header = ({
   HandleSideBar,
-  quantityProducts,
   handleModalContent,
   refreshTokenUserCheck,
 }) => {
   const [showMenuUser, setShowMenuUser] = useState(false);
 
   const {user, setUser} = useContext(UserContext);
+  const {quantityProducts} = useContext(CartContext);
 
   //Función que se encarga del deslogueo del usuario
   const handleLogout = async () => {

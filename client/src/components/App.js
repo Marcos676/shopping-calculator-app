@@ -190,7 +190,6 @@ function App() {
       {/* -------- */}
       <Header
         HandleSideBar={HandleSideBar}
-        quantityProducts={quantityProducts} //Mandar por contexto
         handleModalContent={handleModalContent}
         refreshTokenUserCheck={refreshTokenUserCheck}
       />
