@@ -1,5 +1,5 @@
 import "../styles/SidebarShoppingCart.css";
-import { useContext } from 'react';
+import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 
 // Importaciones de funciones para manejo de precios y validaciones
@@ -20,11 +20,10 @@ export const SidebarShoppingCart = ({
   products,
   cleanCartList,
   deleteProductCartlist,
-  editProductCartList,
   handleModalContent,
   quantityProducts,
   refreshTokenUserCheck,
-  showOverlay
+  showOverlay,
 }) => {
   // Contexto de usuario
   const { user, setUser } = useContext(UserContext);
@@ -51,7 +50,9 @@ export const SidebarShoppingCart = ({
   const handleSaveTicket = async (name) => {
     try {
       const response = await fetch(
-        (process.env.NODE_ENV === "production" ? "https://" : "http://") + process.env.REACT_APP_API_URL + "/api/ticket/crear",
+        (process.env.NODE_ENV === "production" ? "https://" : "http://") +
+          process.env.REACT_APP_API_URL +
+          "/api/ticket/crear",
         {
           method: "POST",
           credentials: "include",
@@ -66,7 +67,7 @@ export const SidebarShoppingCart = ({
       );
       switch (response.status) {
         case 200:
-          cleanCartList("Ticket guardado")
+          cleanCartList("Ticket guardado");
           break;
         case 400:
           const formErrors = await response.json();
@@ -77,15 +78,16 @@ export const SidebarShoppingCart = ({
               ".error-message-name",
               formErrors.errors.name.msg,
             );
-             formErrors.errors.productList && showOverlay("!", formErrors.errors.productList.msg);
+          formErrors.errors.productList &&
+            showOverlay("!", formErrors.errors.productList.msg);
           break;
-          case 401:
-            refreshTokenUserCheck()
-            handleSaveTicket(name)
+        case 401:
+          refreshTokenUserCheck();
+          handleSaveTicket(name);
           break;
-          case 403:
-            const tokenError = await response.json();
-            console.log("TokenError: ", tokenError);
+        case 403:
+          const tokenError = await response.json();
+          console.log("TokenError: ", tokenError);
           break;
         default:
           break;
@@ -147,17 +149,15 @@ export const SidebarShoppingCart = ({
                         onClick={() =>
                           handleModalContent(
                             "EditProductForm",
-                            editProductCartList,
+                            "",
                             [],
                             "",
                             {
-                              product: {
-                                id,
-                                name,
-                                originalPrice,
-                                porcentDiscount,
-                                quantity,
-                              },
+                              id,
+                              name,
+                              originalPrice,
+                              porcentDiscount,
+                              quantity,
                             },
                           )
                         }
@@ -220,7 +220,10 @@ export const SidebarShoppingCart = ({
               onClick={() => {
                 // condiciones enviando avisos al usuario para que no guarde un carrito vacío y esté logueado
                 if (products.length === 0)
-                  return showOverlay("!", "No se puede guardar un carrito vacío");
+                  return showOverlay(
+                    "!",
+                    "No se puede guardar un carrito vacío",
+                  );
                 if (user.name === "")
                   return handleModalContent("LoginUserForm");
                 // activa modal para nombrar ticket
