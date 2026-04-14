@@ -172,9 +172,7 @@ function App() {
     <div className="App">
       <SidebarShoppingCart
         isOpen={HandleSideBar}
-        products={cartList}
         handleModalContent={handleModalContent}
-        quantityProducts={quantityProducts}
         refreshTokenUserCheck={refreshTokenUserCheck}
       />
       <Modal

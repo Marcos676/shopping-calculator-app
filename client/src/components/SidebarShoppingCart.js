@@ -21,15 +21,13 @@ import { nameTicketValidation } from "../validations/ticketValidation";
 
 export const SidebarShoppingCart = ({
   isOpen,
-  products,
   handleModalContent,
-  quantityProducts,
   refreshTokenUserCheck,
 }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["cartCookie"]);
   // Contextos
   const { user, setUser } = useContext(UserContext);
-  const { cartList, setCartList } = useContext(CartContext);
+  const { cartList, setCartList, quantityProducts } = useContext(CartContext);
 
     const deleteProductCartlist = (id) => {
     const updatedList = cartList.filter((product) => {
@@ -80,7 +78,7 @@ export const SidebarShoppingCart = ({
           },
           body: JSON.stringify({
             name,
-            productList: products,
+            productList: cartList,
           }),
         },
       );
@@ -128,10 +126,10 @@ export const SidebarShoppingCart = ({
       </header>
       <div className="cart-content">
         <div className="items-list">
-          {products.length === 0 && (
+          {cartList.length === 0 && (
             <p className="empty-legend">Carrito vacío</p>
           )}
-          {products.map(
+          {cartList.map(
             ({ id, name, originalPrice, porcentDiscount, quantity }) => {
               return (
                 <div className={`item-container item-${id}`} key={id}>
@@ -203,11 +201,11 @@ export const SidebarShoppingCart = ({
           <div className="total-container">
             <p className="total-price">
               <i className="fa-solid fa-sack-dollar result-icons"></i>{" "}
-              {`Total a pagar: ${formatToCurrency(getTotalPrice(products))}`}
+              {`Total a pagar: ${formatToCurrency(getTotalPrice(cartList))}`}
             </p>
             <p className="">
               <i className="fa-solid fa-tag result-icons"></i>
-              {`Total ahorrado: ${formatToCurrency(getTotalDiscount(products))}`}
+              {`Total ahorrado: ${formatToCurrency(getTotalDiscount(cartList))}`}
             </p>
             <p className="">
               <i className="fa-solid fa-cart-shopping result-icons"></i>
@@ -219,7 +217,7 @@ export const SidebarShoppingCart = ({
               className="clean-cart"
               type="button"
               onClick={() => {
-                if (products.length === 0) {
+                if (cartList.length === 0) {
                   showOverlay("!", "El carrito ya está vacío");
                 } else {
                   handleModalContent(
@@ -238,7 +236,7 @@ export const SidebarShoppingCart = ({
               type="button"
               onClick={() => {
                 // condiciones enviando avisos al usuario para que no guarde un carrito vacío y esté logueado
-                if (products.length === 0)
+                if (cartList.length === 0)
                   return showOverlay(
                     "!",
                     "No se puede guardar un carrito vacío",
