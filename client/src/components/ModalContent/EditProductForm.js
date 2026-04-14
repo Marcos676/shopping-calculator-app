@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useCookies } from "react-cookie";
+import { CartContext } from "../../contexts/CartContext";
+import { ModalContext } from "../../contexts/ModalContext";
+// importa funciones para manejar calculos de precios y validaciones de campos
 import {
   handleValues,
   getDiscount,
@@ -11,13 +15,15 @@ import {
   porcentDiscountValidation,
   quantityValidation,
 } from "../../validations/productValidation";
+// Importa función para mostrar notificaciones
+import { showToast } from "../../utils/notifications";
 
-export const EditProductForm = ({
-  setIsOpenIn,
-  editProductCartList,
-  utils,
-}) => {
-  const { product } = utils;
+export const EditProductForm = ({ product }) => {
+
+  const { cartList, setCartList } = useContext(CartContext);
+  const { setModalIsOpenIn } = useContext(ModalContext);
+  const [cookies, setCookies] = useCookies(["cartCookie"]);
+
   const [name, setName] = useState(product.name);
   const [originalPrice, setOriginalPrice] = useState(product.originalPrice);
   const [porcentDiscount, setPorcentDiscount] = useState(
@@ -38,6 +44,24 @@ export const EditProductForm = ({
       product.quantity
     )
   );
+
+  const editProductCartList = (updatedData) => {
+    // Si el campo de descuento o cantidad queda vacio, se asigna un valor por defecto para evitar errores en los calculos
+    updatedData.porcentDiscount =
+      updatedData.porcentDiscount === "" ? 0 : updatedData.porcentDiscount;
+    updatedData.quantity =
+      updatedData.quantity === "" ? 1 : updatedData.quantity;
+    // Actualiza la lista de productos del carrito con los nuevos datos editados
+    const updatedList = cartList.map((product) =>
+      product.id === updatedData.id ? updatedData : product,
+    );
+    // Actualiza el estado del carrito, la cookie y muestra el mensaje de producto editado exitosamente
+    setCartList(updatedList);
+    setCookies("cartCookie", { cartList: updatedList }, { path: "/" });
+    showToast(`<i class="fa-solid fa-circle-check"></i> Producto editado</i>`);
+    // Cierra el modal de edición de producto
+    setModalIsOpenIn("");
+  };
 
   return (
     <form className="reset-form-class overflow-container">
@@ -184,7 +208,7 @@ export const EditProductForm = ({
         <button
           className="red-button"
           type="button"
-          onClick={() => setIsOpenIn("")}
+          onClick={() => setModalIsOpenIn("")}
         >
           Cancelar
         </button>
