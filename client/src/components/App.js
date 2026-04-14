@@ -199,11 +199,7 @@ function App() {
             path="/"
             element={
               <CalculatePrice
-                cartList={cartList}//Mandar por contexto
-                setCartList={setCartList}//Mandar por contexto
-                setCookies={setCookies}//Mandar por importacion de useCookies
                 handleResetForm={handleResetForm}//Evaluar llevar esta función a un archivo de utils
-                setModalIsOpenIn={setModalIsOpenIn}//Mandar por contexto
                 handleModalContent={handleModalContent}
               />
             }

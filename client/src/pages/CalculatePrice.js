@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useCookies } from "react-cookie";
+import { CartContext } from "../contexts/CartContext";
 
 import { handleValues, formatToCurrency } from "../utils/handlerPrices";
 import {
@@ -9,7 +11,10 @@ import {
 } from "../validations/productValidation";
 import { showToast } from "../utils/notifications";
 
-export const CalculatePrice = ({cartList, setCartList, setCookies, handleResetForm, setModalIsOpenIn, handleModalContent}) => {
+export const CalculatePrice = ({handleResetForm, handleModalContent}) => {
+  const {cartList, setCartList} = useContext(CartContext);
+  const [cookies, setCookie] = useCookies(["cartCookie"]);
+
   // Estados de calculos
   const [originalPrice, setOriginalPrice] = useState("");
   const [porcentDiscount, setPorcentDiscount] = useState("");
@@ -37,7 +42,7 @@ export const CalculatePrice = ({cartList, setCartList, setCookies, handleResetFo
     });
     //Guarda la nueva lista actualizada en el estado y la cookie
     setCartList(updatedList);
-    setCookies("cartCookie", { cartList: updatedList }, { path: "/" });
+    setCookie("cartCookie", { cartList: updatedList }, { path: "/" });
     // Muestra el toast con el mensaje de producto guardado
     showToast(
       `<i class="fa-solid fa-circle-check"></i> Agregado al <i class="fa-solid fa-cart-shopping"></i>`,
