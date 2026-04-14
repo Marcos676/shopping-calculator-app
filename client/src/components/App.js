@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import "../styles/App.css";
 import { useState, useEffect, useContext } from "react";
-// Importa el hook para manejar cookies
 import { useCookies } from "react-cookie";
 
 // Importa las páginas y componentes necesarios
@@ -19,6 +18,7 @@ import { UserContext } from "../contexts/UserContext";
 import { CartContext } from "../contexts/CartContext";
 import { ModalContext } from "../contexts/ModalContext";
 
+import { showOverlay } from "../utils/notifications";
 
 function App() {
   // Estados de Contexto
@@ -108,22 +108,6 @@ function App() {
   /* --------------------------------------------------------------- */
 
   // ----- Funciones útiles
-
-  //Activa overlay para el mensaje de vaciado de carrito exitoso
-  function showOverlay(simbol, message) {
-    const overlay = document.getElementById("overlayFeedback");
-    const iconEl = document.getElementById("overlayIcon");
-    const textEl = document.getElementById("overlayText");
-
-    iconEl.textContent = simbol;
-    textEl.textContent = message;
-    overlay.classList.add("show");
-
-    setTimeout(() => {
-      overlay.classList.remove("show");
-    }, 2000);
-  }
-
   //Resetea formularios segun query pasada como parametro
   const handleResetForm = (classForm) => {
     document.querySelectorAll(classForm).forEach((form) => {
@@ -212,7 +196,6 @@ function App() {
         handleModalContent={handleModalContent}
         quantityProducts={quantityProducts}
         refreshTokenUserCheck={refreshTokenUserCheck}
-        showOverlay={showOverlay}
       />
       <Modal
         isOpenIn={modalIsOpenIn}

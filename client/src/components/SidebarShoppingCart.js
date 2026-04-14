@@ -11,6 +11,8 @@ import {
   formatToCurrency,
 } from "../utils/handlerPrices";
 
+import { showOverlay } from "../utils/notifications";
+
 import { handleServerValidations } from "../utils/handleServerValidations";
 
 import { nameTicketValidation } from "../validations/ticketValidation";
@@ -23,7 +25,6 @@ export const SidebarShoppingCart = ({
   handleModalContent,
   quantityProducts,
   refreshTokenUserCheck,
-  showOverlay,
 }) => {
   // Contexto de usuario
   const { user, setUser } = useContext(UserContext);
