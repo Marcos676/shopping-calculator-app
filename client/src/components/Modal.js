@@ -4,22 +4,25 @@ import { EditProductForm } from "./ModalContent/EditProductForm"
 import { Confirm } from "./ModalContent/Confirm";
 import { LoginRegisterUser } from "./ModalContent/LoginRegisterUser";
 import { TicketDetail } from "./ModalContent/TicketDetail";
+import { useContext } from "react";
+import { ModalContext } from "../contexts/ModalContext";
 
-export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
+export const Modal = ({ contentProps }) => {
+  const { modalIsOpenIn, setModalIsOpenIn } = useContext(ModalContext);
 
   let content;
-  switch (isOpenIn) {
+  switch (modalIsOpenIn) {
     case "LoginUserForm":
       content = (
         <LoginRegisterUser
-          setIsOpenIn={setIsOpenIn}
+          setIsOpenIn={setModalIsOpenIn}
         />
       );
     break;
     case "NameForm":
       content = (
         <NameForm
-          setIsOpenIn={setIsOpenIn}
+          setIsOpenIn={setModalIsOpenIn}
           methodAction={contentProps.methodAction}
           textContent={contentProps.textContent}
           inputValidation={contentProps.otherRequires.inputValidation}
@@ -29,16 +32,14 @@ export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
       case "EditProductForm":
         content = (
           <EditProductForm
-          setIsOpenIn={setIsOpenIn}
-          editProductCartList={contentProps.methodAction}
-          utils={contentProps.otherRequires}
+          product={contentProps.otherRequires}
            />
         )
         break;
     case "Confirm":
       content = (
         <Confirm
-          setIsOpenIn={setIsOpenIn}
+          setIsOpenIn={setModalIsOpenIn}
           actionMethod={contentProps.methodAction}
           paramsActionMethod={contentProps.arrayParams}
           textContent={contentProps.textContent}
@@ -60,7 +61,7 @@ export const Modal = ({ isOpenIn, setIsOpenIn, contentProps }) => {
       <div className="modal-content">
         <div className="close-modal"><i
           className="fa-solid fa-xmark xmark-class"
-          onClick={() => setIsOpenIn("")}
+          onClick={() => setModalIsOpenIn("")}
         ></i></div>
         {content}
       </div>
