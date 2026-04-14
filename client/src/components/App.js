@@ -13,14 +13,11 @@ import { MyTickets } from "../pages/MyTickets";
 import { CalculatePrice } from "../pages/CalculatePrice";
 import { PrivateRoute } from "./PrivateRoute"; // Componente para proteger rutas privadas, solo accesibles para usuarios logueados
 
-//Hooks
-//import { useFirstReload } from "../hooks/useEffects";
-//import { useValidateAndRefreshTokens } from "../hooks/useAuth";
-
 //Contextos
 import { UserContext } from "../contexts/UserContext";
 import { CartContext } from "../contexts/CartContext";
 import { ModalContext } from "../contexts/ModalContext";
+
 
 function App() {
   // Estados de Contexto
@@ -80,9 +77,10 @@ function App() {
           const error401Data = await response.json();
           console.log("Error 401: ", error401Data);
           break;
-        case 403: // Token vencido o error en token, solicitar que se vuelva a iniciar sesion
+        case 403: // refreshToken vencido o error en token, solicitar que se vuelva a iniciar sesion
           const error403Data = await response.json();
           console.log("Error 403: ", error403Data);
+          //Guarda el nombre de usaurio en session para autocompletarlo en el form de login
           sessionStorage.setItem(
             "expiredUserData",
             JSON.stringify(error403Data.name),
@@ -160,22 +158,6 @@ function App() {
 
   // ----- CRUD  de productos -----
 
-  const editProductCartList = (updatedData) => {
-    updatedData.porcentDiscount =
-      updatedData.porcentDiscount === "" ? 0 : updatedData.porcentDiscount;
-    updatedData.quantity =
-      updatedData.quantity === "" ? 1 : updatedData.quantity;
-
-    const updatedList = cartList.map((product) =>
-      product.id === updatedData.id ? updatedData : product,
-    );
-    setCartList(updatedList);
-    setCookies("cartCookie", { cartList: updatedList }, { path: "/" });
-    showToast(`<i class="fa-solid fa-circle-check"></i> Producto editado</i>`);
-
-    setModalIsOpenIn("");
-  };
-
   const deleteProductCartlist = (id) => {
     const updatedList = cartList.filter((product) => {
       return product.id !== id;
@@ -238,7 +220,6 @@ function App() {
         products={cartList}
         cleanCartList={cleanCartList}
         deleteProductCartlist={deleteProductCartlist}
-        editProductCartList={editProductCartList}
         handleModalContent={handleModalContent}
         quantityProducts={quantityProducts}
         refreshTokenUserCheck={refreshTokenUserCheck}
