@@ -7,8 +7,9 @@ import {
   quantityValidation,
   nameProductValidation,
 } from "../validations/productValidation";
+import { showToast } from "../utils/notifications";
 
-export const CalculatePrice = ({cartList, setCartList, setCookies, showToast, handleResetForm, setModalIsOpenIn, handleModalContent}) => {
+export const CalculatePrice = ({cartList, setCartList, setCookies, handleResetForm, setModalIsOpenIn, handleModalContent}) => {
   // Estados de calculos
   const [originalPrice, setOriginalPrice] = useState("");
   const [porcentDiscount, setPorcentDiscount] = useState("");

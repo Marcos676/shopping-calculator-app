@@ -109,18 +109,6 @@ function App() {
 
   // ----- Funciones útiles
 
-  // Mostrar Toast (mensaje de agregado y editado de producto exitoso)
-  function showToast(message) {
-    const toast = document.querySelector(".toast");
-
-    toast.innerHTML = message;
-    toast.classList.add("show");
-
-    setTimeout(() => {
-      toast.classList.remove("show");
-    }, 3000);
-  }
-
   //Activa overlay para el mensaje de vaciado de carrito exitoso
   function showOverlay(simbol, message) {
     const overlay = document.getElementById("overlayFeedback");
@@ -256,7 +244,6 @@ function App() {
                 cartList={cartList}
                 setCartList={setCartList}
                 setCookies={setCookies}
-                showToast={showToast}
                 handleResetForm={handleResetForm}
                 setModalIsOpenIn={setModalIsOpenIn}
                 handleModalContent={handleModalContent}
