@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { useCookies } from "react-cookie";
 import { CartContext } from "../contexts/CartContext";
 
@@ -11,8 +11,12 @@ import {
 } from "../validations/productValidation";
 import { showToast } from "../utils/notifications";
 
-export const CalculatePrice = ({handleResetForm, handleModalContent}) => {
-  const {cartList, setCartList} = useContext(CartContext);
+export const CalculatePrice = ({ handleModalContent }) => {
+  //Captura referencia del formulario
+  const formRef = useRef(null);
+  const form = formRef.current;
+
+  const { cartList, setCartList } = useContext(CartContext);
   const [cookies, setCookie] = useCookies(["cartCookie"]);
 
   // Estados de calculos
@@ -47,8 +51,8 @@ export const CalculatePrice = ({handleResetForm, handleModalContent}) => {
     showToast(
       `<i class="fa-solid fa-circle-check"></i> Agregado al <i class="fa-solid fa-cart-shopping"></i>`,
     );
-// Resetea el formulario y los estados
-    handleResetForm(".reset-form-class");
+    // Resetea el formulario y los estados
+    form.reset();
     setOriginalPrice("");
     setPorcentDiscount("");
     setQuantity(1);
@@ -61,7 +65,7 @@ export const CalculatePrice = ({handleResetForm, handleModalContent}) => {
       <div className="title-description">
         <h2>Calculá tu compra</h2>
       </div>
-      <form className="functional-app reset-form-class">
+      <form ref={formRef} className="functional-app reset-form-class">
         <div>
           <label htmlFor="original-price">Precio</label>
           <input

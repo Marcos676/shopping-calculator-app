@@ -107,14 +107,6 @@ function App() {
 
   /* --------------------------------------------------------------- */
 
-  // ----- Funciones útiles
-  //Resetea formularios segun query pasada como parametro
-  const handleResetForm = (classForm) => {
-    document.querySelectorAll(classForm).forEach((form) => {
-      form.reset();
-    });
-  };
-
   // --------Manejadores
   // Actualiza cantidad de productos en el carrito
   useEffect(() => {
@@ -199,7 +191,6 @@ function App() {
             path="/"
             element={
               <CalculatePrice
-                handleResetForm={handleResetForm}//Evaluar llevar esta función a un archivo de utils
                 handleModalContent={handleModalContent}
               />
             }
