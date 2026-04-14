@@ -7,6 +7,7 @@ import { useCookies } from "react-cookie";
 // Importa las páginas y componentes necesarios
 import { Header } from "./Header";
 import { SidebarShoppingCart } from "./SidebarShoppingCart";
+import { UIFeedback } from "./UIFeedback";
 import { Modal } from "./Modal";
 
 import { MyTickets } from "../pages/MyTickets";
@@ -230,15 +231,7 @@ function App() {
         setIsOpenIn={setModalIsOpenIn}
         contentProps={modalProps}
       />
-      {/* Toast */}
-      <div className="toast"></div>
-      {/* -------- */}
-      {/* Overlay */}
-      <div id="overlayFeedback" className="overlay-feedback">
-        <div className="icon" id="overlayIcon"></div>
-        <div className="text" id="overlayText"></div>
-      </div>
-      {/* -------- */}
+      <UIFeedback />
       {/* Boton de FullScreen */}
       <div className="fullScreen-button" onClick={() => toggleFullScreen()}>
         {fullScreen ? (
