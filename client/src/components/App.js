@@ -129,24 +129,6 @@ function App() {
     }
   }, [cartList]);
 
-  // ----- CRUD  de productos -----
-
-  const deleteProductCartlist = (id) => {
-    const updatedList = cartList.filter((product) => {
-      return product.id !== id;
-    });
-    setCartList(updatedList);
-    updatedList.length === 0
-      ? removeCookie("cartCookie")
-      : setCookies("cartCookie", { cartList: updatedList }, { path: "/" });
-  };
-
-  const cleanCartList = (mensaje) => {
-    setCartList([]);
-    removeCookie("cartCookie");
-    showOverlay("✓", mensaje);
-  };
-
   // ----- Maneja la apertura y cierre del carrito -----
   const HandleSideBar = (show) => {
     setIsOpenSidebar(show ? true : false);
@@ -191,8 +173,6 @@ function App() {
       <SidebarShoppingCart
         isOpen={HandleSideBar}
         products={cartList}
-        cleanCartList={cleanCartList}
-        deleteProductCartlist={deleteProductCartlist}
         handleModalContent={handleModalContent}
         quantityProducts={quantityProducts}
         refreshTokenUserCheck={refreshTokenUserCheck}

@@ -1,6 +1,8 @@
 import "../styles/SidebarShoppingCart.css";
 import { useContext } from "react";
+import { useCookies } from "react-cookie";
 import { UserContext } from "../contexts/UserContext";
+import { CartContext } from "../contexts/CartContext";
 
 // Importaciones de funciones para manejo de precios y validaciones
 import {
@@ -20,14 +22,30 @@ import { nameTicketValidation } from "../validations/ticketValidation";
 export const SidebarShoppingCart = ({
   isOpen,
   products,
-  cleanCartList,
-  deleteProductCartlist,
   handleModalContent,
   quantityProducts,
   refreshTokenUserCheck,
 }) => {
-  // Contexto de usuario
+  const [cookies, setCookie, removeCookie] = useCookies(["cartCookie"]);
+  // Contextos
   const { user, setUser } = useContext(UserContext);
+  const { cartList, setCartList } = useContext(CartContext);
+
+    const deleteProductCartlist = (id) => {
+    const updatedList = cartList.filter((product) => {
+      return product.id !== id;
+    });
+    setCartList(updatedList);
+    updatedList.length === 0
+      ? removeCookie("cartCookie")
+      : setCookie("cartCookie", { cartList: updatedList }, { path: "/" });
+  };
+
+  const cleanCartList = (mensaje) => {
+    setCartList([]);
+    removeCookie("cartCookie");
+    showOverlay("✓", mensaje);
+  };
 
   const handleDropdownDetail = (id) => {
     let detailBox = document.querySelector(
