@@ -176,8 +176,6 @@ function App() {
         refreshTokenUserCheck={refreshTokenUserCheck}
       />
       <Modal
-        isOpenIn={modalIsOpenIn}
-        setIsOpenIn={setModalIsOpenIn}
         contentProps={modalProps}
       />
       <UIFeedback />
@@ -192,7 +190,7 @@ function App() {
       {/* -------- */}
       <Header
         HandleSideBar={HandleSideBar}
-        quantityProducts={quantityProducts}
+        quantityProducts={quantityProducts} //Mandar por contexto
         handleModalContent={handleModalContent}
         refreshTokenUserCheck={refreshTokenUserCheck}
       />
@@ -202,11 +200,11 @@ function App() {
             path="/"
             element={
               <CalculatePrice
-                cartList={cartList}
-                setCartList={setCartList}
-                setCookies={setCookies}
-                handleResetForm={handleResetForm}
-                setModalIsOpenIn={setModalIsOpenIn}
+                cartList={cartList}//Mandar por contexto
+                setCartList={setCartList}//Mandar por contexto
+                setCookies={setCookies}//Mandar por importacion de useCookies
+                handleResetForm={handleResetForm}//Evaluar llevar esta función a un archivo de utils
+                setModalIsOpenIn={setModalIsOpenIn}//Mandar por contexto
                 handleModalContent={handleModalContent}
               />
             }
