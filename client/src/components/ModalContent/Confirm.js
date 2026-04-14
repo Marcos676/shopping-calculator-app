@@ -1,9 +1,12 @@
+import { useContext } from "react";
+import { ModalContext } from "../../contexts/ModalContext";
+
 export const Confirm = ({
-  setIsOpenIn,
   actionMethod,
   paramsActionMethod,
   textContent,
 }) => {
+  const { setModalIsOpenIn } = useContext(ModalContext);
   return (
     <div className="confirm-content text-center">
       <h3>{textContent}</h3>
@@ -13,12 +16,12 @@ export const Confirm = ({
           className="green-button"
           onClick={() => {
             actionMethod(paramsActionMethod[0]);
-            setIsOpenIn("");
+            setModalIsOpenIn("");
           }}
         >
           Confirmar
         </button>
-        <button className="red-button" onClick={() => setIsOpenIn("")}>
+        <button className="red-button" onClick={() => setModalIsOpenIn("")}>
           Cancelar
         </button>
       </div>

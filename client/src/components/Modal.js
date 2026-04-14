@@ -22,7 +22,6 @@ export const Modal = ({ contentProps }) => {
     case "NameForm":
       content = (
         <NameForm
-          setIsOpenIn={setModalIsOpenIn}
           methodAction={contentProps.methodAction}
           textContent={contentProps.textContent}
           inputValidation={contentProps.otherRequires.inputValidation}
@@ -39,7 +38,6 @@ export const Modal = ({ contentProps }) => {
     case "Confirm":
       content = (
         <Confirm
-          setIsOpenIn={setModalIsOpenIn}
           actionMethod={contentProps.methodAction}
           paramsActionMethod={contentProps.arrayParams}
           textContent={contentProps.textContent}

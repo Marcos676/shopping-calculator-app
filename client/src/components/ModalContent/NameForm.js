@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ModalContext } from "../../contexts/ModalContext";
 
 export const NameForm = ({
-  setIsOpenIn,
   methodAction,
   textContent,
   inputValidation,
 }) => {
+  const { setModalIsOpenIn } = useContext(ModalContext);
   const [name, setName] = useState("");
   return (
     <form className="reset-form-class">
@@ -33,7 +34,7 @@ export const NameForm = ({
               )
             ) {
               methodAction(name);
-              setIsOpenIn("");
+              setModalIsOpenIn("");
             }
           }}
         >
@@ -42,7 +43,7 @@ export const NameForm = ({
         <button
           className="red-button"
           type="button"
-          onClick={() => setIsOpenIn("")}
+          onClick={() => setModalIsOpenIn("")}
         >
           Cancelar
         </button>
