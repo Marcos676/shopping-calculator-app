@@ -26,7 +26,7 @@ export const SidebarShoppingCart = ({
 }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["cartCookie"]);
   // Contextos
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const { cartList, setCartList, quantityProducts } = useContext(CartContext);
 
     const deleteProductCartlist = (id) => {

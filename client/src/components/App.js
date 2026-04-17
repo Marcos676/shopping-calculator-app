@@ -18,18 +18,16 @@ import { UserContext } from "../contexts/UserContext";
 import { CartContext } from "../contexts/CartContext";
 import { ModalContext } from "../contexts/ModalContext";
 
-import { showOverlay } from "../utils/notifications";
-
 function App() {
   // Estados de Contexto
   const { setUser } = useContext(UserContext);
-  const { cartList, setCartList, quantityProducts, setQuantityProducts } =
+  const { cartList, setCartList, setQuantityProducts } =
     useContext(CartContext);
-  const { modalIsOpenIn, setModalIsOpenIn, modalProps, setModalProps } =
+  const { setModalIsOpenIn, modalProps, setModalProps } =
     useContext(ModalContext);
 
   // Seteo de cookie
-  const [cookies, setCookies, removeCookie] = useCookies(["cartCookie"]);
+  const [cookies] = useCookies(["cartCookie"]);
 
   //ESTADOS LOCALES DE APP.JS
 
