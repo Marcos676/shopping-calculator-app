@@ -12,7 +12,7 @@ Aplicación web fullstack para gestionar y calcular costos de compras en tiempo 
 
 Prueba las siguientes credenciales:
 - **Email:** `demo@test.com`
-- **Contraseña:** `demo123`
+- **Contraseña:** `Demo1234`
 
 O crea tu propia cuenta para explorar todas las funcionalidades.
 
